@@ -16,7 +16,7 @@ const routes = [
     output: "index.html",
     title: "ПЛАНКОД — проектирование, инженерные системы и умный дом",
     description: "Проектирование отопления, вентиляции и кондиционирования, монтаж, умный дом и поставка оборудования.",
-    ogImage: "og.png",
+    ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
   {
@@ -25,7 +25,7 @@ const routes = [
     output: "smart-home.html",
     title: "Умный дом под ключ — ПЛАНКОД",
     description: "Интеграция отопления, вентиляции, кондиционирования и безопасности в умный дом.",
-    ogImage: "og.png",
+    ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
   {
@@ -34,7 +34,7 @@ const routes = [
     output: "projects.html",
     title: "Проектирование и объекты — ПЛАНКОД",
     description: "Проектирование инженерных систем частных домов и коммерческих помещений.",
-    ogImage: "og.png",
+    ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
   {
@@ -43,7 +43,7 @@ const routes = [
     output: "products.html",
     title: "Продукция для умного дома — ПЛАНКОД",
     description: "Оборудование для умного дома и кондиционирования с подбором, доставкой и монтажом.",
-    ogImage: "og.png",
+    ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
   {
@@ -52,7 +52,7 @@ const routes = [
     output: "about.html",
     title: "О компании — ПЛАНКОД",
     description: "ПЛАНКОД — проектирование, поставка, монтаж и сервис инженерных систем и умного дома с 2022 года.",
-    ogImage: "og.png",
+    ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
 ];
