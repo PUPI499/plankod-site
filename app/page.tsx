@@ -10,7 +10,7 @@ export default function Home() {
         <div className="hero-copy panel">
           <div className="eyebrow"><span>Проект от 15 000 ₽</span><b>Сначала думаем. Потом делаем.</b></div>
           <h1>Считаем.<br /><em>Проектируем.</em><br />Делаем умным.</h1>
-          <p>Проектируем инженерные системы и умный дом как одно целое: отопление, вентиляция, кондиционирование и понятное управление домом.</p>
+          <p>Проектируем инженерные системы объектов любой сложности — от частного дома до производственного цеха: отопление, вентиляция, кондиционирование. А для дома — ещё и умный дом с понятным управлением.</p>
           <div className="hero-actions">
             <GetSmartHomeButton label="Связаться с нами" />
             <a className="quiet-link" href="#install">Как мы работаем ↓</a>
@@ -22,20 +22,42 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-system panel" aria-label="Схема умного дома">
-          <div className="system-top"><span>ПЛАНКОД / СИСТЕМА 01</span><strong>онлайн</strong></div>
-          <div className="house-photo" />
-          <div className="control-card">
-            <small>Дом</small>
-            <strong>Всё в порядке</strong>
-            <div className="room-temp"><b>22°</b><span>комфорт</span></div>
-            <div className="control-toggles"><i /><i /><i /></div>
+        <div className="hero-system panel" aria-label="Инженерная схема вентиляции и отопления">
+          <div className="system-top"><span>ПЛАНКОД / ИНЖЕНЕРНЫЙ ПРОЕКТ</span><strong>расчёт подтверждён</strong></div>
+          <div className="object-schematic">
+            <svg viewBox="0 0 400 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <path d="M70 26 V424" fill="none" stroke="rgba(255,255,255,.55)" strokeWidth="2.4" />
+              <path d="M70 92 H322" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth="1.6" />
+              <path d="M70 168 H286" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth="1.6" />
+              <path d="M70 244 H332" fill="none" stroke="#9f9cf0" strokeWidth="1.6" />
+              <path d="M70 320 H262" fill="none" stroke="#9f9cf0" strokeWidth="1.6" />
+              <path d="M70 396 H304" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth="1.6" />
+              <circle cx="70" cy="92" r="3.2" fill="#fff" /><rect x="316" y="86" width="12" height="12" fill="rgba(255,255,255,.85)" />
+              <circle cx="70" cy="168" r="3.2" fill="#fff" /><rect x="280" y="162" width="12" height="12" fill="rgba(255,255,255,.85)" />
+              <circle cx="70" cy="244" r="3.6" fill="#9f9cf0" /><rect x="326" y="238" width="12" height="12" fill="#9f9cf0" />
+              <circle cx="70" cy="320" r="3.2" fill="#9f9cf0" /><rect x="256" y="314" width="12" height="12" fill="#9f9cf0" />
+              <circle cx="70" cy="396" r="3.2" fill="#fff" /><rect x="298" y="390" width="12" height="12" fill="rgba(255,255,255,.85)" />
+              <text x="200" y="82" fontSize="9" fill="rgba(255,255,255,.55)">П1 · Ø250 · 420 м³/ч</text>
+              <text x="180" y="158" fontSize="9" fill="rgba(255,255,255,.55)">П2 · Ø200 · 260 м³/ч</text>
+              <text x="200" y="234" fontSize="9" fill="rgba(159,156,240,.85)">В1 · Ø315 · 980 м³/ч</text>
+              <text x="150" y="310" fontSize="9" fill="rgba(159,156,240,.85)">В2 · Ø250 · 540 м³/ч</text>
+              <text x="180" y="386" fontSize="9" fill="rgba(255,255,255,.55)">О1 · контур отопления</text>
+              <circle cx="366" cy="26" r="10" fill="none" stroke="rgba(255,255,255,.3)" />
+              <path d="M366 18 V34 M358 26 H374" stroke="rgba(255,255,255,.3)" strokeWidth="1" />
+              <text x="311" y="50" fontSize="8" fill="rgba(255,255,255,.35)">М 1:100</text>
+            </svg>
           </div>
-          <div className="device device-sensor"><i /><b>Датчик</b><span>сухо</span></div>
-          <div className="device device-light"><i /><b>Свет</b><span>выкл.</span></div>
-          <div className="device device-access"><i /><b>Доступ</b><span>закрыто</span></div>
+          <div className="object-card">
+            <small>Объект</small>
+            <strong>Цех пищевого производства</strong>
+            <div className="airflow-readout"><b>1 250</b><span>м³/ч приток</span></div>
+            <div className="circuit-legend"><i>ОВ</i><i>К</i><i>А</i></div>
+          </div>
+          <div className="spec-badge spec-badge-one"><i /><b>Приток</b><span>Ø250 · 420 м³/ч</span></div>
+          <div className="spec-badge spec-badge-two"><i /><b>Вытяжка</b><span>Ø315 · 980 м³/ч</span></div>
+          <div className="spec-badge spec-badge-three"><i /><b>Фасад</b><span>греющий кабель</span></div>
           <div className="signal-line signal-one" /><div className="signal-line signal-two" />
-          <div className="system-caption">Тепло. Воздух. Климат.<br /><strong>Одна умная система.</strong></div>
+          <div className="system-caption">Вентиляция. Отопление. Кондиционирование.<br /><strong>Один инженерный проект — от расчёта до пусконаладки.</strong></div>
         </div>
       </section>
 
@@ -68,14 +90,14 @@ export default function Home() {
         <div className="trust-title blue-panel panel">
           <span className="micro-label">Что делает ПЛАНКОД</span>
           <h2>Проектируем.<br />Монтируем.<br /><em>Объединяем.</em></h2>
-          <p>Инженерное проектирование (отопление, вентиляция, кондиционирование) и умный дом — не два разных подрядчика, а одна команда и один проект.</p>
+          <p>Инженерное проектирование — вентиляция, отопление, кондиционирование, климат производственных и общественных зданий — и умный дом там, где он нужен. Не разные подрядчики, а одна команда и один проект.</p>
           <div className="trust-highlights"><span className="pill">Проект</span><span className="pill">Оборудование</span><span className="pill">Монтаж</span><span className="pill">Сервис</span></div>
           <div className="plan-code-mark"><span>ПЛАН</span><i>→</i><span>КОД</span></div>
         </div>
         <div className="proof-grid">
           <article className="proof-card panel">
             <span>01</span><h3>Инженерный проект</h3>
-            <p>Отопление, вентиляция, кондиционирование и автоматика до выхода на объект.</p>
+            <p>Отопление, вентиляция, кондиционирование и автоматика — для дома, производства и коммерческих объектов — до выхода на площадку.</p>
           </article>
           <article className="proof-card panel dark-proof">
             <span>02</span><h3>Поставка оборудования</h3>
@@ -193,14 +215,15 @@ export default function Home() {
           <div className="secondary-intro">
             <span className="micro-label">Два направления — одна команда</span>
             <h2>Проектирование<br />и <em>умный дом</em></h2>
-            <p>Отопление, вентиляцию и кондиционирование рассчитываем как единый климатический контур, а затем связываем его с умным домом в одном проекте.</p>
+            <p>Отопление, вентиляцию и кондиционирование проектируем для дома, производственных цехов и коммерческих объектов — от квартиры до комплекса зданий. Умный дом связываем в тот же проект, где это уместно.</p>
           </div>
           <div className="secondary-list">
             <article><span>01</span><h3>Кондиционирование</h3><p>Подбор, поставка и монтаж Gree / Midea.</p></article>
-            <article><span>02</span><h3>Вентиляция</h3><p>Приток, вытяжка и решения с рекуперацией.</p></article>
+            <article><span>02</span><h3>Вентиляция</h3><p>Приток, вытяжка и решения с рекуперацией — от квартиры до цеха пищевого производства.</p></article>
             <article><span>03</span><h3>Отопление</h3><p>Проектирование и управление температурой.</p></article>
-            <article><span>04</span><h3>Умный дом</h3><p>Сценарии, датчики и объединённое управление домом.</p></article>
-            <article><span>05</span><h3>Сервис</h3><p>Диагностика, регламент и развитие системы.</p></article>
+            <article><span>04</span><h3>Промышленные и общественные объекты</h3><p>Вентиляция производств, климат кинозалов, фасадный обогрев, инженерия кампусов.</p></article>
+            <article><span>05</span><h3>Умный дом</h3><p>Сценарии, датчики и объединённое управление домом.</p></article>
+            <article><span>06</span><h3>Сервис</h3><p>Диагностика, регламент и развитие системы.</p></article>
           </div>
         </div>
       </section>
@@ -208,7 +231,7 @@ export default function Home() {
       <section className="cases-section shell">
         <div className="case-card panel case-photo-one"><span>PLACEHOLDER / ЧАСТНЫЙ ДОМ</span><h3>Инженерные системы и умный дом</h3><p>Площадь, регион, состав проекта и фотографии будут добавлены после получения данных.</p></div>
         <div className="case-card panel case-message"><span>ПОРТФОЛИО ПЛАНКОД</span><h2>Проекты,<br />которыми можно<br /><em>объяснить подход</em></h2><p>На отдельной странице подготовлена структура портфолио: задача, решение, оборудование, монтаж и результат.</p><a href="/projects">Перейти ко всем объектам ↗</a></div>
-        <div className="case-card panel case-photo-two"><span>PLACEHOLDER / КОММЕРЦИЯ</span><h3>Вентиляция и кондиционирование</h3><p>Тип объекта, площадь и инженерные показатели будут заполнены позднее.</p></div>
+        <div className="case-card panel case-photo-two"><span>PLACEHOLDER / ПРОИЗВОДСТВО</span><h3>Вентиляция производственного цеха</h3><p>Тип объекта, площадь и инженерные показатели будут заполнены позднее.</p></div>
       </section>
 
       <section className="faq-section shell">
