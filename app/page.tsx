@@ -23,6 +23,19 @@ const rightWindows = [0, 1, 2, 3].flatMap((floor) =>
 const leftWindows = [0, 1, 2, 3].flatMap((floor) =>
   [0.24, 0.6].map((t) => ({ t, h: floor * 55 + 17 }))
 );
+// Generic isometric point: u along the right wall axis, v along the left
+// wall axis, h vertical. Lets us place ground-level and roof-slope elements
+// (underfloor loop, solar array) on the same grid as the walls/windows.
+function isoPoint(u: number, v: number, h: number): [number, number] {
+  return [150 + 155 * u - 106 * v, 410 - 41 * u - 29 * v - h];
+}
+// Right roof slope parametrised by (s along the eave, r up toward the ridge).
+function roofPoint(s: number, r: number): [number, number] {
+  return [150 + 155 * s + 25 * r, 190 - 41 * s - 115 * r];
+}
+const solarPanels = [0.06, 0.22, 0.38].flatMap((s) =>
+  [0.08, 0.26].map((r) => ({ s, r }))
+);
 
 export default function Home() {
   return (
@@ -88,6 +101,13 @@ export default function Home() {
               <path d="M150 190 L305 149 L175 75 Z" fill="rgba(255,255,255,.17)" stroke="rgba(255,255,255,.7)" strokeWidth="2.2" />
               <path d="M150 190 L44 161 L175 75 Z" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.65)" strokeWidth="2.2" />
               <path d="M175 75 L200 64" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth="1.3" />
+              {/* солнечные панели на скате */}
+              {solarPanels.map((p, i) => (
+                <g key={`sp${i}`}>
+                  <path d={panelPath(roofPoint, p.s, p.r, 0.12, 0.14)} fill="rgba(111,179,255,.16)" stroke="rgba(111,179,255,.55)" strokeWidth="0.8" />
+                  <path d={`M${roofPoint(p.s, p.r).join(" ")} L${roofPoint(p.s + 0.12, p.r + 0.14).join(" ")}`} stroke="rgba(111,179,255,.35)" strokeWidth="0.5" />
+                </g>
+              ))}
               {/* кровельный блок вентиляции */}
               <rect x="205" y="118" width="24" height="12" fill="rgba(255,255,255,.16)" stroke="rgba(255,255,255,.55)" strokeWidth="1" />
               <path d="M217 118 V102 H247" fill="none" stroke="rgba(255,255,255,.55)" strokeWidth="1.3" />
@@ -119,11 +139,20 @@ export default function Home() {
               <circle cx="188" cy="270" r="2.8" fill="rgba(111,179,255,.95)" />
               <path d="M197 420 L150 437" fill="none" stroke="rgba(111,179,255,.55)" strokeWidth="1.2" strokeDasharray="3 2" />
               <text x="194" y="266" fontSize="7" fill="rgba(111,179,255,.95)">Ø20</text>
+              {/* тёплый пол — петля перед домом, на той же изометрической сетке */}
+              <path d="M84 388 L146 371 L167 377 L105 393 L126 399 L188 383" fill="none" stroke="#9f9cf0" strokeWidth="1.4" strokeLinejoin="round" />
+              <circle cx="84" cy="388" r="2.4" fill="#9f9cf0" />
+              <circle cx="188" cy="383" r="2.4" fill="#9f9cf0" />
+              <text x="88" y="406" fontSize="6.5" fill="rgba(159,156,240,.85)">тёплый пол</text>
               {/* тепловой пункт */}
               <rect x="123" y="428" width="54" height="18" fill="rgba(23,20,143,.6)" stroke="rgba(255,255,255,.6)" strokeWidth="1.4" />
               <text x="133" y="441" fontSize="9" fill="rgba(255,255,255,.85)">ИТП</text>
+              {/* щит автоматики рядом с ИТП */}
+              <path d={panelPath(rightPoint, 0.05, 20, 0.045, 16)} fill="rgba(232,185,105,.22)" stroke="rgba(232,185,105,.75)" strokeWidth="1" />
+              <path d={panelPath(rightPoint, 0.05, 42, 0.045, 16)} fill="rgba(232,185,105,.22)" stroke="rgba(232,185,105,.75)" strokeWidth="1" />
               {/* ввод сетей — водопровод от границы участка */}
               <path d="M250 447 L177 438" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth="1.4" strokeDasharray="3 3" />
+              <path d="M254 453 L181 444" fill="none" stroke="rgba(232,185,105,.55)" strokeWidth="1.2" strokeDasharray="3 3" />
               <circle cx="250" cy="447" r="3" fill="none" stroke="rgba(255,255,255,.55)" strokeWidth="1.2" />
               {/* подписи — тонкие выносные линии без плашек, в стиле чертежа */}
               <g>
@@ -142,7 +171,7 @@ export default function Home() {
                 <line x1="290" y1="420" x2="250" y2="447" stroke="rgba(255,255,255,.4)" strokeWidth="1" />
                 <line x1="290" y1="407" x2="374" y2="407" stroke="rgba(255,255,255,.28)" strokeWidth="0.75" />
                 <text x="290" y="403" fontSize="7" letterSpacing=".04em" fill="rgba(255,255,255,.6)">ВВОД СЕТЕЙ</text>
-                <text x="290" y="418" fontSize="8.5" fill="#fff">водопровод</text>
+                <text x="290" y="418" fontSize="8.5" fill="#fff">вода · электрика</text>
               </g>
             </svg>
           </div>
