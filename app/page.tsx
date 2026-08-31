@@ -23,7 +23,7 @@ export default function Home() {
         </div>
 
         <div className="hero-system panel" aria-label="Инженерная схема вентиляции и отопления">
-          <div className="system-top"><span>ПЛАНКОД / ИНЖЕНЕРНЫЙ ПРОЕКТ</span><strong>расчёт подтверждён</strong></div>
+          <div className="system-top"><span>ПЛАНКОД / ЛИСТ ОВ-01</span><strong>М 1:100</strong></div>
           <div className="object-schematic">
             <svg viewBox="0 0 400 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
               <rect x="30" y="20" width="340" height="380" fill="none" stroke="rgba(255,255,255,.55)" strokeWidth="2.2" />
@@ -53,9 +53,6 @@ export default function Home() {
               <text x="305" y="238" fontSize="9" fill="rgba(159,156,240,.9)">Ø200 · В</text>
               <text x="96" y="353" fontSize="9" fill="rgba(255,255,255,.55)">Ø160</text>
               <text x="315" y="353" fontSize="9" fill="rgba(255,255,255,.55)">Ø250</text>
-              <circle cx="352" cy="38" r="10" fill="none" stroke="rgba(255,255,255,.3)" />
-              <path d="M352 30 V46 M344 38 H360" stroke="rgba(255,255,255,.3)" strokeWidth="1" />
-              <text x="297" y="62" fontSize="8" fill="rgba(255,255,255,.35)">М 1:100</text>
             </svg>
           </div>
           <div className="object-card">
@@ -65,12 +62,8 @@ export default function Home() {
               <div><i>03</i><span>Венткамера</span><b>22 м²</b></div>
               <div><i>05</i><span>Компрессорная</span><b>18 м²</b></div>
             </div>
-            <div className="circuit-legend"><i>ОВ</i><i>К</i><i>А</i></div>
+            <div className="circuit-legend"><span>ОВ</span><span>К</span><span>А</span></div>
           </div>
-          <div className="spec-badge spec-badge-one"><i /><b>Приток</b><span>Ø250 · 420 м³/ч</span></div>
-          <div className="spec-badge spec-badge-two"><i /><b>Вытяжка</b><span>Ø315 · 980 м³/ч</span></div>
-          <div className="spec-badge spec-badge-three"><i /><b>Фасад</b><span>греющий кабель</span></div>
-          <div className="signal-line signal-one" /><div className="signal-line signal-two" />
           <div className="system-caption">Вентиляция. Отопление. Кондиционирование.<br /><strong>Один инженерный проект — от расчёта до пусконаладки.</strong></div>
         </div>
       </section>
