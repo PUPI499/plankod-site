@@ -1,6 +1,13 @@
 import { ContactBand, SiteFooter, SiteHeader } from "./components";
 import { GetSmartHomeButton } from "./get-smart-home-modal";
 
+const heatingFloors = [
+  { n: "04", bandTop: 20, midY: 62, color: "#9f9cf0" },
+  { n: "03", bandTop: 105, midY: 147, color: "#fff" },
+  { n: "02", bandTop: 190, midY: 232, color: "#9f9cf0" },
+  { n: "01", bandTop: 275, midY: 317, color: "#fff" },
+];
+
 export default function Home() {
   return (
     <main>
@@ -22,47 +29,40 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-system panel" aria-label="Инженерная схема вентиляции и отопления">
-          <div className="system-top"><span>ПЛАНКОД / ЛИСТ ОВ-01</span><strong>М 1:100</strong></div>
+        <div className="hero-system panel" aria-label="Стояковая схема отопления здания">
+          <div className="system-top"><span>ПЛАНКОД / ЛИСТ ОВ-02</span><strong>без масштаба</strong></div>
           <div className="object-schematic">
             <svg viewBox="0 0 400 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-              <rect x="30" y="20" width="340" height="380" fill="none" stroke="rgba(255,255,255,.55)" strokeWidth="2.2" />
-              <path d="M206 20 V170 M30 170 H370 M160 170 V320 M30 320 H370 M260 320 V400" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth="1.4" />
-              <text x="44" y="40" fontSize="10" fill="rgba(255,255,255,.5)">01</text>
-              <text x="220" y="40" fontSize="10" fill="rgba(255,255,255,.5)">02</text>
-              <text x="44" y="190" fontSize="10" fill="rgba(255,255,255,.5)">03</text>
-              <text x="174" y="190" fontSize="10" fill="rgba(255,255,255,.5)">04</text>
-              <text x="44" y="340" fontSize="10" fill="rgba(255,255,255,.5)">05</text>
-              <text x="274" y="340" fontSize="10" fill="rgba(255,255,255,.5)">06</text>
-              <path d="M225 6 V400" fill="none" stroke="rgba(255,255,255,.6)" strokeWidth="2" />
-              <path d="M110 95 H300" fill="none" stroke="#fff" strokeWidth="1.6" />
-              <path d="M95 245 H300" fill="none" stroke="#9f9cf0" strokeWidth="1.6" />
-              <path d="M140 360 H310" fill="none" stroke="#fff" strokeWidth="1.6" />
-              <circle cx="225" cy="95" r="3.4" fill="#fff" />
-              <circle cx="225" cy="245" r="3.6" fill="#9f9cf0" />
-              <circle cx="225" cy="360" r="3.4" fill="#fff" />
-              <rect x="104" y="89" width="12" height="12" fill="#fff" />
-              <rect x="294" y="89" width="12" height="12" fill="#fff" />
-              <rect x="89" y="239" width="12" height="12" fill="#9f9cf0" />
-              <rect x="294" y="239" width="12" height="12" fill="#9f9cf0" />
-              <rect x="134" y="354" width="12" height="12" fill="#fff" />
-              <rect x="304" y="354" width="12" height="12" fill="#fff" />
-              <text x="66" y="88" fontSize="9" fill="rgba(255,255,255,.55)">Ø200</text>
-              <text x="305" y="88" fontSize="9" fill="rgba(255,255,255,.55)">Ø250</text>
-              <text x="50" y="238" fontSize="9" fill="rgba(159,156,240,.9)">Ø315 · В</text>
-              <text x="305" y="238" fontSize="9" fill="rgba(159,156,240,.9)">Ø200 · В</text>
-              <text x="96" y="353" fontSize="9" fill="rgba(255,255,255,.55)">Ø160</text>
-              <text x="315" y="353" fontSize="9" fill="rgba(255,255,255,.55)">Ø250</text>
+              <rect x="60" y="20" width="280" height="340" fill="none" stroke="rgba(255,255,255,.55)" strokeWidth="2.2" />
+              <path d="M60 105 H340 M60 190 H340 M60 275 H340" fill="none" stroke="rgba(255,255,255,.35)" strokeWidth="1.2" />
+              <path d="M170 360 V20" fill="none" stroke="#fff" strokeWidth="2" />
+              <path d="M190 360 V20" fill="none" stroke="#9f9cf0" strokeWidth="2" />
+              {heatingFloors.map((f) => (
+                <g key={f.n}>
+                  <text x="72" y={f.bandTop + 20} fontSize="10" fill="rgba(255,255,255,.5)">{f.n}</text>
+                  <path d={`M180 ${f.midY} H88`} fill="none" stroke={f.color} strokeWidth="1.6" />
+                  <path d={`M180 ${f.midY} H312`} fill="none" stroke={f.color} strokeWidth="1.6" />
+                  <circle cx="180" cy={f.midY} r="3.4" fill={f.color} />
+                  <rect x="62" y={f.midY - 7} width="26" height="14" fill="none" stroke={f.color} strokeWidth="1.2" />
+                  <path d={`M69 ${f.midY - 7} V${f.midY + 7} M76 ${f.midY - 7} V${f.midY + 7} M83 ${f.midY - 7} V${f.midY + 7}`} stroke={f.color} strokeWidth="1" />
+                  <rect x="312" y={f.midY - 7} width="26" height="14" fill="none" stroke={f.color} strokeWidth="1.2" />
+                  <path d={`M319 ${f.midY - 7} V${f.midY + 7} M326 ${f.midY - 7} V${f.midY + 7} M333 ${f.midY - 7} V${f.midY + 7}`} stroke={f.color} strokeWidth="1" />
+                </g>
+              ))}
+              <rect x="145" y="368" width="90" height="28" fill="none" stroke="rgba(255,255,255,.55)" strokeWidth="1.6" />
+              <text x="160" y="386" fontSize="10" fill="rgba(255,255,255,.7)">ИТП</text>
+              <text x="100" y="386" fontSize="8" fill="rgba(255,255,255,.5)">Т1 · 80°</text>
+              <text x="243" y="386" fontSize="8" fill="rgba(159,156,240,.85)">Т2 · 60°</text>
             </svg>
           </div>
           <div className="object-card">
-            <small>Экспликация помещений</small>
+            <small>Тепловая нагрузка</small>
             <div className="room-schedule">
-              <div><i>01</i><span>Цех №1</span><b>68 м²</b></div>
-              <div><i>03</i><span>Венткамера</span><b>22 м²</b></div>
-              <div><i>05</i><span>Компрессорная</span><b>18 м²</b></div>
+              <div><i>01</i><span>Этаж 1</span><b>4,2 кВт</b></div>
+              <div><i>02</i><span>Этаж 2</span><b>3,8 кВт</b></div>
+              <div><i>03</i><span>Этаж 3</span><b>3,8 кВт</b></div>
             </div>
-            <div className="circuit-legend"><span>ОВ</span><span>К</span><span>А</span></div>
+            <div className="circuit-legend"><span>Т1</span><span>Т2</span><span>ГВС</span></div>
           </div>
           <div className="system-caption">Вентиляция. Отопление. Кондиционирование.<br /><strong>Один инженерный проект — от расчёта до пусконаладки.</strong></div>
         </div>
