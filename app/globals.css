@@ -612,6 +612,11 @@ main p,.hero-copy>p,.subhero-copy>p,.portfolio-copy>p,.products-hero-copy>p,.abo
 .contact-form { margin-top:26px; padding-top:24px; border-top:1px solid var(--line); }
 .contact-form label { display:block; margin-bottom:12px; color:#54565f; font-size:12px; }
 .contact-form textarea { width:100%; margin-top:6px; padding:12px; border:1px solid var(--line); border-radius:14px; outline:0; color:var(--ink); background:#fff; font:inherit; font-size:14px; resize:vertical; }
+.contact-form input:not([type="checkbox"]) { width:100%; margin-top:6px; padding:12px; border:1px solid var(--line); border-radius:14px; outline:0; color:var(--ink); background:#fff; font:inherit; font-size:14px; }
+.form-status { margin-top:14px; font-size:12px; line-height:1.5; }
+.form-status-ok { color:#1a7a4c; }
+.form-status-error { color:#b23b3b; }
+.hp-field { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; pointer-events:none; }
 .contact-form .consent-row { display:flex; align-items:flex-start; gap:10px; margin:6px 0 16px; font-size:12px; color:#54565f; line-height:1.5; }
 .contact-form .consent-row input { margin-top:3px; }
 .contact-form-actions { display:flex; gap:8px; flex-wrap:wrap; }

@@ -140,36 +140,73 @@
   });
 })();
 
-// Contact form: consent gate + live mailto (point 10)
+// Contact form: consent gate + real submission to contact.php (point 10)
 (function () {
   "use strict";
   var forms = Array.prototype.slice.call(document.querySelectorAll(".contact-form"));
   forms.forEach(function (form) {
-    var nameInput = form.querySelector('label:nth-of-type(1) input');
+    var labels = form.querySelectorAll("label");
+    var nameInput = labels[0] && labels[0].querySelector("input");
+    var contactInput = labels[1] && labels[1].querySelector("input");
     var messageInput = form.querySelector("textarea");
+    var honeypot = form.querySelector('input[name="website"]');
     var consent = form.querySelector('input[type="checkbox"]');
-    var mailLink = form.querySelector("a.mail-link");
-    if (!consent || !mailLink) return;
+    var submitBtn = form.querySelector("button.mail-link");
+    var statusOk = form.querySelector(".form-status-ok");
+    var statusError = form.querySelector(".form-status-error");
+    if (!consent || !submitBtn || !nameInput || !contactInput || !messageInput) return;
 
-    function updateHref() {
-      var name = (nameInput && nameInput.value) || "—";
-      var message = (messageInput && messageInput.value) || "—";
-      var body = "Имя: " + name + "\n\nЗадача:\n" + message;
-      var href = "mailto:info@plankod.ru?subject=" + encodeURIComponent("Заявка с сайта ПЛАНКОД") + "&body=" + encodeURIComponent(body);
-      mailLink.setAttribute("href", href);
+    function fieldsFilled() {
+      return nameInput.value.trim() !== "" && contactInput.value.trim() !== "" && messageInput.value.trim() !== "";
     }
 
     function updateState() {
-      mailLink.classList.toggle("disabled-link", !consent.checked);
+      submitBtn.disabled = !(consent.checked && fieldsFilled());
     }
 
-    if (nameInput) nameInput.addEventListener("input", updateHref);
-    if (messageInput) messageInput.addEventListener("input", updateHref);
-    consent.addEventListener("change", updateState);
-    mailLink.addEventListener("click", function (event) {
-      if (!consent.checked) event.preventDefault();
+    [nameInput, contactInput, messageInput].forEach(function (el) {
+      el.addEventListener("input", updateState);
     });
-    updateHref();
+    consent.addEventListener("change", updateState);
+
+    submitBtn.addEventListener("click", function () {
+      if (submitBtn.disabled) return;
+      if (statusOk) statusOk.hidden = true;
+      if (statusError) statusError.hidden = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Отправляем…";
+
+      var params = new URLSearchParams();
+      params.set("name", nameInput.value);
+      params.set("contact", contactInput.value);
+      params.set("message", messageInput.value);
+      params.set("website", honeypot ? honeypot.value : "");
+
+      fetch("/contact.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: params.toString(),
+      })
+        .then(function (response) {
+          return response.json().catch(function () { return null; }).then(function (data) {
+            return { ok: response.ok, data: data };
+          });
+        })
+        .then(function (result) {
+          if (result.ok && result.data && result.data.ok) {
+            submitBtn.textContent = "Отправлено ✓";
+            if (statusOk) statusOk.hidden = false;
+          } else {
+            throw new Error("submit_failed");
+          }
+        })
+        .catch(function () {
+          submitBtn.textContent = "Отправить заявку";
+          submitBtn.disabled = false;
+          if (statusError) statusError.hidden = false;
+        });
+    });
+
     updateState();
   });
 })();
