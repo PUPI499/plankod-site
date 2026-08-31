@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-// PLACEHOLDER contacts — Anna will supply the real Telegram / Max links and email later.
-const TELEGRAM_LINK = "https://t.me/plankod";
+// Max — PLACEHOLDER, Anna will supply the real Max link later.
+const TELEGRAM_LINK = "https://t.me/plancod";
 const EMAIL_LINK = "mailto:info@plankod.ru?subject=Получить%20умный%20дом";
 const MAX_LINK = "https://max.ru/plankod";
 
