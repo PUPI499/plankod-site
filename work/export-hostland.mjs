@@ -1,0 +1,129 @@
+// Static export for classic shared hosting (e.g. Hostland file manager).
+// Renders every app/*/page.tsx route to plain, self-contained HTML with
+// inlined CSS, standard filenames (index.html + friends), OG/meta tags,
+// and copies public assets. No Node server, no Cloudflare Worker needed.
+import { build } from "esbuild";
+import { readFile, writeFile, mkdir, copyFile, rm } from "node:fs/promises";
+import { pathToFileURL } from "node:url";
+import { renderToStaticMarkup } from "react-dom/server";
+
+const OUT_DIR = new URL("../hostland-export/", import.meta.url);
+
+const routes = [
+  {
+    entry: "../app/page.tsx",
+    bundle: "./tmp-home.mjs",
+    output: "index.html",
+    title: "ПЛАНКОД — проектирование, инженерные системы и умный дом",
+    description: "Проектирование отопления, вентиляции и кондиционирования, монтаж, умный дом и поставка оборудования.",
+    ogImage: "og.png",
+    clientScript: "catalog.js",
+  },
+  {
+    entry: "../app/smart-home/page.tsx",
+    bundle: "./tmp-smart.mjs",
+    output: "smart-home.html",
+    title: "Умный дом под ключ — ПЛАНКОД",
+    description: "Интеграция отопления, вентиляции, кондиционирования и безопасности в умный дом.",
+    ogImage: "og.png",
+    clientScript: "catalog.js",
+  },
+  {
+    entry: "../app/projects/page.tsx",
+    bundle: "./tmp-projects.mjs",
+    output: "projects.html",
+    title: "Проектирование и объекты — ПЛАНКОД",
+    description: "Проектирование инженерных систем частных домов и коммерческих помещений.",
+    ogImage: "og.png",
+    clientScript: "catalog.js",
+  },
+  {
+    entry: "../app/products/page.tsx",
+    bundle: "./tmp-products.mjs",
+    output: "products.html",
+    title: "Продукция для умного дома — ПЛАНКОД",
+    description: "Оборудование для умного дома и кондиционирования с подбором, доставкой и монтажом.",
+    ogImage: "og.png",
+    clientScript: "catalog.js",
+  },
+  {
+    entry: "../app/about/page.tsx",
+    bundle: "./tmp-about.mjs",
+    output: "about.html",
+    title: "О компании — ПЛАНКОД",
+    description: "ПЛАНКОД — проектирование, поставка, монтаж и сервис инженерных систем и умного дома с 2022 года.",
+    ogImage: "og.png",
+    clientScript: "catalog.js",
+  },
+];
+
+const LINK_MAP = {
+  'href="/#contact"': 'href="index.html#contact"',
+  'href="/smart-home"': 'href="smart-home.html"',
+  'href="/projects"': 'href="projects.html"',
+  'href="/products"': 'href="products.html"',
+  'href="/about"': 'href="about.html"',
+  'href="/"': 'href="index.html"',
+};
+
+function localizeLinks(markup) {
+  let out = markup;
+  for (const [from, to] of Object.entries(LINK_MAP)) out = out.replaceAll(from, to);
+  return out;
+}
+
+await rm(OUT_DIR, { recursive: true, force: true });
+await mkdir(OUT_DIR, { recursive: true });
+
+const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+try {
+  await copyFile(new URL("../public/og.png", import.meta.url), new URL("./og.png", OUT_DIR));
+  console.log("copied og.png");
+} catch (err) {
+  console.warn("WARN: could not copy public/og.png —", err.message);
+}
+
+await copyFile(new URL("./hostland-catalog.js", import.meta.url), new URL("./catalog.js", OUT_DIR));
+console.log("copied catalog.js");
+
+for (const route of routes) {
+  const bundledPage = new URL(route.bundle, import.meta.url);
+  await build({
+    entryPoints: [new URL(route.entry, import.meta.url).pathname],
+    outfile: bundledPage.pathname,
+    bundle: true,
+    platform: "node",
+    format: "esm",
+    jsx: "automatic",
+    external: ["react", "react/jsx-runtime", "react-dom", "react-dom/server"],
+  });
+  const { default: Page } = await import(`${pathToFileURL(bundledPage.pathname).href}?v=${Date.now()}`);
+  const body = localizeLinks(renderToStaticMarkup(Page()));
+  const scriptTag = route.clientScript ? `\n  <script defer src="${route.clientScript}"></script>` : "";
+  const html = `<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${route.title}</title>
+  <meta name="description" content="${route.description}">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="${route.title}">
+  <meta property="og:description" content="${route.description}">
+  <meta property="og:image" content="${route.ogImage}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${route.title}">
+  <meta name="twitter:description" content="${route.description}">
+  <meta name="twitter:image" content="${route.ogImage}">
+  <style>${css}</style>${scriptTag}
+</head>
+<body>${body}</body>
+</html>`;
+  await writeFile(new URL(route.output, OUT_DIR), html);
+  await rm(bundledPage, { force: true });
+  console.log("wrote", route.output);
+}
+
+console.log("\nDone. Static export in:", OUT_DIR.pathname);

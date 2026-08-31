@@ -1,0 +1,44 @@
+name: Build and deploy to Hostland
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Export static site for Hostland
+        run: node work/export-hostland.mjs
+
+      # Uses the FTP/SFTP credentials for the Hostland account, stored as
+      # repo secrets (Settings -> Secrets and variables -> Actions).
+      # FTP_SERVER_DIR must be the document root for plancod.ru, e.g.
+      # /public_html/ or /domains/plancod.ru/public_html/ (ask your host).
+      - name: Deploy over FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./hostland-export/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          protocol: ftps
