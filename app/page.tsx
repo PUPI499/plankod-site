@@ -26,31 +26,45 @@ export default function Home() {
           <div className="system-top"><span>ПЛАНКОД / ИНЖЕНЕРНЫЙ ПРОЕКТ</span><strong>расчёт подтверждён</strong></div>
           <div className="object-schematic">
             <svg viewBox="0 0 400 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-              <path d="M70 26 V424" fill="none" stroke="rgba(255,255,255,.55)" strokeWidth="2.4" />
-              <path d="M70 92 H322" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth="1.6" />
-              <path d="M70 168 H286" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth="1.6" />
-              <path d="M70 244 H332" fill="none" stroke="#9f9cf0" strokeWidth="1.6" />
-              <path d="M70 320 H262" fill="none" stroke="#9f9cf0" strokeWidth="1.6" />
-              <path d="M70 396 H304" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth="1.6" />
-              <circle cx="70" cy="92" r="3.2" fill="#fff" /><rect x="316" y="86" width="12" height="12" fill="rgba(255,255,255,.85)" />
-              <circle cx="70" cy="168" r="3.2" fill="#fff" /><rect x="280" y="162" width="12" height="12" fill="rgba(255,255,255,.85)" />
-              <circle cx="70" cy="244" r="3.6" fill="#9f9cf0" /><rect x="326" y="238" width="12" height="12" fill="#9f9cf0" />
-              <circle cx="70" cy="320" r="3.2" fill="#9f9cf0" /><rect x="256" y="314" width="12" height="12" fill="#9f9cf0" />
-              <circle cx="70" cy="396" r="3.2" fill="#fff" /><rect x="298" y="390" width="12" height="12" fill="rgba(255,255,255,.85)" />
-              <text x="200" y="82" fontSize="9" fill="rgba(255,255,255,.55)">П1 · Ø250 · 420 м³/ч</text>
-              <text x="180" y="158" fontSize="9" fill="rgba(255,255,255,.55)">П2 · Ø200 · 260 м³/ч</text>
-              <text x="200" y="234" fontSize="9" fill="rgba(159,156,240,.85)">В1 · Ø315 · 980 м³/ч</text>
-              <text x="150" y="310" fontSize="9" fill="rgba(159,156,240,.85)">В2 · Ø250 · 540 м³/ч</text>
-              <text x="180" y="386" fontSize="9" fill="rgba(255,255,255,.55)">О1 · контур отопления</text>
-              <circle cx="366" cy="26" r="10" fill="none" stroke="rgba(255,255,255,.3)" />
-              <path d="M366 18 V34 M358 26 H374" stroke="rgba(255,255,255,.3)" strokeWidth="1" />
-              <text x="311" y="50" fontSize="8" fill="rgba(255,255,255,.35)">М 1:100</text>
+              <rect x="30" y="20" width="340" height="380" fill="none" stroke="rgba(255,255,255,.55)" strokeWidth="2.2" />
+              <path d="M206 20 V170 M30 170 H370 M160 170 V320 M30 320 H370 M260 320 V400" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth="1.4" />
+              <text x="44" y="40" fontSize="10" fill="rgba(255,255,255,.5)">01</text>
+              <text x="220" y="40" fontSize="10" fill="rgba(255,255,255,.5)">02</text>
+              <text x="44" y="190" fontSize="10" fill="rgba(255,255,255,.5)">03</text>
+              <text x="174" y="190" fontSize="10" fill="rgba(255,255,255,.5)">04</text>
+              <text x="44" y="340" fontSize="10" fill="rgba(255,255,255,.5)">05</text>
+              <text x="274" y="340" fontSize="10" fill="rgba(255,255,255,.5)">06</text>
+              <path d="M225 6 V400" fill="none" stroke="rgba(255,255,255,.6)" strokeWidth="2" />
+              <path d="M110 95 H300" fill="none" stroke="#fff" strokeWidth="1.6" />
+              <path d="M95 245 H300" fill="none" stroke="#9f9cf0" strokeWidth="1.6" />
+              <path d="M140 360 H310" fill="none" stroke="#fff" strokeWidth="1.6" />
+              <circle cx="225" cy="95" r="3.4" fill="#fff" />
+              <circle cx="225" cy="245" r="3.6" fill="#9f9cf0" />
+              <circle cx="225" cy="360" r="3.4" fill="#fff" />
+              <rect x="104" y="89" width="12" height="12" fill="#fff" />
+              <rect x="294" y="89" width="12" height="12" fill="#fff" />
+              <rect x="89" y="239" width="12" height="12" fill="#9f9cf0" />
+              <rect x="294" y="239" width="12" height="12" fill="#9f9cf0" />
+              <rect x="134" y="354" width="12" height="12" fill="#fff" />
+              <rect x="304" y="354" width="12" height="12" fill="#fff" />
+              <text x="66" y="88" fontSize="9" fill="rgba(255,255,255,.55)">Ø200</text>
+              <text x="305" y="88" fontSize="9" fill="rgba(255,255,255,.55)">Ø250</text>
+              <text x="50" y="238" fontSize="9" fill="rgba(159,156,240,.9)">Ø315 · В</text>
+              <text x="305" y="238" fontSize="9" fill="rgba(159,156,240,.9)">Ø200 · В</text>
+              <text x="96" y="353" fontSize="9" fill="rgba(255,255,255,.55)">Ø160</text>
+              <text x="315" y="353" fontSize="9" fill="rgba(255,255,255,.55)">Ø250</text>
+              <circle cx="352" cy="38" r="10" fill="none" stroke="rgba(255,255,255,.3)" />
+              <path d="M352 30 V46 M344 38 H360" stroke="rgba(255,255,255,.3)" strokeWidth="1" />
+              <text x="297" y="62" fontSize="8" fill="rgba(255,255,255,.35)">М 1:100</text>
             </svg>
           </div>
           <div className="object-card">
-            <small>Объект</small>
-            <strong>Цех пищевого производства</strong>
-            <div className="airflow-readout"><b>1 250</b><span>м³/ч приток</span></div>
+            <small>Экспликация помещений</small>
+            <div className="room-schedule">
+              <div><i>01</i><span>Цех №1</span><b>68 м²</b></div>
+              <div><i>03</i><span>Венткамера</span><b>22 м²</b></div>
+              <div><i>05</i><span>Компрессорная</span><b>18 м²</b></div>
+            </div>
             <div className="circuit-legend"><i>ОВ</i><i>К</i><i>А</i></div>
           </div>
           <div className="spec-badge spec-badge-one"><i /><b>Приток</b><span>Ø250 · 420 м³/ч</span></div>
