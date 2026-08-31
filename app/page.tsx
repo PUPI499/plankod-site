@@ -2,10 +2,10 @@ import { ContactBand, SiteFooter, SiteHeader } from "./components";
 import { GetSmartHomeButton } from "./get-smart-home-modal";
 
 const heatingFloors = [
-  { n: "04", bandTop: 20, midY: 62, color: "#9f9cf0" },
-  { n: "03", bandTop: 105, midY: 147, color: "#fff" },
-  { n: "02", bandTop: 190, midY: 232, color: "#9f9cf0" },
-  { n: "01", bandTop: 275, midY: 317, color: "#fff" },
+  { n: 1, color: "#fff" },
+  { n: 2, color: "#9f9cf0" },
+  { n: 3, color: "#fff" },
+  { n: 4, color: "#9f9cf0" },
 ];
 
 export default function Home() {
@@ -29,30 +29,31 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-system panel" aria-label="Стояковая схема отопления здания">
-          <div className="system-top"><span>ПЛАНКОД / ЛИСТ ОВ-02</span><strong>без масштаба</strong></div>
+        <div className="hero-system panel" aria-label="Изометрическая схема отопления здания">
+          <div className="system-top"><span>ПЛАНКОД / ЛИСТ ОВ-02</span><strong>изометрия</strong></div>
           <div className="object-schematic">
             <svg viewBox="0 0 400 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-              <rect x="60" y="20" width="280" height="340" fill="none" stroke="rgba(255,255,255,.55)" strokeWidth="2.2" />
-              <path d="M60 105 H340 M60 190 H340 M60 275 H340" fill="none" stroke="rgba(255,255,255,.35)" strokeWidth="1.2" />
-              <path d="M170 360 V20" fill="none" stroke="#fff" strokeWidth="2" />
-              <path d="M190 360 V20" fill="none" stroke="#9f9cf0" strokeWidth="2" />
-              {heatingFloors.map((f) => (
-                <g key={f.n}>
-                  <text x="72" y={f.bandTop + 20} fontSize="10" fill="rgba(255,255,255,.5)">{f.n}</text>
-                  <path d={`M180 ${f.midY} H88`} fill="none" stroke={f.color} strokeWidth="1.6" />
-                  <path d={`M180 ${f.midY} H312`} fill="none" stroke={f.color} strokeWidth="1.6" />
-                  <circle cx="180" cy={f.midY} r="3.4" fill={f.color} />
-                  <rect x="62" y={f.midY - 7} width="26" height="14" fill="none" stroke={f.color} strokeWidth="1.2" />
-                  <path d={`M69 ${f.midY - 7} V${f.midY + 7} M76 ${f.midY - 7} V${f.midY + 7} M83 ${f.midY - 7} V${f.midY + 7}`} stroke={f.color} strokeWidth="1" />
-                  <rect x="312" y={f.midY - 7} width="26" height="14" fill="none" stroke={f.color} strokeWidth="1.2" />
-                  <path d={`M319 ${f.midY - 7} V${f.midY + 7} M326 ${f.midY - 7} V${f.midY + 7} M333 ${f.midY - 7} V${f.midY + 7}`} stroke={f.color} strokeWidth="1" />
-                </g>
-              ))}
-              <rect x="145" y="368" width="90" height="28" fill="none" stroke="rgba(255,255,255,.55)" strokeWidth="1.6" />
-              <text x="160" y="386" fontSize="10" fill="rgba(255,255,255,.7)">ИТП</text>
-              <text x="100" y="386" fontSize="8" fill="rgba(255,255,255,.5)">Т1 · 80°</text>
-              <text x="243" y="386" fontSize="8" fill="rgba(159,156,240,.85)">Т2 · 60°</text>
+              <path d="M200 380 V115" fill="none" stroke="rgba(255,255,255,.75)" strokeWidth="2.4" />
+              {heatingFloors.map((f) => {
+                const riserY = 380 - f.n * 65;
+                const branchY = riserY + 34;
+                return (
+                  <g key={f.n}>
+                    <path d={`M200 ${riserY} L258 ${branchY}`} fill="none" stroke={f.color} strokeWidth="1.6" />
+                    <path d={`M200 ${riserY} L142 ${branchY}`} fill="none" stroke={f.color} strokeWidth="1.6" />
+                    <circle cx="200" cy={riserY} r="3.6" fill={f.color} />
+                    <path d={`M258 ${branchY - 6} L264 ${branchY} L258 ${branchY + 6} L252 ${branchY} Z`} fill={f.color} />
+                    <path d={`M142 ${branchY - 6} L148 ${branchY} L142 ${branchY + 6} L136 ${branchY} Z`} fill={f.color} />
+                    <text x="208" y={riserY - 6} fontSize="7" fill="rgba(255,255,255,.45)">{`+${(f.n * 3.3).toFixed(1)}`}</text>
+                  </g>
+                );
+              })}
+              <text x="272" y="352" fontSize="8" fill="rgba(255,255,255,.5)">Ø25</text>
+              <text x="104" y="212" fontSize="8" fill="rgba(159,156,240,.85)">Ø32</text>
+              <rect x="160" y="380" width="80" height="26" fill="rgba(23,20,143,.35)" stroke="rgba(255,255,255,.55)" strokeWidth="1.6" />
+              <text x="176" y="397" fontSize="10" fill="rgba(255,255,255,.75)">ИТП</text>
+              <text x="94" y="397" fontSize="8" fill="rgba(255,255,255,.5)">Т1 · 80°</text>
+              <text x="248" y="397" fontSize="8" fill="rgba(159,156,240,.9)">Т2 · 60°</text>
             </svg>
           </div>
           <div className="object-card">
