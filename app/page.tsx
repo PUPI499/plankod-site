@@ -29,31 +29,35 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-system panel" aria-label="Изометрическая схема отопления здания">
-          <div className="system-top"><span>ПЛАНКОД / ЛИСТ ОВ-02</span><strong>изометрия</strong></div>
+        <div className="hero-system panel" aria-label="Изометрическая схема здания с разводкой отопления">
+          <div className="system-top"><span>ПЛАНКОД / ЛИСТ ОВ-03</span><strong>изометрия</strong></div>
           <div className="object-schematic">
             <svg viewBox="0 0 400 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-              <path d="M200 380 V115" fill="none" stroke="rgba(255,255,255,.75)" strokeWidth="2.4" />
+              <path d="M170 400 L300 325 L300 105 L170 180 Z" fill="rgba(255,255,255,.045)" stroke="rgba(255,255,255,.5)" strokeWidth="1.6" />
+              <path d="M170 400 L75 345 L75 125 L170 180 Z" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.5)" strokeWidth="1.6" />
+              <path d="M170 180 L300 105 L205 50 L75 125 Z" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.55)" strokeWidth="1.6" />
+              <path d="M170 345 L300 270 M170 290 L300 215 M170 235 L300 160" fill="none" stroke="rgba(255,255,255,.16)" strokeWidth="1" />
+              <path d="M170 345 L75 290 M170 290 L75 235 M170 235 L75 180" fill="none" stroke="rgba(255,255,255,.16)" strokeWidth="1" />
+              <path d="M170 400 V180" fill="none" stroke="rgba(255,255,255,.85)" strokeWidth="2.2" />
               {heatingFloors.map((f) => {
-                const riserY = 380 - f.n * 65;
-                const branchY = riserY + 34;
+                const riserY = 400 - f.n * 55;
+                const rightX = 235, rightY = riserY - 37.5;
+                const leftX = 122.5, leftY = riserY - 27.5;
                 return (
                   <g key={f.n}>
-                    <path d={`M200 ${riserY} L258 ${branchY}`} fill="none" stroke={f.color} strokeWidth="1.6" />
-                    <path d={`M200 ${riserY} L142 ${branchY}`} fill="none" stroke={f.color} strokeWidth="1.6" />
-                    <circle cx="200" cy={riserY} r="3.6" fill={f.color} />
-                    <path d={`M258 ${branchY - 6} L264 ${branchY} L258 ${branchY + 6} L252 ${branchY} Z`} fill={f.color} />
-                    <path d={`M142 ${branchY - 6} L148 ${branchY} L142 ${branchY + 6} L136 ${branchY} Z`} fill={f.color} />
-                    <text x="208" y={riserY - 6} fontSize="7" fill="rgba(255,255,255,.45)">{`+${(f.n * 3.3).toFixed(1)}`}</text>
+                    <path d={`M170 ${riserY} L${rightX} ${rightY}`} fill="none" stroke={f.color} strokeWidth="1.6" />
+                    <path d={`M170 ${riserY} L${leftX} ${leftY}`} fill="none" stroke={f.color} strokeWidth="1.6" />
+                    <circle cx="170" cy={riserY} r="3.4" fill={f.color} />
+                    <path d={`M${rightX} ${rightY - 6} L${rightX + 6} ${rightY} L${rightX} ${rightY + 6} L${rightX - 6} ${rightY} Z`} fill={f.color} />
+                    <path d={`M${leftX} ${leftY - 6} L${leftX + 6} ${leftY} L${leftX} ${leftY + 6} L${leftX - 6} ${leftY} Z`} fill={f.color} />
+                    <text x="152" y={riserY - 10} fontSize="7" fill="rgba(255,255,255,.5)">{`+${(f.n * 3.3).toFixed(1)}`}</text>
                   </g>
                 );
               })}
-              <text x="272" y="352" fontSize="8" fill="rgba(255,255,255,.5)">Ø25</text>
-              <text x="104" y="212" fontSize="8" fill="rgba(159,156,240,.85)">Ø32</text>
-              <rect x="160" y="380" width="80" height="26" fill="rgba(23,20,143,.35)" stroke="rgba(255,255,255,.55)" strokeWidth="1.6" />
-              <text x="176" y="397" fontSize="10" fill="rgba(255,255,255,.75)">ИТП</text>
-              <text x="94" y="397" fontSize="8" fill="rgba(255,255,255,.5)">Т1 · 80°</text>
-              <text x="248" y="397" fontSize="8" fill="rgba(159,156,240,.9)">Т2 · 60°</text>
+              <text x="240" y="130" fontSize="8" fill="rgba(255,255,255,.55)">Ø25</text>
+              <text x="88" y="195" fontSize="8" fill="rgba(159,156,240,.85)">Ø32</text>
+              <rect x="143" y="404" width="54" height="18" fill="rgba(23,20,143,.5)" stroke="rgba(255,255,255,.55)" strokeWidth="1.4" />
+              <text x="153" y="417" fontSize="9" fill="rgba(255,255,255,.8)">ИТП</text>
             </svg>
           </div>
           <div className="object-card">
