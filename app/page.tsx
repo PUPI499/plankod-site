@@ -1,13 +1,14 @@
 import { ContactBand, SiteFooter, SiteHeader } from "./components";
 import { GetSmartHomeButton } from "./get-smart-home-modal";
 
-// Isometric house geometry: front-bottom corner O=(170,400), right wall along
-// Wvec=(130,-75), left wall along Dvec=(-95,-55), height 220 (4 floor bands of 55).
+// Isometric house geometry (flatter, grazing-angle isometric): front-bottom
+// corner O=(150,410), right wall along Wvec=(155,-41), left wall along
+// Dvec=(-106,-29), height 220 (4 floor bands of 55).
 function rightPoint(t: number, h: number): [number, number] {
-  return [170 + t * 130, 400 - t * 75 - h];
+  return [150 + t * 155, 410 - t * 41 - h];
 }
 function leftPoint(t: number, h: number): [number, number] {
-  return [170 - t * 95, 400 - t * 55 - h];
+  return [150 - t * 106, 410 - t * 29 - h];
 }
 function panelPath(pointFn: (t: number, h: number) => [number, number], t: number, h: number, dt: number, dh: number) {
   const [x1, y1] = pointFn(t, h);
@@ -44,18 +45,18 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-system panel" aria-label="Детализированная изометрическая схема дома: фундамент, стены, окна, крыша и разводка отопления">
-          <div className="system-top"><span>ПЛАНКОД / ЛИСТ ОВ-05</span><strong>изометрия</strong></div>
+        <div className="hero-system panel" aria-label="Детализированная изометрическая схема дома: фундамент, стены, окна, крыша, отопление и водоснабжение">
+          <div className="system-top"><span>ПЛАНКОД / ЛИСТ ОВ-06</span><strong>изометрия</strong></div>
           <div className="object-schematic">
             <svg viewBox="0 0 400 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
               {/* фундамент */}
-              <path d="M170 400 L300 325 L300 343 L170 418 Z" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.45)" strokeWidth="1.4" />
-              <path d="M170 400 L75 345 L75 363 L170 418 Z" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.45)" strokeWidth="1.4" />
+              <path d="M150 410 L305 369 L305 387 L150 428 Z" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.45)" strokeWidth="1.4" />
+              <path d="M150 410 L44 381 L44 399 L150 428 Z" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.45)" strokeWidth="1.4" />
               {/* стены */}
-              <path d="M170 400 L300 325 L300 105 L170 180 Z" fill="rgba(255,255,255,.045)" stroke="rgba(255,255,255,.5)" strokeWidth="1.6" />
-              <path d="M170 400 L75 345 L75 125 L170 180 Z" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.5)" strokeWidth="1.6" />
-              <path d="M170 345 L300 270 M170 290 L300 215 M170 235 L300 160" fill="none" stroke="rgba(255,255,255,.14)" strokeWidth="1" />
-              <path d="M170 345 L75 290 M170 290 L75 235 M170 235 L75 180" fill="none" stroke="rgba(255,255,255,.14)" strokeWidth="1" />
+              <path d="M150 410 L305 369 L305 149 L150 190 Z" fill="rgba(255,255,255,.045)" stroke="rgba(255,255,255,.5)" strokeWidth="1.6" />
+              <path d="M150 410 L44 381 L44 161 L150 190 Z" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.5)" strokeWidth="1.6" />
+              <path d="M150 355 L305 314 M150 300 L305 259 M150 245 L305 204" fill="none" stroke="rgba(255,255,255,.14)" strokeWidth="1" />
+              <path d="M150 355 L44 326 M150 300 L44 271 M150 245 L44 216" fill="none" stroke="rgba(255,255,255,.14)" strokeWidth="1" />
               {/* окна */}
               {rightWindows.map((w, i) => (
                 <path key={`rw${i}`} d={panelPath(rightPoint, w.t, w.h, 0.1, 20)} fill="rgba(159,156,240,.22)" stroke="rgba(255,255,255,.55)" strokeWidth="1" />
@@ -66,51 +67,80 @@ export default function Home() {
               {/* входная дверь */}
               <path d={panelPath(rightPoint, 0.42, 0, 0.09, 40)} fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.55)" strokeWidth="1.2" />
               {/* крыша (вальмовая) */}
-              <path d="M170 180 L300 105 L187.5 60 Z" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.6)" strokeWidth="1.6" />
-              <path d="M170 180 L75 125 L187.5 60 Z" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.6)" strokeWidth="1.6" />
-              <path d="M187.5 60 L205 50" fill="none" stroke="rgba(255,255,255,.35)" strokeWidth="1.2" />
-              {/* кровельный блок вентиляции — второй контур, показывает не только отопление */}
-              <rect x="220" y="88" width="24" height="12" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.5)" strokeWidth="1" />
-              <path d="M232 88 V72 H262" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth="1.3" />
-              <circle cx="262" cy="72" r="2.6" fill="#fff" />
-              <text x="248" y="66" fontSize="7" fill="rgba(255,255,255,.5)">ПВУ</text>
-              {/* стояк от ИТП к разводке отопления под кровлей */}
-              <path d="M170 422 V180" fill="none" stroke="rgba(255,255,255,.85)" strokeWidth="2.2" />
-              <circle cx="170" cy="180" r="3.6" fill="#9f9cf0" />
-              {/* разводка отопления по чердачному перекрытию — магистраль с несколькими отводами, по примеру */}
-              <path d="M170 180 L190 152 L225 138" fill="none" stroke="#9f9cf0" strokeWidth="1.8" />
-              <path d="M190 152 L135 160" fill="none" stroke="#9f9cf0" strokeWidth="1.8" />
-              <path d="M190 152 L178 168" fill="none" stroke="#9f9cf0" strokeWidth="1.6" />
-              <circle cx="190" cy="152" r="3.4" fill="#9f9cf0" />
-              <circle cx="225" cy="138" r="3" fill="#9f9cf0" />
-              <circle cx="135" cy="160" r="3" fill="#9f9cf0" />
-              <circle cx="178" cy="168" r="2.6" fill="#9f9cf0" />
-              <path d="M225 138 V152" fill="none" stroke="#9f9cf0" strokeWidth="1.3" />
-              <rect x="218" y="152" width="14" height="8" fill="#9f9cf0" />
-              <path d="M135 160 V174" fill="none" stroke="#9f9cf0" strokeWidth="1.3" />
-              <rect x="128" y="174" width="14" height="8" fill="#9f9cf0" />
-              <path d="M178 168 V180" fill="none" stroke="#9f9cf0" strokeWidth="1.3" />
-              <rect x="171" y="180" width="14" height="8" fill="#9f9cf0" />
-              <text x="234" y="150" fontSize="7" fill="rgba(159,156,240,.9)">Ø20</text>
-              <text x="98" y="158" fontSize="7" fill="rgba(159,156,240,.9)">Ø25</text>
-              <text x="186" y="198" fontSize="7" fill="rgba(159,156,240,.9)">Ø15</text>
+              <path d="M150 190 L305 149 L175 75 Z" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.6)" strokeWidth="1.6" />
+              <path d="M150 190 L44 161 L175 75 Z" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.6)" strokeWidth="1.6" />
+              <path d="M175 75 L200 64" fill="none" stroke="rgba(255,255,255,.35)" strokeWidth="1.2" />
+              {/* кровельный блок вентиляции */}
+              <rect x="205" y="118" width="24" height="12" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.5)" strokeWidth="1" />
+              <path d="M217 118 V102 H247" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth="1.3" />
+              <circle cx="247" cy="102" r="2.6" fill="#fff" />
+              <text x="233" y="96" fontSize="7" fill="rgba(255,255,255,.5)">ПВУ</text>
+              {/* стояк отопления от ИТП под кровлю */}
+              <path d="M150 446 V190" fill="none" stroke="rgba(255,255,255,.85)" strokeWidth="2.2" />
+              <circle cx="150" cy="190" r="3.6" fill="#9f9cf0" />
+              {/* разводка отопления по чердачному перекрытию — трасса приподнята над линией карниза, в стороне от конькового узла */}
+              <path d="M150 190 L172 182 L230 160" fill="none" stroke="#9f9cf0" strokeWidth="1.8" />
+              <path d="M172 182 L120 176" fill="none" stroke="#9f9cf0" strokeWidth="1.8" />
+              <path d="M230 160 L270 145" fill="none" stroke="#9f9cf0" strokeWidth="1.6" />
+              <circle cx="172" cy="182" r="3" fill="#9f9cf0" />
+              <circle cx="230" cy="160" r="3.4" fill="#9f9cf0" />
+              <circle cx="120" cy="176" r="3" fill="#9f9cf0" />
+              <circle cx="270" cy="145" r="2.6" fill="#9f9cf0" />
+              <path d="M230 160 V174" fill="none" stroke="#9f9cf0" strokeWidth="1.3" />
+              <rect x="223" y="174" width="14" height="8" fill="#9f9cf0" />
+              <path d="M120 176 V190" fill="none" stroke="#9f9cf0" strokeWidth="1.3" />
+              <rect x="113" y="190" width="14" height="8" fill="#9f9cf0" />
+              <path d="M270 145 V159" fill="none" stroke="#9f9cf0" strokeWidth="1.3" />
+              <rect x="263" y="159" width="14" height="8" fill="#9f9cf0" />
+              <text x="238" y="172" fontSize="7" fill="rgba(159,156,240,.9)">Ø15</text>
+              <text x="84" y="184" fontSize="7" fill="rgba(159,156,240,.9)">Ø25</text>
+              <text x="276" y="143" fontSize="7" fill="rgba(159,156,240,.9)">Ø20</text>
+              {/* бак ГВС и водоснабжение */}
+              <ellipse cx="225" cy="392" rx="16" ry="6" fill="rgba(201,199,247,.18)" stroke="rgba(201,199,247,.75)" strokeWidth="1.2" />
+              <path d="M209 392 V424 M241 392 V424" fill="none" stroke="rgba(201,199,247,.75)" strokeWidth="1.2" />
+              <path d="M209 424 A16 6 0 0 0 241 424" fill="none" stroke="rgba(201,199,247,.75)" strokeWidth="1.2" />
+              <path d="M225 392 V300 L205 275" fill="none" stroke="rgba(201,199,247,.85)" strokeWidth="1.6" strokeDasharray="4 3" />
+              <circle cx="205" cy="275" r="2.8" fill="rgba(201,199,247,.9)" />
+              <path d="M197 420 L150 437" fill="none" stroke="rgba(201,199,247,.6)" strokeWidth="1.3" strokeDasharray="3 2" />
+              <text x="234" y="404" fontSize="7" fill="rgba(201,199,247,.9)">Ø20</text>
               {/* тепловой пункт */}
-              <rect x="143" y="422" width="54" height="18" fill="rgba(23,20,143,.55)" stroke="rgba(255,255,255,.55)" strokeWidth="1.4" />
-              <text x="153" y="435" fontSize="9" fill="rgba(255,255,255,.8)">ИТП</text>
+              <rect x="123" y="428" width="54" height="18" fill="rgba(23,20,143,.55)" stroke="rgba(255,255,255,.55)" strokeWidth="1.4" />
+              <text x="133" y="441" fontSize="9" fill="rgba(255,255,255,.8)">ИТП</text>
+              {/* ввод сетей — водопровод от границы участка, заходит с правой стороны */}
+              <path d="M250 447 L177 438" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth="1.4" strokeDasharray="3 3" />
+              <circle cx="250" cy="447" r="3" fill="none" stroke="rgba(255,255,255,.55)" strokeWidth="1.2" />
+              {/* подписи-карточки */}
+              <g>
+                <line x1="300" y1="128" x2="272" y2="146" stroke="rgba(255,255,255,.4)" strokeWidth="1" />
+                <rect x="300" y="102" width="92" height="26" rx="2" fill="rgba(23,20,143,.72)" stroke="rgba(255,255,255,.4)" strokeWidth="1" />
+                <text x="308" y="114" fontSize="7" fill="rgba(255,255,255,.65)">ОТОПЛЕНИЕ</text>
+                <text x="308" y="123" fontSize="7.5" fill="#fff">Ø20 · двухтрубная</text>
+              </g>
+              <g>
+                <line x1="305" y1="343" x2="241" y2="392" stroke="rgba(255,255,255,.4)" strokeWidth="1" />
+                <rect x="305" y="330" width="88" height="26" rx="2" fill="rgba(23,20,143,.72)" stroke="rgba(255,255,255,.4)" strokeWidth="1" />
+                <text x="313" y="342" fontSize="7" fill="rgba(255,255,255,.65)">ГВС</text>
+                <text x="313" y="351" fontSize="7.5" fill="#fff">бак 200 л</text>
+              </g>
+              <g>
+                <line x1="290" y1="420" x2="250" y2="447" stroke="rgba(255,255,255,.4)" strokeWidth="1" />
+                <rect x="280" y="394" width="104" height="26" rx="2" fill="rgba(23,20,143,.72)" stroke="rgba(255,255,255,.4)" strokeWidth="1" />
+                <text x="288" y="406" fontSize="7" fill="rgba(255,255,255,.65)">ВВОД СЕТЕЙ</text>
+                <text x="288" y="415" fontSize="7.5" fill="#fff">водопровод</text>
+              </g>
             </svg>
           </div>
           <div className="object-card">
-            <small>Тепловая нагрузка</small>
+            <small>Экспликация помещений</small>
             <div className="room-schedule">
-              <div><i>01</i><span>Этаж 1</span><b>4,2 кВт</b></div>
-              <div><i>02</i><span>Этаж 2</span><b>3,8 кВт</b></div>
-              <div><i>03</i><span>Этаж 3</span><b>3,8 кВт</b></div>
+              <div><i>01</i><span>Тепловой пункт</span><b>3,4 м²</b></div>
+              <div><i>02</i><span>Венткамера</span><b>2,6 м²</b></div>
+              <div><i>03</i><span>Техническое</span><b>4,1 м²</b></div>
             </div>
             <div className="circuit-legend"><span>Т1</span><span>Т2</span><span>ГВС</span></div>
           </div>
-          <div className="system-caption">Вентиляция. Отопление. Кондиционирование.<br /><strong>Один инженерный проект — от расчёта до пусконаладки.</strong></div>
-        </div>
-      </section>
+          <div className="system-caption">Отопление. Вентиляция. Водоснабжение.<br /><strong>Один инженерный проект — от расчёта до пусконаладки.</strong></div>
+        </div></section>
 
       <section className="equipment-preview shell" id="equipment">
         <div className="section-head">
