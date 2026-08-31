@@ -87,6 +87,41 @@ try {
 await copyFile(new URL("./hostland-catalog.js", import.meta.url), new URL("./catalog.js", OUT_DIR));
 console.log("copied catalog.js");
 
+const SITE_URL = "https://plancod.ru";
+const lastmod = new Date().toISOString().slice(0, 10);
+
+const robotsTxt = `User-agent: *
+Allow: /
+
+Sitemap: ${SITE_URL}/sitemap.xml
+`;
+await writeFile(new URL("./robots.txt", OUT_DIR), robotsTxt);
+console.log("wrote robots.txt");
+
+const sitemapUrls = [
+  { path: "/", priority: "1.0" },
+  { path: "/smart-home.html", priority: "0.8" },
+  { path: "/projects.html", priority: "0.8" },
+  { path: "/products.html", priority: "0.8" },
+  { path: "/about.html", priority: "0.6" },
+];
+const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapUrls
+  .map(
+    (u) => `  <url>
+    <loc>${SITE_URL}${u.path}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`
+  )
+  .join("\n")}
+</urlset>
+`;
+await writeFile(new URL("./sitemap.xml", OUT_DIR), sitemapXml);
+console.log("wrote sitemap.xml");
+
 for (const route of routes) {
   const bundledPage = new URL(route.bundle, import.meta.url);
   await build({
