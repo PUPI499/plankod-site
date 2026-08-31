@@ -1,6 +1,28 @@
 import { ContactBand, SiteFooter, SiteHeader } from "./components";
 import { GetSmartHomeButton } from "./get-smart-home-modal";
 
+// Isometric house geometry: front-bottom corner O=(170,400), right wall along
+// Wvec=(130,-75), left wall along Dvec=(-95,-55), height 220 (4 floor bands of 55).
+function rightPoint(t: number, h: number): [number, number] {
+  return [170 + t * 130, 400 - t * 75 - h];
+}
+function leftPoint(t: number, h: number): [number, number] {
+  return [170 - t * 95, 400 - t * 55 - h];
+}
+function panelPath(pointFn: (t: number, h: number) => [number, number], t: number, h: number, dt: number, dh: number) {
+  const [x1, y1] = pointFn(t, h);
+  const [x2, y2] = pointFn(t + dt, h);
+  const [x3, y3] = pointFn(t + dt, h + dh);
+  const [x4, y4] = pointFn(t, h + dh);
+  return `M${x1} ${y1} L${x2} ${y2} L${x3} ${y3} L${x4} ${y4} Z`;
+}
+const rightWindows = [0, 1, 2, 3].flatMap((floor) =>
+  [0.3, 0.66].map((t) => ({ t, h: floor * 55 + 17 }))
+);
+const leftWindows = [0, 1, 2, 3].flatMap((floor) =>
+  [0.24, 0.6].map((t) => ({ t, h: floor * 55 + 17 }))
+);
+
 export default function Home() {
   return (
     <main>
@@ -22,8 +44,8 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-system panel" aria-label="Изометрическая схема дома с фундаментом, крышей и разводкой отопления">
-          <div className="system-top"><span>ПЛАНКОД / ЛИСТ ОВ-04</span><strong>изометрия</strong></div>
+        <div className="hero-system panel" aria-label="Детализированная изометрическая схема дома: фундамент, стены, окна, крыша и разводка отопления">
+          <div className="system-top"><span>ПЛАНКОД / ЛИСТ ОВ-05</span><strong>изометрия</strong></div>
           <div className="object-schematic">
             <svg viewBox="0 0 400 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
               {/* фундамент */}
@@ -32,27 +54,46 @@ export default function Home() {
               {/* стены */}
               <path d="M170 400 L300 325 L300 105 L170 180 Z" fill="rgba(255,255,255,.045)" stroke="rgba(255,255,255,.5)" strokeWidth="1.6" />
               <path d="M170 400 L75 345 L75 125 L170 180 Z" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.5)" strokeWidth="1.6" />
-              <path d="M170 345 L300 270 M170 290 L300 215 M170 235 L300 160" fill="none" stroke="rgba(255,255,255,.16)" strokeWidth="1" />
-              <path d="M170 345 L75 290 M170 290 L75 235 M170 235 L75 180" fill="none" stroke="rgba(255,255,255,.16)" strokeWidth="1" />
-              {/* крыша (плоская кровля) */}
-              <path d="M170 180 L300 105 L205 50 L75 125 Z" fill="rgba(255,255,255,.09)" stroke="rgba(255,255,255,.6)" strokeWidth="1.6" />
-              {/* стояк от ИТП к разводке под кровлей */}
+              <path d="M170 345 L300 270 M170 290 L300 215 M170 235 L300 160" fill="none" stroke="rgba(255,255,255,.14)" strokeWidth="1" />
+              <path d="M170 345 L75 290 M170 290 L75 235 M170 235 L75 180" fill="none" stroke="rgba(255,255,255,.14)" strokeWidth="1" />
+              {/* окна */}
+              {rightWindows.map((w, i) => (
+                <path key={`rw${i}`} d={panelPath(rightPoint, w.t, w.h, 0.1, 20)} fill="rgba(159,156,240,.22)" stroke="rgba(255,255,255,.55)" strokeWidth="1" />
+              ))}
+              {leftWindows.map((w, i) => (
+                <path key={`lw${i}`} d={panelPath(leftPoint, w.t, w.h, 0.1, 20)} fill="rgba(159,156,240,.14)" stroke="rgba(255,255,255,.4)" strokeWidth="1" />
+              ))}
+              {/* входная дверь */}
+              <path d={panelPath(rightPoint, 0.42, 0, 0.09, 40)} fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.55)" strokeWidth="1.2" />
+              {/* крыша (вальмовая) */}
+              <path d="M170 180 L300 105 L187.5 60 Z" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.6)" strokeWidth="1.6" />
+              <path d="M170 180 L75 125 L187.5 60 Z" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.6)" strokeWidth="1.6" />
+              <path d="M187.5 60 L205 50" fill="none" stroke="rgba(255,255,255,.35)" strokeWidth="1.2" />
+              {/* кровельный блок вентиляции — второй контур, показывает не только отопление */}
+              <rect x="220" y="88" width="24" height="12" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.5)" strokeWidth="1" />
+              <path d="M232 88 V72 H262" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth="1.3" />
+              <circle cx="262" cy="72" r="2.6" fill="#fff" />
+              <text x="248" y="66" fontSize="7" fill="rgba(255,255,255,.5)">ПВУ</text>
+              {/* стояк от ИТП к разводке отопления под кровлей */}
               <path d="M170 422 V180" fill="none" stroke="rgba(255,255,255,.85)" strokeWidth="2.2" />
               <circle cx="170" cy="180" r="3.6" fill="#9f9cf0" />
-              {/* разводка отопления по чердачному перекрытию — по примеру: магистраль + отводы к приборам */}
-              <path d="M170 180 L190 120 L250 90" fill="none" stroke="#9f9cf0" strokeWidth="1.8" />
-              <circle cx="190" cy="120" r="3.4" fill="#9f9cf0" />
-              <circle cx="250" cy="90" r="3.2" fill="#9f9cf0" />
-              <path d="M190 120 L112 142" fill="none" stroke="#9f9cf0" strokeWidth="1.8" />
-              <circle cx="112" cy="142" r="3.2" fill="#9f9cf0" />
-              <path d="M250 90 V108" fill="none" stroke="#9f9cf0" strokeWidth="1.4" />
-              <rect x="243" y="108" width="14" height="8" fill="#9f9cf0" />
-              <path d="M190 120 V138" fill="none" stroke="#9f9cf0" strokeWidth="1.4" />
-              <rect x="183" y="138" width="14" height="8" fill="#9f9cf0" />
-              <path d="M112 142 V160" fill="none" stroke="#9f9cf0" strokeWidth="1.4" />
-              <rect x="105" y="160" width="14" height="8" fill="#9f9cf0" />
-              <text x="258" y="118" fontSize="8" fill="rgba(159,156,240,.9)">Ø25</text>
-              <text x="70" y="178" fontSize="8" fill="rgba(159,156,240,.9)">Ø32</text>
+              {/* разводка отопления по чердачному перекрытию — магистраль с несколькими отводами, по примеру */}
+              <path d="M170 180 L190 152 L225 138" fill="none" stroke="#9f9cf0" strokeWidth="1.8" />
+              <path d="M190 152 L135 160" fill="none" stroke="#9f9cf0" strokeWidth="1.8" />
+              <path d="M190 152 L178 168" fill="none" stroke="#9f9cf0" strokeWidth="1.6" />
+              <circle cx="190" cy="152" r="3.4" fill="#9f9cf0" />
+              <circle cx="225" cy="138" r="3" fill="#9f9cf0" />
+              <circle cx="135" cy="160" r="3" fill="#9f9cf0" />
+              <circle cx="178" cy="168" r="2.6" fill="#9f9cf0" />
+              <path d="M225 138 V152" fill="none" stroke="#9f9cf0" strokeWidth="1.3" />
+              <rect x="218" y="152" width="14" height="8" fill="#9f9cf0" />
+              <path d="M135 160 V174" fill="none" stroke="#9f9cf0" strokeWidth="1.3" />
+              <rect x="128" y="174" width="14" height="8" fill="#9f9cf0" />
+              <path d="M178 168 V180" fill="none" stroke="#9f9cf0" strokeWidth="1.3" />
+              <rect x="171" y="180" width="14" height="8" fill="#9f9cf0" />
+              <text x="234" y="150" fontSize="7" fill="rgba(159,156,240,.9)">Ø20</text>
+              <text x="98" y="158" fontSize="7" fill="rgba(159,156,240,.9)">Ø25</text>
+              <text x="186" y="198" fontSize="7" fill="rgba(159,156,240,.9)">Ø15</text>
               {/* тепловой пункт */}
               <rect x="143" y="422" width="54" height="18" fill="rgba(23,20,143,.55)" stroke="rgba(255,255,255,.55)" strokeWidth="1.4" />
               <text x="153" y="435" fontSize="9" fill="rgba(255,255,255,.8)">ИТП</text>
