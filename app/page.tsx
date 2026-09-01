@@ -1,9 +1,9 @@
 import { ContactBand, SiteFooter, SiteHeader } from "./components";
 import { GetSmartHomeButton } from "./get-smart-home-modal";
 
-// Isometric house geometry (flatter, grazing-angle isometric): front-bottom
+// Isometric building geometry (flatter, grazing-angle isometric): front-bottom
 // corner O=(150,410), right wall along Wvec=(155,-41), left wall along
-// Dvec=(-106,-29), height 220 (4 floor bands of 55).
+// Dvec=(-106,-29). Three floor bands of 62 (flat roof at h=186).
 function rightPoint(t: number, h: number): [number, number] {
   return [150 + t * 155, 410 - t * 41 - h];
 }
@@ -17,24 +17,21 @@ function panelPath(pointFn: (t: number, h: number) => [number, number], t: numbe
   const [x4, y4] = pointFn(t, h + dh);
   return `M${x1} ${y1} L${x2} ${y2} L${x3} ${y3} L${x4} ${y4} Z`;
 }
-const rightWindows = [0, 1, 2, 3].flatMap((floor) =>
-  [0.3, 0.66].map((t) => ({ t, h: floor * 55 + 17 }))
-);
-const leftWindows = [0, 1, 2, 3].flatMap((floor) =>
-  [0.24, 0.6].map((t) => ({ t, h: floor * 55 + 17 }))
-);
 // Generic isometric point: u along the right wall axis, v along the left
-// wall axis, h vertical. Lets us place ground-level and roof-slope elements
-// (underfloor loop, solar array) on the same grid as the walls/windows.
+// wall axis, h vertical. Lets ducts, furniture and the rooftop unit sit on
+// the same grid as the walls.
 function isoPoint(u: number, v: number, h: number): [number, number] {
   return [150 + 155 * u - 106 * v, 410 - 41 * u - 29 * v - h];
 }
-// Right roof slope parametrised by (s along the eave, r up toward the ridge).
-function roofPoint(s: number, r: number): [number, number] {
-  return [150 + 155 * s + 25 * r, 190 - 41 * s - 115 * r];
+function iso(u: number, v: number, h: number): string {
+  const [x, y] = isoPoint(u, v, h);
+  return `${x.toFixed(1)} ${y.toFixed(1)}`;
 }
-const solarPanels = [0.06, 0.22, 0.38].flatMap((s) =>
-  [0.08, 0.26].map((r) => ({ s, r }))
+const FLOOR_H = 62;
+const floorBands = [0, FLOOR_H, FLOOR_H * 2];
+const mullionTs = [0.12, 0.32, 0.52, 0.72, 0.92];
+const mullions = floorBands.flatMap((fb) =>
+  mullionTs.map((t) => ({ t, h0: fb + 5, h1: fb + FLOOR_H - 4 }))
 );
 
 export default function Home() {
@@ -58,133 +55,116 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-system panel" aria-label="Детализированная изометрическая схема дома: фундамент, стены, окна, крыша, отопление и водоснабжение">
-          <div className="system-top"><span>ПЛАНКОД / ЛИСТ ОВ-07</span><strong>изометрия</strong></div>
+        <div className="hero-system panel" aria-label="Детализированная изометрическая схема здания: вентиляция, отопление и автоматика">
+          <div className="system-top"><span>ПЛАНКОД / ЛИСТ ОВ-08</span><strong>изометрия</strong></div>
           <div className="object-schematic">
             <svg viewBox="0 0 400 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-              {/* тень на земле — для объёма */}
+              <defs>
+                <linearGradient id="faceSun" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stopColor="rgba(255,255,255,.22)" />
+                  <stop offset="1" stopColor="rgba(255,255,255,.05)" />
+                </linearGradient>
+                <linearGradient id="faceShade" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stopColor="rgba(255,255,255,.09)" />
+                  <stop offset="1" stopColor="rgba(255,255,255,.01)" />
+                </linearGradient>
+              </defs>
+              {/* тень на земле */}
               <ellipse cx="172" cy="434" rx="172" ry="17" fill="rgba(0,0,0,.22)" />
               {/* фундамент */}
-              <path d="M150 410 L305 369 L305 387 L150 428 Z" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.55)" strokeWidth="1.6" />
-              <path d="M150 410 L44 381 L44 399 L150 428 Z" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.55)" strokeWidth="1.6" />
-              {/* стены */}
-              <path d="M150 410 L305 369 L305 149 L150 190 Z" fill="rgba(255,255,255,.09)" stroke="rgba(255,255,255,.65)" strokeWidth="2.2" />
-              <path d="M150 410 L44 381 L44 161 L150 190 Z" fill="rgba(255,255,255,.025)" stroke="rgba(255,255,255,.6)" strokeWidth="2.2" />
-              <path d="M150 355 L305 314 M150 300 L305 259 M150 245 L305 204" fill="none" stroke="rgba(255,255,255,.12)" strokeWidth="0.7" />
-              <path d="M150 355 L44 326 M150 300 L44 271 M150 245 L44 216" fill="none" stroke="rgba(255,255,255,.1)" strokeWidth="0.7" />
-              {/* окна */}
-              {rightWindows.map((w, i) => {
-                const mt = w.t + 0.05;
-                const [mx1, my1] = rightPoint(mt, w.h);
-                const [mx2, my2] = rightPoint(mt, w.h + 20);
-                return (
-                  <g key={`rw${i}`}>
-                    <path d={panelPath(rightPoint, w.t, w.h, 0.1, 20)} fill="rgba(159,156,240,.24)" stroke="rgba(255,255,255,.65)" strokeWidth="0.9" />
-                    <path d={`M${mx1} ${my1} L${mx2} ${my2}`} stroke="rgba(255,255,255,.3)" strokeWidth="0.6" />
-                  </g>
-                );
-              })}
-              {leftWindows.map((w, i) => {
-                const mt = w.t + 0.05;
-                const [mx1, my1] = leftPoint(mt, w.h);
-                const [mx2, my2] = leftPoint(mt, w.h + 20);
-                return (
-                  <g key={`lw${i}`}>
-                    <path d={panelPath(leftPoint, w.t, w.h, 0.1, 20)} fill="rgba(159,156,240,.15)" stroke="rgba(255,255,255,.45)" strokeWidth="0.9" />
-                    <path d={`M${mx1} ${my1} L${mx2} ${my2}`} stroke="rgba(255,255,255,.2)" strokeWidth="0.6" />
-                  </g>
-                );
-              })}
-              {/* входная дверь */}
-              <path d={panelPath(rightPoint, 0.42, 0, 0.09, 40)} fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.6)" strokeWidth="1.2" />
-              {/* крыша (вальмовая) */}
-              <path d="M150 190 L305 149 L175 75 Z" fill="rgba(255,255,255,.17)" stroke="rgba(255,255,255,.7)" strokeWidth="2.2" />
-              <path d="M150 190 L44 161 L175 75 Z" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.65)" strokeWidth="2.2" />
-              <path d="M175 75 L200 64" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth="1.3" />
-              {/* солнечные панели на скате */}
-              {solarPanels.map((p, i) => (
-                <g key={`sp${i}`}>
-                  <path d={panelPath(roofPoint, p.s, p.r, 0.12, 0.14)} fill="rgba(111,179,255,.16)" stroke="rgba(111,179,255,.55)" strokeWidth="0.8" />
-                  <path d={`M${roofPoint(p.s, p.r).join(" ")} L${roofPoint(p.s + 0.12, p.r + 0.14).join(" ")}`} stroke="rgba(111,179,255,.35)" strokeWidth="0.5" />
-                </g>
+              <path d="M150 410 L305 369 L305 387 L150 428 Z" fill="url(#faceSun)" stroke="rgba(255,255,255,.55)" strokeWidth="1.6" />
+              <path d="M150 410 L44 381 L44 399 L150 428 Z" fill="url(#faceShade)" stroke="rgba(255,255,255,.55)" strokeWidth="1.6" />
+              {/* стены — остеклённые, 3 этажа */}
+              <path d="M150 410 L305 369 L305 183 L150 224 Z" fill="url(#faceSun)" stroke="rgba(255,255,255,.65)" strokeWidth="2.2" />
+              <path d="M150 410 L44 381 L44 195 L150 224 Z" fill="url(#faceShade)" stroke="rgba(255,255,255,.6)" strokeWidth="2.2" />
+              {/* перекрытия */}
+              <path d="M150 348 L305 307 M150 286 L305 245" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth="1.6" />
+              <path d="M150 348 L44 319 M150 286 L44 257" fill="none" stroke="rgba(255,255,255,.35)" strokeWidth="1.6" />
+              {/* импосты остекления */}
+              {mullions.map((m, i) => (
+                <path key={`mr${i}`} d={`M${rightPoint(m.t, m.h0).join(" ")} L${rightPoint(m.t, m.h1).join(" ")}`} stroke="rgba(255,255,255,.22)" strokeWidth="0.6" />
               ))}
-              {/* кровельный блок вентиляции */}
-              <rect x="205" y="118" width="24" height="12" fill="rgba(255,255,255,.16)" stroke="rgba(255,255,255,.55)" strokeWidth="1" />
-              <path d="M217 118 V102 H247" fill="none" stroke="rgba(255,255,255,.55)" strokeWidth="1.3" />
-              <circle cx="247" cy="102" r="2.6" fill="#fff" />
-              <text x="233" y="96" fontSize="7" fill="rgba(255,255,255,.55)">ПВУ</text>
-              {/* стояк отопления от ИТП, трасса приподнята над карнизом и не совпадает с коньковым узлом */}
-              <path d="M150 446 V178" fill="none" stroke="rgba(255,255,255,.9)" strokeWidth="2.2" />
-              <path d="M96 192 L246 153" fill="none" stroke="#9f9cf0" strokeWidth="1.8" />
-              <circle cx="150" cy="178" r="3.4" fill="#9f9cf0" />
-              <path d="M96 192 L66 184" fill="none" stroke="#9f9cf0" strokeWidth="1.6" />
-              <circle cx="96" cy="192" r="3" fill="#9f9cf0" />
-              <circle cx="246" cy="153" r="2.8" fill="#9f9cf0" />
-              <circle cx="66" cy="184" r="2.8" fill="#9f9cf0" />
-              <path d="M246 153 V173" fill="none" stroke="#9f9cf0" strokeWidth="1.3" />
-              <rect x="239" y="173" width="14" height="8" fill="#9f9cf0" />
-              <path d="M66 184 V204" fill="none" stroke="#9f9cf0" strokeWidth="1.3" />
-              <rect x="59" y="204" width="14" height="8" fill="#9f9cf0" />
-              <text x="172" y="164" fontSize="7" fill="rgba(159,156,240,.9)">Ø20</text>
-              <text x="252" y="168" fontSize="7" fill="rgba(159,156,240,.9)">Ø15</text>
-              <text x="32" y="200" fontSize="7" fill="rgba(159,156,240,.9)">Ø15</text>
-              {/* бак ГВС и водоснабжение */}
-              <ellipse cx="225" cy="392" rx="16" ry="6" fill="rgba(111,179,255,.15)" stroke="rgba(111,179,255,.8)" strokeWidth="1.2" />
-              <path d="M209 392 V424 M241 392 V424" fill="none" stroke="rgba(111,179,255,.8)" strokeWidth="1.2" />
-              <path d="M209 424 A16 6 0 0 0 241 424" fill="none" stroke="rgba(111,179,255,.8)" strokeWidth="1.2" />
-              <path d="M225 392 V304" fill="none" stroke="rgba(111,179,255,.9)" strokeWidth="1.6" />
-              <path d="M225 304 L188 294" fill="none" stroke="rgba(111,179,255,.9)" strokeWidth="1.6" />
-              <path d="M188 294 V270" fill="none" stroke="rgba(111,179,255,.9)" strokeWidth="1.6" />
-              <circle cx="225" cy="304" r="2.6" fill="rgba(111,179,255,.95)" />
-              <circle cx="188" cy="270" r="2.8" fill="rgba(111,179,255,.95)" />
-              <path d="M197 420 L150 437" fill="none" stroke="rgba(111,179,255,.55)" strokeWidth="1.2" strokeDasharray="3 2" />
-              <text x="194" y="266" fontSize="7" fill="rgba(111,179,255,.95)">Ø20</text>
-              {/* тёплый пол — петля перед домом, на той же изометрической сетке */}
-              <path d="M84 388 L146 371 L167 377 L105 393 L126 399 L188 383" fill="none" stroke="#9f9cf0" strokeWidth="1.4" strokeLinejoin="round" />
-              <circle cx="84" cy="388" r="2.4" fill="#9f9cf0" />
-              <circle cx="188" cy="383" r="2.4" fill="#9f9cf0" />
-              <text x="88" y="406" fontSize="6.5" fill="rgba(159,156,240,.85)">тёплый пол</text>
-              {/* тепловой пункт */}
-              <rect x="123" y="428" width="54" height="18" fill="rgba(23,20,143,.6)" stroke="rgba(255,255,255,.6)" strokeWidth="1.4" />
-              <text x="133" y="441" fontSize="9" fill="rgba(255,255,255,.85)">ИТП</text>
-              {/* щит автоматики рядом с ИТП */}
-              <path d={panelPath(rightPoint, 0.05, 20, 0.045, 16)} fill="rgba(232,185,105,.22)" stroke="rgba(232,185,105,.75)" strokeWidth="1" />
-              <path d={panelPath(rightPoint, 0.05, 42, 0.045, 16)} fill="rgba(232,185,105,.22)" stroke="rgba(232,185,105,.75)" strokeWidth="1" />
-              {/* ввод сетей — водопровод от границы участка */}
-              <path d="M250 447 L177 438" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth="1.4" strokeDasharray="3 3" />
-              <path d="M254 453 L181 444" fill="none" stroke="rgba(232,185,105,.55)" strokeWidth="1.2" strokeDasharray="3 3" />
-              <circle cx="250" cy="447" r="3" fill="none" stroke="rgba(255,255,255,.55)" strokeWidth="1.2" />
-              {/* подписи — тонкие выносные линии без плашек, в стиле чертежа */}
-              <g>
-                <line x1="300" y1="128" x2="246" y2="153" stroke="rgba(255,255,255,.4)" strokeWidth="1" />
-                <line x1="300" y1="115" x2="384" y2="115" stroke="rgba(255,255,255,.28)" strokeWidth="0.75" />
-                <text x="300" y="111" fontSize="7" letterSpacing=".04em" fill="rgba(255,255,255,.6)">ОТОПЛЕНИЕ</text>
-                <text x="300" y="126" fontSize="8.5" fill="#fff">Ø20 · двухтрубная</text>
-              </g>
-              <g>
-                <line x1="305" y1="343" x2="225" y2="320" stroke="rgba(255,255,255,.4)" strokeWidth="1" />
-                <line x1="305" y1="330" x2="374" y2="330" stroke="rgba(255,255,255,.28)" strokeWidth="0.75" />
-                <text x="305" y="326" fontSize="7" letterSpacing=".04em" fill="rgba(255,255,255,.6)">ГВС</text>
-                <text x="305" y="341" fontSize="8.5" fill="#fff">бак 200 л</text>
-              </g>
-              <g>
-                <line x1="290" y1="420" x2="250" y2="447" stroke="rgba(255,255,255,.4)" strokeWidth="1" />
-                <line x1="290" y1="407" x2="374" y2="407" stroke="rgba(255,255,255,.28)" strokeWidth="0.75" />
-                <text x="290" y="403" fontSize="7" letterSpacing=".04em" fill="rgba(255,255,255,.6)">ВВОД СЕТЕЙ</text>
-                <text x="290" y="418" fontSize="8.5" fill="#fff">вода · электрика</text>
-              </g>
+              {mullions.map((m, i) => (
+                <path key={`ml${i}`} d={`M${leftPoint(m.t, m.h0).join(" ")} L${leftPoint(m.t, m.h1).join(" ")}`} stroke="rgba(255,255,255,.16)" strokeWidth="0.6" />
+              ))}
+              {/* плоская кровля */}
+              <path d="M150 224 L305 183 L199 154 L44 195 Z" fill="url(#faceSun)" stroke="rgba(255,255,255,.6)" strokeWidth="1.8" />
+              {/* кровельная приточно-вытяжная установка */}
+              <path d={`M${iso(0.55, 0.25, 186)} L${iso(0.73, 0.25, 186)} L${iso(0.73, 0.25, 212)} L${iso(0.55, 0.25, 212)} Z`} fill="rgba(255,255,255,.16)" stroke="rgba(255,255,255,.55)" strokeWidth="1" />
+              <path d={`M${iso(0.55, 0.25, 186)} L${iso(0.55, 0.4, 186)} L${iso(0.55, 0.4, 212)} L${iso(0.55, 0.25, 212)} Z`} fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.5)" strokeWidth="1" />
+              <path d={`M${iso(0.55, 0.25, 212)} L${iso(0.73, 0.25, 212)} L${iso(0.73, 0.4, 212)} L${iso(0.55, 0.4, 212)} Z`} fill="rgba(255,255,255,.2)" stroke="rgba(255,255,255,.55)" strokeWidth="1" />
+              <text x="192" y="176" fontSize="6.5" fill="rgba(255,255,255,.55)">ПВУ</text>
+              {/* стояк — общий канал к приточной установке и щиту */}
+              <path d="M249 369 V186" fill="none" stroke="rgba(255,255,255,.6)" strokeWidth="5" strokeLinecap="round" />
+              {/* приточный воздух — верхний контур */}
+              <path d="M166 274 L220 260 L249 264" fill="none" stroke="#e5534d" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              <rect x="217" y="257" width="6" height="6" fill="#fff" opacity=".8" />
+              {/* вытяжной воздух — верхний контур */}
+              <path d="M166 288 L220 274 L249 278" fill="none" stroke="#6fb3ff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              <rect x="217" y="271" width="6" height="6" fill="#fff" opacity=".8" />
+              {/* приточный воздух — нижний контур */}
+              <path d="M166 352 L220 338 L249 346" fill="none" stroke="#e5534d" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              <rect x="217" y="335" width="6" height="6" fill="#fff" opacity=".8" />
+              {/* вытяжной воздух — нижний контур */}
+              <path d="M166 366 L220 352 L249 360" fill="none" stroke="#6fb3ff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              <rect x="217" y="349" width="6" height="6" fill="#fff" opacity=".8" />
+              <text x="168" y="266" fontSize="6.5" fill="rgba(229,83,77,.95)">Ø250</text>
+              <text x="168" y="300" fontSize="6.5" fill="rgba(111,179,255,.95)">Ø200</text>
+              {/* тёплый пол на 1 этаже */}
+              <path d="M84 388 L146 371 L167 377 L105 393 L126 399 L188 383" fill="none" stroke="#f0a05a" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              <circle cx="84" cy="388" r="2.4" fill="#f0a05a" />
+              <circle cx="188" cy="383" r="2.4" fill="#f0a05a" />
+              <text x="88" y="406" fontSize="6.5" fill="rgba(240,160,90,.9)">тёплый пол</text>
+              {/* автоматика — датчики по этажам */}
+              <path d="M189 214 V400" fill="none" stroke="#5fd8c9" strokeWidth="1.3" strokeDasharray="1 4" strokeLinecap="round" />
+              <circle cx="189" cy="214" r="4" fill="rgba(95,216,201,.25)" />
+              <circle cx="189" cy="214" r="2" fill="#5fd8c9" />
+              <circle cx="189" cy="276" r="2" fill="#5fd8c9" />
+              <circle cx="189" cy="338" r="2" fill="#5fd8c9" />
+              <path d="M251 321 V366" fill="none" stroke="#5fd8c9" strokeWidth="1.3" strokeDasharray="1 4" strokeLinecap="round" />
+              <circle cx="251" cy="321" r="4" fill="rgba(95,216,201,.25)" />
+              <circle cx="251" cy="321" r="2" fill="#5fd8c9" />
+              {/* щит автоматики и оборудование на 1 этаже */}
+              <rect x="232" y="372" width="16" height="10" fill="rgba(232,185,105,.28)" stroke="rgba(232,185,105,.8)" strokeWidth="1" />
+              <rect x="232" y="384" width="16" height="10" fill="rgba(232,185,105,.28)" stroke="rgba(232,185,105,.8)" strokeWidth="1" />
+              <rect x="232" y="396" width="16" height="10" fill="rgba(232,185,105,.28)" stroke="rgba(232,185,105,.8)" strokeWidth="1" />
+              <rect x="255" y="380" width="20" height="16" rx="2" fill="rgba(23,20,143,.6)" stroke="rgba(95,216,201,.8)" strokeWidth="1.2" />
+              <circle cx="265" cy="388" r="2.2" fill="#5fd8c9" />
             </svg>
           </div>
           <div className="object-card">
-            <small>Экспликация помещений</small>
+            <small>Системы</small>
             <div className="room-schedule">
-              <div><i>01</i><span>Тепловой пункт</span><b>3,4 м²</b></div>
-              <div><i>02</i><span>Венткамера</span><b>2,6 м²</b></div>
-              <div><i>03</i><span>Техническое</span><b>4,1 м²</b></div>
+              <div>
+                <i>01</i><span>Вентиляция</span>
+                <b style={{ display: "flex", gap: 3, justifyContent: "flex-end" }}>
+                  <i style={{ display: "inline-block", width: 11, height: 3, borderRadius: 2, background: "#e5534d" }} />
+                  <i style={{ display: "inline-block", width: 11, height: 3, borderRadius: 2, background: "#6fb3ff" }} />
+                </b>
+              </div>
+              <div>
+                <i>02</i><span>Отопление</span>
+                <b><i style={{ display: "inline-block", width: 26, height: 3, borderRadius: 2, background: "#f0a05a" }} /></b>
+              </div>
+              <div>
+                <i>03</i><span>Автоматика</span>
+                <b><i style={{ display: "inline-block", width: 26, height: 0, borderTop: "2px dashed #5fd8c9" }} /></b>
+              </div>
             </div>
-            <div className="circuit-legend"><span>Т1</span><span>Т2</span><span>ГВС</span></div>
           </div>
-          <div className="system-caption">Отопление. Вентиляция. Водоснабжение.<br /><strong>Один инженерный проект — от расчёта до пусконаладки.</strong></div>
+          <div className="duct-badge" style={{ top: 128, right: 24 }}>
+            <i style={{ background: "#e5534d" }} />
+            <div><strong>Приточный воздух</strong><span>Ø250 · по этажам</span></div>
+          </div>
+          <div className="duct-badge" style={{ top: 288, right: 24 }}>
+            <i style={{ background: "#6fb3ff" }} />
+            <div><strong>Вытяжной воздух</strong><span>Ø200 · по этажам</span></div>
+          </div>
+          <div className="duct-badge" style={{ top: 448, right: 24 }}>
+            <i style={{ background: "#5fd8c9" }} />
+            <div><strong>Управление</strong><span>датчики и автоматика</span></div>
+          </div>
+          <div className="system-caption">Вентиляция. Отопление. Автоматика.<br /><strong>Инженерные системы в единой модели.</strong></div>
         </div></section>
 
       <section className="equipment-preview shell" id="equipment">
