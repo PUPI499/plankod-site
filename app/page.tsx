@@ -56,9 +56,10 @@ export default function Home() {
         </div>
 
         <div className="hero-system panel" aria-label="Инженерные системы здания: приточно-вытяжная вентиляция, отопление, автоматика — лист ОВ-08">
+          <div className="hero-system-header"><span>ПЛАНКОД / ЛИСТ ОВ-08</span><span>ИЗОМЕТРИЯ</span></div>
           <img
-            src="/images/hero-ov08.webp"
-            alt="Изометрическая схема инженерных систем здания: приточная и вытяжная вентиляция, отопление, автоматика — ПЛАНКОД, лист ОВ-08"
+            src="/images/hero-building.webp"
+            alt="Изометрическая схема здания с инженерными системами: приточная и вытяжная вентиляция, отопление, автоматика — ПЛАНКОД, лист ОВ-08"
             className="hero-system-image"
           />
           <div className="duct-badge" style={{ top: 128, right: 24 }}>
@@ -72,6 +73,15 @@ export default function Home() {
           <div className="duct-badge" style={{ top: 472, right: 24 }}>
             <i style={{ background: "#5fd8c9" }} />
             <div><strong>Управление</strong><span>датчики и автоматика</span></div>
+          </div>
+          <div className="hero-system-footer">
+            <div className="hero-system-legend">
+              <b>Системы</b>
+              <div><i>01</i><span>Вентиляция</span><em className="legend-line legend-line-vent" /></div>
+              <div><i>02</i><span>Отопление</span><em className="legend-line legend-line-heat" /></div>
+              <div><i>03</i><span>Автоматика</span><em className="legend-line legend-line-auto" /></div>
+            </div>
+            <p className="hero-system-caption">Инженерные системы в единой модели.</p>
           </div>
         </div></section>
 
