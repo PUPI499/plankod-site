@@ -55,116 +55,24 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-system panel" aria-label="Детализированная изометрическая схема здания: вентиляция, отопление и автоматика">
-          <div className="system-top"><span>ПЛАНКОД / ЛИСТ ОВ-08</span><strong>изометрия</strong></div>
-          <div className="object-schematic">
-            <svg viewBox="0 0 400 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-              <defs>
-                <linearGradient id="faceSun" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stopColor="rgba(255,255,255,.22)" />
-                  <stop offset="1" stopColor="rgba(255,255,255,.05)" />
-                </linearGradient>
-                <linearGradient id="faceShade" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stopColor="rgba(255,255,255,.09)" />
-                  <stop offset="1" stopColor="rgba(255,255,255,.01)" />
-                </linearGradient>
-              </defs>
-              {/* тень на земле */}
-              <ellipse cx="172" cy="434" rx="172" ry="17" fill="rgba(0,0,0,.22)" />
-              {/* фундамент */}
-              <path d="M150 410 L305 369 L305 387 L150 428 Z" fill="url(#faceSun)" stroke="rgba(255,255,255,.55)" strokeWidth="1.6" />
-              <path d="M150 410 L44 381 L44 399 L150 428 Z" fill="url(#faceShade)" stroke="rgba(255,255,255,.55)" strokeWidth="1.6" />
-              {/* стены — остеклённые, 3 этажа */}
-              <path d="M150 410 L305 369 L305 183 L150 224 Z" fill="url(#faceSun)" stroke="rgba(255,255,255,.65)" strokeWidth="2.2" />
-              <path d="M150 410 L44 381 L44 195 L150 224 Z" fill="url(#faceShade)" stroke="rgba(255,255,255,.6)" strokeWidth="2.2" />
-              {/* перекрытия */}
-              <path d="M150 348 L305 307 M150 286 L305 245" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth="1.6" />
-              <path d="M150 348 L44 319 M150 286 L44 257" fill="none" stroke="rgba(255,255,255,.35)" strokeWidth="1.6" />
-              {/* импосты остекления */}
-              {mullions.map((m, i) => (
-                <path key={`mr${i}`} d={`M${rightPoint(m.t, m.h0).join(" ")} L${rightPoint(m.t, m.h1).join(" ")}`} stroke="rgba(255,255,255,.22)" strokeWidth="0.6" />
-              ))}
-              {mullions.map((m, i) => (
-                <path key={`ml${i}`} d={`M${leftPoint(m.t, m.h0).join(" ")} L${leftPoint(m.t, m.h1).join(" ")}`} stroke="rgba(255,255,255,.16)" strokeWidth="0.6" />
-              ))}
-              {/* плоская кровля */}
-              <path d="M150 224 L305 183 L199 154 L44 195 Z" fill="url(#faceSun)" stroke="rgba(255,255,255,.6)" strokeWidth="1.8" />
-              {/* кровельная приточно-вытяжная установка */}
-              <path d={`M${iso(0.55, 0.25, 186)} L${iso(0.73, 0.25, 186)} L${iso(0.73, 0.25, 212)} L${iso(0.55, 0.25, 212)} Z`} fill="rgba(255,255,255,.16)" stroke="rgba(255,255,255,.55)" strokeWidth="1" />
-              <path d={`M${iso(0.55, 0.25, 186)} L${iso(0.55, 0.4, 186)} L${iso(0.55, 0.4, 212)} L${iso(0.55, 0.25, 212)} Z`} fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.5)" strokeWidth="1" />
-              <path d={`M${iso(0.55, 0.25, 212)} L${iso(0.73, 0.25, 212)} L${iso(0.73, 0.4, 212)} L${iso(0.55, 0.4, 212)} Z`} fill="rgba(255,255,255,.2)" stroke="rgba(255,255,255,.55)" strokeWidth="1" />
-              <text x="192" y="176" fontSize="6.5" fill="rgba(255,255,255,.55)">ПВУ</text>
-              {/* стояк — общий канал к приточной установке и щиту */}
-              <path d="M249 369 V186" fill="none" stroke="rgba(255,255,255,.6)" strokeWidth="5" strokeLinecap="round" />
-              {/* приточный воздух — верхний контур */}
-              <path d="M166 274 L220 260 L249 264" fill="none" stroke="#e5534d" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-              <rect x="217" y="257" width="6" height="6" fill="#fff" opacity=".8" />
-              {/* вытяжной воздух — верхний контур */}
-              <path d="M166 288 L220 274 L249 278" fill="none" stroke="#6fb3ff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-              <rect x="217" y="271" width="6" height="6" fill="#fff" opacity=".8" />
-              {/* приточный воздух — нижний контур */}
-              <path d="M166 352 L220 338 L249 346" fill="none" stroke="#e5534d" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-              <rect x="217" y="335" width="6" height="6" fill="#fff" opacity=".8" />
-              {/* вытяжной воздух — нижний контур */}
-              <path d="M166 366 L220 352 L249 360" fill="none" stroke="#6fb3ff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-              <rect x="217" y="349" width="6" height="6" fill="#fff" opacity=".8" />
-              <text x="168" y="266" fontSize="6.5" fill="rgba(229,83,77,.95)">Ø250</text>
-              <text x="168" y="300" fontSize="6.5" fill="rgba(111,179,255,.95)">Ø200</text>
-              {/* тёплый пол на 1 этаже */}
-              <path d="M84 388 L146 371 L167 377 L105 393 L126 399 L188 383" fill="none" stroke="#f0a05a" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              <circle cx="84" cy="388" r="2.4" fill="#f0a05a" />
-              <circle cx="188" cy="383" r="2.4" fill="#f0a05a" />
-              <text x="88" y="406" fontSize="6.5" fill="rgba(240,160,90,.9)">тёплый пол</text>
-              {/* автоматика — датчики по этажам */}
-              <path d="M189 214 V400" fill="none" stroke="#5fd8c9" strokeWidth="1.3" strokeDasharray="1 4" strokeLinecap="round" />
-              <circle cx="189" cy="214" r="4" fill="rgba(95,216,201,.25)" />
-              <circle cx="189" cy="214" r="2" fill="#5fd8c9" />
-              <circle cx="189" cy="276" r="2" fill="#5fd8c9" />
-              <circle cx="189" cy="338" r="2" fill="#5fd8c9" />
-              <path d="M251 321 V366" fill="none" stroke="#5fd8c9" strokeWidth="1.3" strokeDasharray="1 4" strokeLinecap="round" />
-              <circle cx="251" cy="321" r="4" fill="rgba(95,216,201,.25)" />
-              <circle cx="251" cy="321" r="2" fill="#5fd8c9" />
-              {/* щит автоматики и оборудование на 1 этаже */}
-              <rect x="232" y="372" width="16" height="10" fill="rgba(232,185,105,.28)" stroke="rgba(232,185,105,.8)" strokeWidth="1" />
-              <rect x="232" y="384" width="16" height="10" fill="rgba(232,185,105,.28)" stroke="rgba(232,185,105,.8)" strokeWidth="1" />
-              <rect x="232" y="396" width="16" height="10" fill="rgba(232,185,105,.28)" stroke="rgba(232,185,105,.8)" strokeWidth="1" />
-              <rect x="255" y="380" width="20" height="16" rx="2" fill="rgba(23,20,143,.6)" stroke="rgba(95,216,201,.8)" strokeWidth="1.2" />
-              <circle cx="265" cy="388" r="2.2" fill="#5fd8c9" />
-            </svg>
-          </div>
-          <div className="object-card">
-            <small>Системы</small>
-            <div className="room-schedule">
-              <div>
-                <i>01</i><span>Вентиляция</span>
-                <b style={{ display: "flex", gap: 3, justifyContent: "flex-end" }}>
-                  <i style={{ display: "inline-block", width: 11, height: 3, borderRadius: 2, background: "#e5534d" }} />
-                  <i style={{ display: "inline-block", width: 11, height: 3, borderRadius: 2, background: "#6fb3ff" }} />
-                </b>
-              </div>
-              <div>
-                <i>02</i><span>Отопление</span>
-                <b><i style={{ display: "inline-block", width: 26, height: 3, borderRadius: 2, background: "#f0a05a" }} /></b>
-              </div>
-              <div>
-                <i>03</i><span>Автоматика</span>
-                <b><i style={{ display: "inline-block", width: 26, height: 0, borderTop: "2px dashed #5fd8c9" }} /></b>
-              </div>
-            </div>
-          </div>
+        <div className="hero-system panel" aria-label="Инженерные системы здания: приточно-вытяжная вентиляция, отопление, автоматика — лист ОВ-08">
+          <img
+            src="/images/hero-ov08.webp"
+            alt="Изометрическая схема инженерных систем здания: приточная и вытяжная вентиляция, отопление, автоматика — ПЛАНКОД, лист ОВ-08"
+            className="hero-system-image"
+          />
           <div className="duct-badge" style={{ top: 128, right: 24 }}>
             <i style={{ background: "#e5534d" }} />
             <div><strong>Приточный воздух</strong><span>Ø250 · по этажам</span></div>
           </div>
-          <div className="duct-badge" style={{ top: 288, right: 24 }}>
+          <div className="duct-badge" style={{ top: 300, right: 24 }}>
             <i style={{ background: "#6fb3ff" }} />
             <div><strong>Вытяжной воздух</strong><span>Ø200 · по этажам</span></div>
           </div>
-          <div className="duct-badge" style={{ top: 448, right: 24 }}>
+          <div className="duct-badge" style={{ top: 472, right: 24 }}>
             <i style={{ background: "#5fd8c9" }} />
             <div><strong>Управление</strong><span>датчики и автоматика</span></div>
           </div>
-          <div className="system-caption">Вентиляция. Отопление. Автоматика.<br /><strong>Инженерные системы в единой модели.</strong></div>
         </div></section>
 
       <section className="equipment-preview shell" id="equipment">

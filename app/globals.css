@@ -60,6 +60,7 @@ a { color:inherit; text-decoration:none; }
 .duct-badge i { flex:0 0 auto; width:20px; height:20px; border-radius:6px; background:#eceef4; }
 .duct-badge strong { display:block; font-size:12px; font-weight:600; color:var(--ink); line-height:1.25; }
 .duct-badge span { display:block; font-size:10px; color:#8a8c93; margin-top:2px; }
+.hero-system-image { position:absolute; inset:0; z-index:1; width:100%; height:100%; object-fit:cover; display:block; }
 
 .equipment-preview { padding:118px 0 130px; }
 .section-head { display:grid; grid-template-columns:.45fr 1.55fr; align-items:start; margin-bottom:58px; }

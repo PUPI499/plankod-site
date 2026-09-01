@@ -84,6 +84,16 @@ try {
   console.warn("WARN: could not copy public/og.png —", err.message);
 }
 
+try {
+  const { readdir, cp } = await import("node:fs/promises");
+  const imagesDir = new URL("../public/images/", import.meta.url);
+  await readdir(imagesDir); // throws if missing
+  await cp(imagesDir, new URL("./images/", OUT_DIR), { recursive: true });
+  console.log("copied public/images/");
+} catch (err) {
+  if (err.code !== "ENOENT") console.warn("WARN: could not copy public/images/ —", err.message);
+}
+
 await copyFile(new URL("./hostland-catalog.js", import.meta.url), new URL("./catalog.js", OUT_DIR));
 console.log("copied catalog.js");
 
