@@ -100,6 +100,9 @@ console.log("copied catalog.js");
 await copyFile(new URL("./contact.php", import.meta.url), new URL("./contact.php", OUT_DIR));
 console.log("copied contact.php");
 
+await copyFile(new URL("./calc.html", import.meta.url), new URL("./calc.html", OUT_DIR));
+console.log("copied calc.html");
+
 const SITE_URL = "https://plancod.ru";
 const lastmod = new Date().toISOString().slice(0, 10);
 
