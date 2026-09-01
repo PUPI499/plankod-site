@@ -81,7 +81,7 @@ export default function Home() {
               <div><i>02</i><span>Отопление</span><em className="legend-line legend-line-heat" /></div>
               <div><i>03</i><span>Автоматика</span><em className="legend-line legend-line-auto" /></div>
             </div>
-            <p className="hero-system-caption">Инженерные системы в единой модели.</p>
+            <div className="hero-system-caption">Инженерные системы в единой модели.</div>
           </div>
         </div></section>
 
