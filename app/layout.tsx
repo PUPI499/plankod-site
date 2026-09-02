@@ -19,6 +19,7 @@ export const metadata: Metadata = {
     description: "Вентиляция, отопление, кондиционирование, монтаж и автоматизация объектов любой сложности.",
     images: ["/og.png"],
   },
+  icons: { icon: "/favicon.svg" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

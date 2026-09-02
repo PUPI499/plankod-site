@@ -19,8 +19,8 @@ export default function SmartHomePage() {
           <span className="micro-label">Умный дом / проектирование и монтаж</span>
           <h1>Инженерия дома.<br /><em>Под вашим</em><br />контролем.</h1>
           <p>Управляйте отоплением, вентиляцией, кондиционированием, светом и безопасностью привычным способом: кнопкой, в приложении или голосом.</p>
-          <div className="subhero-actions"><GetSmartHomeButton label="Связаться с нами" /><b className="pill">Проект от 15 000 ₽</b></div>
-          <div className="subhero-note"><span className="pill">Все голосовые ассистенты</span><small>* Подтверждаем совместимость оборудования до закупки.</small></div>
+          <div className="subhero-actions"><GetSmartHomeButton label="Обсудить объект" /><b className="pill">Проект от 15 000 ₽</b></div>
+          <div className="subhero-note"><span className="pill">Алиса, Салют и совместимые системы</span><small>* Подтверждаем совместимость оборудования до закупки.</small></div>
         </div>
         <div className="integration-visual panel">
           <div className="visual-grid" />

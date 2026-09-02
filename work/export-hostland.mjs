@@ -85,6 +85,13 @@ try {
 }
 
 try {
+  await copyFile(new URL("../public/favicon.svg", import.meta.url), new URL("./favicon.svg", OUT_DIR));
+  console.log("copied favicon.svg");
+} catch (err) {
+  console.warn("WARN: could not copy public/favicon.svg —", err.message);
+}
+
+try {
   const { readdir, cp } = await import("node:fs/promises");
   const imagesDir = new URL("../public/images/", import.meta.url);
   await readdir(imagesDir); // throws if missing
@@ -157,6 +164,7 @@ for (const route of routes) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <title>${route.title}</title>
   <meta name="description" content="${route.description}">
   <meta property="og:type" content="website">

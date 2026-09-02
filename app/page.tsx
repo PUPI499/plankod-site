@@ -1,38 +1,6 @@
+/* eslint-disable @next/next/no-img-element -- the Hostland static export serves an already optimized WebP */
 import { ContactBand, SiteFooter, SiteHeader } from "./components";
 import { GetSmartHomeButton } from "./get-smart-home-modal";
-
-// Isometric building geometry (flatter, grazing-angle isometric): front-bottom
-// corner O=(150,410), right wall along Wvec=(155,-41), left wall along
-// Dvec=(-106,-29). Three floor bands of 62 (flat roof at h=186).
-function rightPoint(t: number, h: number): [number, number] {
-  return [150 + t * 155, 410 - t * 41 - h];
-}
-function leftPoint(t: number, h: number): [number, number] {
-  return [150 - t * 106, 410 - t * 29 - h];
-}
-function panelPath(pointFn: (t: number, h: number) => [number, number], t: number, h: number, dt: number, dh: number) {
-  const [x1, y1] = pointFn(t, h);
-  const [x2, y2] = pointFn(t + dt, h);
-  const [x3, y3] = pointFn(t + dt, h + dh);
-  const [x4, y4] = pointFn(t, h + dh);
-  return `M${x1} ${y1} L${x2} ${y2} L${x3} ${y3} L${x4} ${y4} Z`;
-}
-// Generic isometric point: u along the right wall axis, v along the left
-// wall axis, h vertical. Lets ducts, furniture and the rooftop unit sit on
-// the same grid as the walls.
-function isoPoint(u: number, v: number, h: number): [number, number] {
-  return [150 + 155 * u - 106 * v, 410 - 41 * u - 29 * v - h];
-}
-function iso(u: number, v: number, h: number): string {
-  const [x, y] = isoPoint(u, v, h);
-  return `${x.toFixed(1)} ${y.toFixed(1)}`;
-}
-const FLOOR_H = 62;
-const floorBands = [0, FLOOR_H, FLOOR_H * 2];
-const mullionTs = [0.12, 0.32, 0.52, 0.72, 0.92];
-const mullions = floorBands.flatMap((fb) =>
-  mullionTs.map((t) => ({ t, h0: fb + 5, h1: fb + FLOOR_H - 4 }))
-);
 
 export default function Home() {
   return (
@@ -45,7 +13,7 @@ export default function Home() {
           <h1>Считаем.<br /><em>Проектируем.</em><br />Делаем умным.</h1>
           <p>Проектируем инженерные системы объектов любой сложности — от частного дома до производственного цеха: отопление, вентиляция, кондиционирование. А для дома — ещё и умный дом с понятным управлением.</p>
           <div className="hero-actions">
-            <GetSmartHomeButton label="Связаться с нами" />
+            <GetSmartHomeButton label="Обсудить объект" />
             <a className="quiet-link" href="#install">Как мы работаем ↓</a>
           </div>
           <div className="trust-strip">
@@ -190,7 +158,7 @@ export default function Home() {
           <span className="micro-label">Не «вау-эффекты», а ежедневные мелочи</span>
           <h2>Дом понимает<br /><em>обычные команды</em></h2>
           <p>Вам не нужно изучать интерфейс инженера. Оставляем понятные кнопки, приложение и голосовые сценарии.</p>
-          <div className="assistant-badges"><span className="pill">Все голосовые ассистенты</span></div>
+          <div className="assistant-badges"><span className="pill">Алиса, Салют и совместимые системы</span></div>
           <small>* Совместимость подтверждаем для конкретного комплекта до закупки.</small>
         </div>
         <div className="scenario-board panel">
@@ -253,9 +221,9 @@ export default function Home() {
       </section>
 
       <section className="cases-section shell">
-        <div className="case-card panel case-photo-one"><span>PLACEHOLDER / ЧАСТНЫЙ ДОМ</span><h3>Инженерные системы и умный дом</h3><p>Площадь, регион, состав проекта и фотографии будут добавлены после получения данных.</p></div>
-        <div className="case-card panel case-message"><span>ПОРТФОЛИО ПЛАНКОД</span><h2>Проекты,<br />которыми можно<br /><em>объяснить подход</em></h2><p>На отдельной странице подготовлена структура портфолио: задача, решение, оборудование, монтаж и результат.</p><a href="/projects">Перейти ко всем объектам ↗</a></div>
-        <div className="case-card panel case-photo-two"><span>PLACEHOLDER / ПРОИЗВОДСТВО</span><h3>Вентиляция производственного цеха</h3><p>Тип объекта, площадь и инженерные показатели будут заполнены позднее.</p></div>
+        <div className="case-card panel case-evidence case-evidence-blue"><span>ПРОЕКТНАЯ ДОКУМЕНТАЦИЯ</span><h3>Состав проекта известен до старта</h3><p>Заранее фиксируем расчёты, схемы, спецификацию и границы работ.</p></div>
+        <div className="case-card panel case-message"><span>ПОРТФОЛИО ПЛАНКОД</span><h2>Не галерея.<br />Разбор <em>решений.</em></h2><p>Каждый опубликованный объект показываем через задачу, инженерное решение, реализацию и проверяемый результат.</p><a href="/projects">Как разбираем проекты ↗</a></div>
+        <div className="case-card panel case-evidence case-evidence-dark"><span>КОНФИДЕНЦИАЛЬНОСТЬ</span><h3>Публикуем только подтверждённые данные</h3><p>Адреса, фотографии и параметры объектов размещаем после проверки и согласования с заказчиком.</p></div>
       </section>
 
       <section className="faq-section shell">
@@ -269,7 +237,7 @@ export default function Home() {
         </div>
       </section>
 
-      <ContactBand eyebrow="Начать без обязательств" title={"Покажите план.\nМы покажем, что имеет смысл."} />
+      <ContactBand eyebrow="Начать без обязательств" title={"Пришлите планировку.\nПокажем, что имеет смысл."} />
       <SiteFooter />
     </main>
   );

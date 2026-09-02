@@ -22,12 +22,12 @@ export function SiteHeader({ active = "home" }: { active?: SectionName }) {
           <a key={key} className={active === key ? "active-link" : ""} aria-current={active === key ? "page" : undefined} href={href}>{label}</a>
         ))}
       </nav>
-      <a className="header-button" href="/#contact">Оставить заявку <span>↗</span></a>
+      <a className="header-button" href="#contact">Оставить заявку <span>↗</span></a>
       <details className="site-menu">
         <summary aria-label="Открыть меню"><i /><i /></summary>
         <nav aria-label="Мобильная навигация">
           {navigation.map(([label, href, key]) => <a key={href} className={active === key ? "active-link" : ""} aria-current={active === key ? "page" : undefined} href={href}>{label}</a>)}
-          <a href="/#contact">Контакты</a>
+          <a href="#contact">Контакты</a>
         </nav>
       </details>
     </header>
@@ -42,12 +42,12 @@ export function ContactBand({ eyebrow = "Начать с проекта", title 
         <div className="contact-copy">
           <span className="micro-label">{eyebrow}</span>
           <h2>{lines.map((line, index) => <span key={line}>{line}{index < lines.length - 1 && <br />}</span>)}</h2>
-          <p>Пришлите планировку, адрес и кратко опишите задачу. Вернёмся с вопросами по существу и предложим следующий шаг.</p>
-          <a href="mailto:info@plankod.ru?subject=Заявка%20ПЛАНКОД">Отправить задачу <span>↗</span></a>
+          <p>Заполните форму или отправьте планировку в Telegram. Вернёмся с вопросами по существу и предложим следующий шаг.</p>
+          <a href="https://t.me/plancod" target="_blank" rel="noopener noreferrer">Отправить план в Telegram <span>↗</span></a>
         </div>
         <div className="contact-card panel">
           <div><small>Email</small><strong>info@plankod.ru</strong></div>
-          <div><small>Мессенджеры</small><strong>Telegram · Max</strong></div>
+          <div><small>Мессенджер</small><strong>Telegram</strong></div>
           <div><small>География</small><strong>Европейская часть России и Урал</strong></div>
           <ContactForm />
         </div>
@@ -66,7 +66,7 @@ export function SiteFooter() {
         <a href="/smart-home">Умный дом</a>
         <a href="/projects">Проектирование и объекты</a>
         <a href="/products">Продукция</a>
-        <a href="/#contact">Контакты</a>
+        <a href="#contact">Контакты</a>
         <a href="/about">О компании</a>
       </nav>
       <div className="footer-bottom"><span>© {new Date().getFullYear()} ПЛАНКОД</span><a href="#top">Наверх ↑</a></div>

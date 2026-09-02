@@ -1,19 +1,17 @@
-// PLACEHOLDER: Max — Anna will supply the real Max link later.
 // Interactivity (validation, /contact.php submission) lives in
 // work/hostland-catalog.js — this export ships no React runtime, only
 // server-rendered markup, so behaviour must be plain DOM JS.
 const TELEGRAM_LINK = "https://t.me/plancod";
-const MAX_LINK = "https://max.ru/plankod";
 const CONTACT_EMAIL = "info@plankod.ru";
 
 export function ContactForm() {
   const mailtoHref = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Заявка с сайта ПЛАНКОД")}`;
 
   return (
-    <div className="contact-form">
-      <label>Как к вам обращаться<input placeholder="Имя" /></label>
-      <label>Как с вами связаться<input placeholder="Телефон, email или Telegram" /></label>
-      <label>Опишите задачу<textarea rows={4} placeholder="Что нужно спроектировать, смонтировать или подключить" /></label>
+    <div className="contact-form" role="form" aria-label="Заявка на консультацию">
+      <label>Как к вам обращаться<input name="name" autoComplete="name" placeholder="Имя" required /></label>
+      <label>Как с вами связаться<input name="contact" autoComplete="tel" placeholder="Телефон, email или Telegram" required /></label>
+      <label>Опишите задачу<textarea name="message" rows={4} placeholder="Что нужно спроектировать, смонтировать или подключить" required /></label>
       <input type="text" name="website" className="hp-field" tabIndex={-1} autoComplete="off" aria-hidden="true" />
       <div className="consent-row">
         <input type="checkbox" id="pd-consent" />
@@ -22,7 +20,6 @@ export function ContactForm() {
       <div className="contact-form-actions">
         <button type="button" className="mail-link" disabled>Отправить заявку</button>
         <a className="telegram-link" href={TELEGRAM_LINK} target="_blank" rel="noopener noreferrer">Telegram</a>
-        <a className="max-link" href={MAX_LINK} target="_blank" rel="noopener noreferrer">Max</a>
       </div>
       <p className="form-status form-status-ok" hidden>Заявка отправлена, ответим в течение одного рабочего дня.</p>
       <p className="form-status form-status-error" hidden>

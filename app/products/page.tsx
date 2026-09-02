@@ -17,7 +17,7 @@ export default function ProductsPage() {
       <section className="products-hero shell" id="top">
         <div className="products-hero-copy panel">
           <span className="micro-label">Продукция / поставка и монтаж</span>
-          <h1>Оборудование,<br />которое <em>не спорит</em><br />друг с другом</h1>
+          <h1>Устройства,<br />которые <em>работают</em><br />как одна система</h1>
           <p>Подбираем устройства под задачу, проверяем совместимость, доставляем на дом и при необходимости устанавливаем.</p>
           <div className="products-hero-points"><span>Умный дом</span><span>Gree / Midea</span><span>Доставка</span><span>Монтаж</span></div>
         </div>
@@ -37,20 +37,20 @@ export default function ProductsPage() {
       </section>
 
       <section className="catalog-section shell">
-        <div className="catalog-heading"><span>01 / каталог</span><h2>Соберите заявку.<br /><em>Совместимость проверим мы.</em></h2><p>Точные модели, цены и наличие появятся после загрузки прайса поставщиков. Структура заказа и доставки уже подготовлена.</p></div>
+        <div className="catalog-heading"><span>01 / каталог</span><h2>Выберите направление.<br /><em>Совместимость проверим мы.</em></h2><p>Показываем основные категории. Конкретные модели, стоимость и наличие подтверждаем после проверки задачи и совместимости.</p></div>
         <ProductCatalog />
       </section>
 
       <section className="buy-process">
         <div className="shell">
-          <div className="page-heading"><span>02 / как купить</span><h2>Проверяем до оплаты.<br /><em>Доставляем с документами.</em></h2></div>
+          <div className="page-heading"><span>02 / как купить</span><h2>Сначала проверяем.<br /><em>Потом оформляем.</em></h2></div>
           <div className="buy-steps">
-            <article><span>1</span><h3>Вы выбираете</h3><p>Добавляете товары или просто описываете задачу.</p></article>
+            <article><span>1</span><h3>Вы выбираете</h3><p>Выбираете категорию или просто описываете задачу.</p></article>
             <article><span>2</span><h3>Мы проверяем</h3><p>Совместимость, мощность, наличие и итоговую комплектацию.</p></article>
             <article><span>3</span><h3>Подтверждаем</h3><p>Фиксируем цену, доставку, монтаж и способ оплаты.</p></article>
             <article><span>4</span><h3>Доставляем</h3><p>На дом или объект; при заказе монтажа передаём команде.</p></article>
           </div>
-          <div className="commerce-note"><b>Для настоящего запуска магазина ещё нужны:</b><span>товарный прайс и остатки</span><span>условия доставки</span><span>рабочие контакты</span><span>эквайринг</span><span>оферта и политика</span></div>
+          <div className="commerce-note"><b>До заказа подтверждаем:</b><span>совместимость</span><span>модель и мощность</span><span>актуальную стоимость</span><span>наличие и доставку</span><span>монтаж</span></div>
         </div>
       </section>
 
