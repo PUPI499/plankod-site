@@ -1,9 +1,9 @@
 <?php
-// Обработчик формы заявки для plancod.ru.
-// Принимает POST от app/contact-form.tsx (fetch на /contact.php) и
-// отправляет письмо через почту хостинга — без сторонних сервисов.
+// Надёжная отправка заявок через авторизованный SMTP Hostland.
+// Секреты не хранятся в Git: конфигурация лежит на сервере уровнем выше www.
 
 header('Content-Type: application/json; charset=utf-8');
+header('Cache-Control: no-store');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -27,27 +27,137 @@ if ($name === '' || $contact === '' || $message === '') {
     exit;
 }
 
-// Защита от header injection через перенос строк в однострочных полях.
+if (strlen($name) > 240 || strlen($contact) > 360 || strlen($message) > 20000) {
+    http_response_code(400);
+    echo json_encode(['ok' => false, 'error' => 'fields_too_long']);
+    exit;
+}
+
 $name = str_replace(["\r", "\n"], ' ', $name);
 $contact = str_replace(["\r", "\n"], ' ', $contact);
 
-$to = 'info@plankod.ru';
-$subject = '=?UTF-8?B?' . base64_encode('Заявка с сайта ПЛАНКОД') . '?=';
+function smtpReadResponse($socket, array $expectedCodes) {
+    $response = '';
+    while (($line = fgets($socket, 515)) !== false) {
+        $response .= $line;
+        if (strlen($line) >= 4 && $line[3] === ' ') {
+            break;
+        }
+    }
 
+    $code = (int) substr($response, 0, 3);
+    if (!in_array($code, $expectedCodes, true)) {
+        throw new RuntimeException('SMTP response code ' . $code);
+    }
+
+    return $response;
+}
+
+function smtpCommand($socket, $command, array $expectedCodes) {
+    if (fwrite($socket, $command . "\r\n") === false) {
+        throw new RuntimeException('SMTP write failed');
+    }
+    return smtpReadResponse($socket, $expectedCodes);
+}
+
+function sendViaHostlandSmtp($username, $password, $recipient, $subjectText, $body, $replyTo = null) {
+    $host = 'mail.hostland.ru';
+    $context = stream_context_create([
+        'ssl' => [
+            'verify_peer' => true,
+            'verify_peer_name' => true,
+            'peer_name' => $host,
+        ],
+    ]);
+
+    $socket = stream_socket_client(
+        'ssl://' . $host . ':465',
+        $errorNumber,
+        $errorMessage,
+        15,
+        STREAM_CLIENT_CONNECT,
+        $context
+    );
+
+    if (!$socket) {
+        throw new RuntimeException('SMTP connection failed: ' . $errorNumber);
+    }
+
+    stream_set_timeout($socket, 15);
+
+    try {
+        smtpReadResponse($socket, [220]);
+        smtpCommand($socket, 'EHLO plancod.ru', [250]);
+        smtpCommand($socket, 'AUTH LOGIN', [334]);
+        smtpCommand($socket, base64_encode($username), [334]);
+        smtpCommand($socket, base64_encode($password), [235]);
+        smtpCommand($socket, 'MAIL FROM:<' . $username . '>', [250]);
+        smtpCommand($socket, 'RCPT TO:<' . $recipient . '>', [250, 251]);
+        smtpCommand($socket, 'DATA', [354]);
+
+        $encodedSubject = '=?UTF-8?B?' . base64_encode($subjectText) . '?=';
+        $headers = [
+            'Date: ' . date(DATE_RFC2822),
+            'Message-ID: <' . bin2hex(random_bytes(12)) . '@plancod.ru>',
+            'From: ПЛАНКОД <' . $username . '>',
+            'To: ' . $recipient,
+            'Subject: ' . $encodedSubject,
+            'MIME-Version: 1.0',
+            'Content-Type: text/plain; charset=UTF-8',
+            'Content-Transfer-Encoding: 8bit',
+        ];
+
+        if ($replyTo && filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
+            $headers[] = 'Reply-To: ' . $replyTo;
+        }
+
+        $normalizedBody = str_replace(["\r\n", "\r"], "\n", $body);
+        $normalizedBody = str_replace("\n.", "\n..", $normalizedBody);
+        fwrite($socket, implode("\r\n", $headers) . "\r\n\r\n" . str_replace("\n", "\r\n", $normalizedBody) . "\r\n.\r\n");
+        smtpReadResponse($socket, [250]);
+        smtpCommand($socket, 'QUIT', [221]);
+    } finally {
+        fclose($socket);
+    }
+}
+
+$config = [];
+$configPath = dirname(__DIR__) . '/plankod-mail-config.php';
+if (is_readable($configPath)) {
+    $loadedConfig = require $configPath;
+    if (is_array($loadedConfig)) {
+        $config = $loadedConfig;
+    }
+}
+
+$smtpUser = $config['username'] ?? (getenv('PLANKOD_SMTP_USER') ?: '');
+$smtpPassword = $config['password'] ?? (getenv('PLANKOD_SMTP_PASSWORD') ?: '');
+$recipient = $config['recipient'] ?? 'info@plancod.ru';
+
+if ($smtpUser === '' || $smtpPassword === '') {
+    error_log('PLANKOD contact form: SMTP is not configured');
+    http_response_code(503);
+    echo json_encode(['ok' => false, 'error' => 'mail_not_configured']);
+    exit;
+}
+
+if (!filter_var($smtpUser, FILTER_VALIDATE_EMAIL) || !filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
+    error_log('PLANKOD contact form: invalid SMTP email configuration');
+    http_response_code(503);
+    echo json_encode(['ok' => false, 'error' => 'mail_configuration_invalid']);
+    exit;
+}
+
+$subject = 'Заявка с сайта ПЛАНКОД';
 $body = "Имя: {$name}\n"
       . "Контакт: {$contact}\n\n"
       . "Задача:\n{$message}\n";
 
-$fromDomain = $_SERVER['SERVER_NAME'] ?? 'plancod.ru';
-$headers = "From: Site Form <noreply@{$fromDomain}>\r\n"
-         . "Reply-To: {$contact}\r\n"
-         . "Content-Type: text/plain; charset=UTF-8\r\n";
-
-$sent = @mail($to, $subject, $body, $headers);
-
-if ($sent) {
+try {
+    sendViaHostlandSmtp($smtpUser, $smtpPassword, $recipient, $subject, $body, $contact);
     echo json_encode(['ok' => true]);
-} else {
-    http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => 'mail_failed']);
+} catch (Throwable $error) {
+    error_log('PLANKOD contact form SMTP error: ' . $error->getMessage());
+    http_response_code(502);
+    echo json_encode(['ok' => false, 'error' => 'mail_delivery_failed']);
 }

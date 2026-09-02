@@ -2,11 +2,8 @@
 // work/hostland-catalog.js — this export ships no React runtime, only
 // server-rendered markup, so behaviour must be plain DOM JS.
 const TELEGRAM_LINK = "https://t.me/plancod";
-const CONTACT_EMAIL = "info@plankod.ru";
 
 export function ContactForm() {
-  const mailtoHref = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Заявка с сайта ПЛАНКОД")}`;
-
   return (
     <div className="contact-form" role="form" aria-label="Заявка на консультацию">
       <label>Как к вам обращаться<input name="name" autoComplete="name" placeholder="Имя" required /></label>
@@ -23,7 +20,7 @@ export function ContactForm() {
       </div>
       <p className="form-status form-status-ok" hidden>Заявка отправлена, ответим в течение одного рабочего дня.</p>
       <p className="form-status form-status-error" hidden>
-        Не получилось отправить автоматически. Напишите напрямую на <a href={mailtoHref}>{CONTACT_EMAIL}</a> или в Telegram.
+        Не получилось отправить автоматически. Пожалуйста, напишите нам в <a href={TELEGRAM_LINK} target="_blank" rel="noopener noreferrer">Telegram</a> — сообщение точно не потеряется.
       </p>
     </div>
   );
