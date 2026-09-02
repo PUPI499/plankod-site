@@ -115,7 +115,9 @@ function sendViaHostlandSmtp($username, $password, $recipient, $subjectText, $bo
         $normalizedBody = str_replace("\n.", "\n..", $normalizedBody);
         fwrite($socket, implode("\r\n", $headers) . "\r\n\r\n" . str_replace("\n", "\r\n", $normalizedBody) . "\r\n.\r\n");
         smtpReadResponse($socket, [250]);
-        smtpCommand($socket, 'QUIT', [221]);
+        // После ответа 250 письмо уже принято сервером. QUIT отправляем
+        // вежливо, но не считаем отсутствие ответа ошибкой доставки.
+        fwrite($socket, "QUIT\r\n");
     } finally {
         fclose($socket);
     }
