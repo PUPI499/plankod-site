@@ -172,8 +172,8 @@ try {
         $publicError = 'smtp_authentication_failed';
     } elseif (strpos($error->getMessage(), 'connection failed') !== false) {
         $publicError = 'smtp_connection_failed';
-    } elseif (preg_match('/SMTP ([a-z_]+) response code/', $error->getMessage(), $matches)) {
-        $publicError = 'smtp_' . $matches[1] . '_failed';
+    } elseif (preg_match('/SMTP ([a-z_]+) response code ([0-9]+)/', $error->getMessage(), $matches)) {
+        $publicError = 'smtp_' . $matches[1] . '_' . $matches[2];
     }
     http_response_code(500);
     echo json_encode(['ok' => false, 'error' => $publicError]);
