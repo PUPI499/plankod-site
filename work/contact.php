@@ -36,7 +36,7 @@ if (strlen($name) > 240 || strlen($contact) > 360 || strlen($message) > 20000) {
 $name = str_replace(["\r", "\n"], ' ', $name);
 $contact = str_replace(["\r", "\n"], ' ', $contact);
 
-function smtpReadResponse($socket, array $expectedCodes) {
+function smtpReadResponse($socket, array $expectedCodes, $stage = 'response') {
     $response = '';
     while (($line = fgets($socket, 515)) !== false) {
         $response .= $line;
@@ -47,17 +47,17 @@ function smtpReadResponse($socket, array $expectedCodes) {
 
     $code = (int) substr($response, 0, 3);
     if (!in_array($code, $expectedCodes, true)) {
-        throw new RuntimeException('SMTP response code ' . $code);
+        throw new RuntimeException('SMTP ' . $stage . ' response code ' . $code);
     }
 
     return $response;
 }
 
-function smtpCommand($socket, $command, array $expectedCodes) {
+function smtpCommand($socket, $command, array $expectedCodes, $stage) {
     if (fwrite($socket, $command . "\r\n") === false) {
         throw new RuntimeException('SMTP write failed');
     }
-    return smtpReadResponse($socket, $expectedCodes);
+    return smtpReadResponse($socket, $expectedCodes, $stage);
 }
 
 function sendViaHostlandSmtp($username, $password, $recipient, $subjectText, $body, $replyTo = null) {
@@ -86,14 +86,14 @@ function sendViaHostlandSmtp($username, $password, $recipient, $subjectText, $bo
     stream_set_timeout($socket, 15);
 
     try {
-        smtpReadResponse($socket, [220]);
-        smtpCommand($socket, 'EHLO plancod.ru', [250]);
-        smtpCommand($socket, 'AUTH LOGIN', [334]);
-        smtpCommand($socket, base64_encode($username), [334]);
-        smtpCommand($socket, base64_encode($password), [235]);
-        smtpCommand($socket, 'MAIL FROM:<' . $username . '>', [250]);
-        smtpCommand($socket, 'RCPT TO:<' . $recipient . '>', [250, 251]);
-        smtpCommand($socket, 'DATA', [354]);
+        smtpReadResponse($socket, [220], 'greeting');
+        smtpCommand($socket, 'EHLO plancod.ru', [250], 'ehlo');
+        smtpCommand($socket, 'AUTH LOGIN', [334], 'auth_start');
+        smtpCommand($socket, base64_encode($username), [334], 'auth_username');
+        smtpCommand($socket, base64_encode($password), [235], 'auth_password');
+        smtpCommand($socket, 'MAIL FROM:<' . $username . '>', [250], 'mail_from');
+        smtpCommand($socket, 'RCPT TO:<' . $recipient . '>', [250, 251], 'recipient');
+        smtpCommand($socket, 'DATA', [354], 'data_start');
 
         $encodedSubject = '=?UTF-8?B?' . base64_encode($subjectText) . '?=';
         $headers = [
@@ -114,7 +114,7 @@ function sendViaHostlandSmtp($username, $password, $recipient, $subjectText, $bo
         $normalizedBody = str_replace(["\r\n", "\r"], "\n", $body);
         $normalizedBody = str_replace("\n.", "\n..", $normalizedBody);
         fwrite($socket, implode("\r\n", $headers) . "\r\n\r\n" . str_replace("\n", "\r\n", $normalizedBody) . "\r\n.\r\n");
-        smtpReadResponse($socket, [250]);
+        smtpReadResponse($socket, [250], 'message');
         // После ответа 250 письмо уже принято сервером. QUIT отправляем
         // вежливо, но не считаем отсутствие ответа ошибкой доставки.
         fwrite($socket, "QUIT\r\n");
@@ -172,6 +172,8 @@ try {
         $publicError = 'smtp_authentication_failed';
     } elseif (strpos($error->getMessage(), 'connection failed') !== false) {
         $publicError = 'smtp_connection_failed';
+    } elseif (preg_match('/SMTP ([a-z_]+) response code/', $error->getMessage(), $matches)) {
+        $publicError = 'smtp_' . $matches[1] . '_failed';
     }
     http_response_code(500);
     echo json_encode(['ok' => false, 'error' => $publicError]);
