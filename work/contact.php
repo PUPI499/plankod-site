@@ -124,9 +124,16 @@ function sendViaHostlandSmtp($username, $password, $recipient, $subjectText, $bo
 $config = [];
 $configPath = dirname(__DIR__) . '/plankod-mail-config.php';
 if (is_readable($configPath)) {
-    $loadedConfig = require $configPath;
-    if (is_array($loadedConfig)) {
-        $config = $loadedConfig;
+    try {
+        $loadedConfig = require $configPath;
+        if (is_array($loadedConfig)) {
+            $config = $loadedConfig;
+        }
+    } catch (Throwable $error) {
+        error_log('PLANKOD contact form config error: ' . $error->getMessage());
+        http_response_code(500);
+        echo json_encode(['ok' => false, 'error' => 'mail_config_file_invalid']);
+        exit;
     }
 }
 
@@ -158,6 +165,12 @@ try {
     echo json_encode(['ok' => true]);
 } catch (Throwable $error) {
     error_log('PLANKOD contact form SMTP error: ' . $error->getMessage());
-    http_response_code(502);
-    echo json_encode(['ok' => false, 'error' => 'mail_delivery_failed']);
+    $publicError = 'mail_delivery_failed';
+    if (strpos($error->getMessage(), '535') !== false) {
+        $publicError = 'smtp_authentication_failed';
+    } elseif (strpos($error->getMessage(), 'connection failed') !== false) {
+        $publicError = 'smtp_connection_failed';
+    }
+    http_response_code(500);
+    echo json_encode(['ok' => false, 'error' => $publicError]);
 }
