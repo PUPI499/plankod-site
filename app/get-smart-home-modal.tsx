@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const TELEGRAM_LINK = "https://t.me/plancod";
-const EMAIL_LINK = "mailto:info@plankod.ru?subject=Получить%20умный%20дом";
+const EMAIL_LINK = "mailto:info@plancod.ru?subject=Получить%20умный%20дом";
 
 export function GetSmartHomeButton({ label = "Обсудить объект" }: { label?: string }) {
   const [open, setOpen] = useState(false);

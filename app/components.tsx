@@ -46,7 +46,8 @@ export function ContactBand({ eyebrow = "Начать с проекта", title 
           <a href="https://t.me/plancod" target="_blank" rel="noopener noreferrer">Отправить план в Telegram <span>↗</span></a>
         </div>
         <div className="contact-card panel">
-          <div><small>Email</small><strong>info@plankod.ru</strong></div>
+          <div><small>Email</small><strong>info@plancod.ru</strong></div>
+          <div><small>Телефон</small><strong><a href="tel:+79518285872">+7 951 828-58-72</a></strong></div>
           <div><small>Мессенджер</small><strong>Telegram</strong></div>
           <div><small>География</small><strong>Европейская часть России и Урал</strong></div>
           <ContactForm />
@@ -69,6 +70,13 @@ export function SiteFooter() {
         <a href="#contact">Контакты</a>
         <a href="/about">О компании</a>
       </nav>
+      <div className="footer-legal">
+        <span>ООО «Приоритет»</span>
+        <span>ИНН 6150063674</span>
+        <span>ОГРН 1106183001980</span>
+        <a href="tel:+79518285872">+7 951 828-58-72</a>
+        <a href="mailto:info@plancod.ru">info@plancod.ru</a>
+      </div>
       <div className="footer-bottom"><span>© {new Date().getFullYear()} ПЛАНКОД</span><a href="#top">Наверх ↑</a></div>
     </footer>
   );
