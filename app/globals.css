@@ -276,6 +276,18 @@ footer { padding:75px 0 25px; }.footer-brand{}.footer-bottom{}.footer-brand .bra
 .page-heading h2,.portfolio-heading h2,.catalog-heading h2 { margin:0; font-family:"Unbounded"; font-size:clamp(42px,4.9vw,70px); line-height:1.08; letter-spacing:-.05em; font-weight:500; }
 .page-heading h2 em,.portfolio-heading h2 em,.catalog-heading h2 em { color:var(--blue); font-style:normal; }
 .page-heading > p,.portfolio-heading > p,.catalog-heading > p { margin:0; color:#696b73; font-size:12px; line-height:1.65; }
+.legal-page .page-heading { grid-template-columns:1fr; max-width:720px; margin-bottom:56px; }
+.legal-page .page-heading h1 { margin:0; font-family:"Unbounded"; font-size:clamp(36px,4.2vw,56px); line-height:1.1; letter-spacing:-.04em; font-weight:500; }
+.legal-page .page-heading h1 em { color:var(--blue); font-style:normal; }
+.legal-page .page-heading > p { margin-top:18px; max-width:560px; font-size:14px; }
+.legal-body { max-width:760px; }
+.legal-body h2 { margin:48px 0 16px; font-size:19px; font-weight:600; letter-spacing:-.01em; }
+.legal-body h2:first-child { margin-top:0; }
+.legal-body ul { margin:0 0 20px; padding-left:20px; color:#555760; font-size:14px; line-height:1.65; }
+.legal-body ul li { margin:6px 0; }
+.legal-body a { color:var(--blue); text-decoration:underline; }
+.legal-updated { margin-top:48px; padding-top:20px; border-top:1px solid var(--line); color:#9092a3; font-size:12px; }
+
 .subhero { min-height:720px; display:grid; grid-template-columns:1.1fr .9fr; gap:14px; }
 .subhero-copy { min-height:720px; padding:42px; display:flex; flex-direction:column; background:#fff; }
 .subhero-copy h1,.portfolio-copy h1,.products-hero-copy h1 { margin:75px 0 28px; font-family:"Unbounded"; font-size:clamp(40px,4.4vw,74px); line-height:1.06; letter-spacing:-.058em; font-weight:500; overflow-wrap:break-word; word-break:break-word; }

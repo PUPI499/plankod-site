@@ -55,6 +55,15 @@ const routes = [
     ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
+  {
+    entry: "../app/privacy/page.tsx",
+    bundle: "./tmp-privacy.mjs",
+    output: "privacy.html",
+    title: "Политика обработки персональных данных — ПЛАНКОД",
+    description: "Политика ООО «Приоритет» в отношении обработки персональных данных пользователей сайта plancod.ru.",
+    ogImage: "https://plancod.ru/og.png",
+    clientScript: "catalog.js",
+  },
 ];
 
 const LINK_MAP = {
@@ -63,6 +72,7 @@ const LINK_MAP = {
   'href="/projects"': 'href="projects.html"',
   'href="/products"': 'href="products.html"',
   'href="/about"': 'href="about.html"',
+  'href="/privacy"': 'href="privacy.html"',
   'href="/"': 'href="index.html"',
 };
 
@@ -127,6 +137,7 @@ const sitemapUrls = [
   { path: "/projects.html", priority: "0.8" },
   { path: "/products.html", priority: "0.8" },
   { path: "/about.html", priority: "0.6" },
+  { path: "/privacy.html", priority: "0.3" },
 ];
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages -- plain anchors keep the downloadable static preview navigable */
 import { ContactForm } from "./contact-form";
 
-type SectionName = "home" | "smart" | "projects" | "products" | "about";
+type SectionName = "home" | "smart" | "projects" | "products" | "about" | "legal";
 
 const navigation = [
   ["Главная", "/", "home"],
@@ -69,6 +69,7 @@ export function SiteFooter() {
         <a href="/products">Продукция</a>
         <a href="#contact">Контакты</a>
         <a href="/about">О компании</a>
+        <a href="/privacy">Политика конфиденциальности</a>
       </nav>
       <div className="footer-legal">
         <span>ООО «Приоритет»</span>

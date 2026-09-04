@@ -12,7 +12,7 @@ export function ContactForm() {
       <input type="text" name="website" className="hp-field" tabIndex={-1} autoComplete="off" aria-hidden="true" />
       <div className="consent-row">
         <input type="checkbox" id="pd-consent" />
-        <label htmlFor="pd-consent" style={{ margin: 0 }}>Даю согласие на обработку персональных данных</label>
+        <label htmlFor="pd-consent" style={{ margin: 0 }}>Даю согласие на <a href="/privacy" target="_blank" rel="noopener noreferrer">обработку персональных данных</a></label>
       </div>
       <div className="contact-form-actions">
         <button type="button" className="mail-link" disabled>Отправить заявку</button>
