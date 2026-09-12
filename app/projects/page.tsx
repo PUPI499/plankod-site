@@ -1,5 +1,72 @@
+/* eslint-disable @next/next/no-img-element -- static Hostland export uses plain image paths */
 import type { Metadata } from "next";
 import { ContactBand, SiteFooter, SiteHeader } from "../components";
+
+const projects = [
+  {
+    number: "01",
+    type: "Производственный объект",
+    title: "Вентиляция пищевого блока",
+    summary: "Комплексный проект для двухэтажного пищевого производства: от расчёта воздухообмена до питания оборудования и конструктивных узлов.",
+    facts: ["410 м²", "2 этажа", "2 месяца"],
+    scope: "ОВК · КР · ЭОМ",
+    image: "/images/projects/food-block.jpg",
+  },
+  {
+    number: "02",
+    type: "Производственный объект",
+    title: "Вентиляция прачечной",
+    summary: "Разделили чистые и загрязнённые процессы, предусмотрели удаление влаги, тепла и химических испарений, автоматику и пожарную блокировку.",
+    facts: ["202,8 м²", "3 раздела", "10,58 кВт"],
+    scope: "ОВК · КР · ЭОМ",
+    image: "/images/projects/laundry.jpg",
+  },
+  {
+    number: "03",
+    type: "Общественное здание",
+    title: "Дом культуры на 350 мест",
+    summary: "Спроектировали отопление и кондиционирование двухэтажного общественного здания с помещениями разной загрузки.",
+    facts: ["350 мест", "2 этажа", "30 раб. дней"],
+    scope: "Отопление · кондиционирование",
+    image: "/images/projects/culture-house.jpg",
+  },
+  {
+    number: "04",
+    type: "Комплекс зданий",
+    title: "Инженерные сети санатория",
+    summary: "Объединили наружное водоснабжение, тепловые сети, камеры, колодцы и подключения нескольких зданий в единую схему территории.",
+    facts: ["5 зданий", "2 вида сетей", "6 месяцев"],
+    scope: "ТС · НВ",
+    image: "/images/projects/sanatorium.jpg",
+  },
+  {
+    number: "05",
+    type: "Научно-медицинский объект",
+    title: "Переустройство помещений",
+    summary: "Увязали приточно-вытяжную вентиляцию с рекуперацией, силовые сети, освещение, кабельные трассы и заземление в существующем здании.",
+    facts: ["Рекуперация", "Вентиляция", "Электроснабжение"],
+    scope: "ОВК · ЭОМ",
+    image: "/images/projects/medical-rooms.jpg",
+  },
+  {
+    number: "06",
+    type: "Наружные сети",
+    title: "Городская водопроводная линия",
+    summary: "Разработали две линии водоснабжения с продольными профилями, узлами, колодцами и восстановлением покрытий после земляных работ.",
+    facts: ["169,8 м", "2 линии", "ПЭ100"],
+    scope: "Наружное водоснабжение",
+    image: "/images/projects/city-water.jpg",
+  },
+  {
+    number: "07",
+    type: "Административное здание",
+    title: "Ремонт подводящего водопровода",
+    summary: "Спроектировали подключение к существующим колодцам, проход в защитном футляре, земляные работы и восстановление территории.",
+    facts: ["48,44 м", "Подключение", "Восстановление"],
+    scope: "Наружное водоснабжение",
+    image: "/images/projects/admin-water.jpg",
+  },
+];
 
 export const metadata: Metadata = {
   title: "Проектирование и объекты — ПЛАНКОД",
@@ -42,22 +109,30 @@ export default function ProjectsPage() {
 
       <section className="portfolio-section">
         <div className="shell">
-          <div className="portfolio-heading"><div><span className="section-number">02</span><p>Объекты</p></div><h2>Факты важнее<br /><em>красивых обещаний</em></h2><p>Материалы реализованных объектов публикуем после проверки данных и согласования с заказчиками.</p></div>
-          <div className="portfolio-proof-grid">
-            <article className="panel"><span>01 / ИСХОДНЫЕ ДАННЫЕ</span><h3>Показываем задачу и ограничения</h3><p>Тип объекта, стадия работ и условия, которые повлияли на проектное решение.</p></article>
-            <article className="panel"><span>02 / РЕШЕНИЕ</span><h3>Объясняем инженерную логику</h3><p>Расчёты, схемы, выбранное оборудование и причины выбора — без рекламной ретуши.</p></article>
-            <article className="panel"><span>03 / РЕАЛИЗАЦИЯ</span><h3>Подтверждаем результат</h3><p>Фотографии, состав работ и показатели размещаем только после проверки и согласования.</p></article>
+          <div className="portfolio-heading"><div><span className="section-number">02</span><p>Выполненные проекты</p></div><h2>Не обещания.<br /><em>Рабочие чертежи.</em></h2><p>Показываем реальные завершённые проекты. Названия заказчиков, адреса и персональные данные не публикуем.</p></div>
+          <div className="real-projects-grid">
+            {projects.map((project) => (
+              <article className="real-project-card panel" key={project.number}>
+                <div className="project-drawing"><img src={project.image} alt={`Фрагмент рабочего чертежа: ${project.title}`} loading="lazy" /><span>{project.number} / {project.type}</span><b>рабочая документация</b></div>
+                <div className="real-project-copy">
+                  <small>{project.scope}</small>
+                  <h3>{project.title}</h3>
+                  <p>{project.summary}</p>
+                  <div className="real-project-facts">{project.facts.map((fact) => <span key={fact}>{fact}</span>)}</div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="project-content shell">
-        <div className="project-content-title panel"><span className="micro-label">Как разбираем объект</span><h2>Не галерея.<br /><em>Разбор решения.</em></h2><p>В каждом опубликованном проекте показываем исходную задачу, ограничения, принятые решения, состав оборудования и реализацию.</p></div>
+        <div className="project-content-title panel"><span className="micro-label">Что получает заказчик</span><h2>Проект, по которому<br /><em>можно работать.</em></h2><p>Состав документации зависит от объекта. До начала работ фиксируем разделы, исходные данные, сроки и стоимость.</p></div>
         <div className="project-case-template panel">
-          <div><span>01</span><h3>Задача заказчика</h3><p>Что требовалось решить и на какой стадии находился объект.</p></div>
-          <div><span>02</span><h3>Проектное решение</h3><p>Почему выбрали именно такую схему и оборудование.</p></div>
-          <div><span>03</span><h3>Реализация</h3><p>Монтаж, пусконаладка, сложные узлы и фактический состав работ.</p></div>
-          <div><span>04</span><h3>Результат</h3><p>Проверяемые показатели и отзыв — только после согласования с заказчиком.</p></div>
+          <div><span>01</span><h3>Расчёты</h3><p>Нагрузки, воздухообмены, мощности и параметры системы — по исходным данным объекта.</p></div>
+          <div><span>02</span><h3>Планы и схемы</h3><p>Трассы, оборудование, подключения, узлы и отметки, необходимые для монтажа.</p></div>
+          <div><span>03</span><h3>Спецификация</h3><p>Состав оборудования и материалов, чтобы закупка соответствовала проектному решению.</p></div>
+          <div><span>04</span><h3>Сопровождение</h3><p>Отвечаем на вопросы по документации и можем продолжить работу поставкой и монтажом.</p></div>
         </div>
       </section>
 
