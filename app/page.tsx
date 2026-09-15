@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element -- the Hostland static export serves an already optimized WebP */
+/* eslint-disable @next/next/no-img-element, @next/next/no-html-link-for-pages -- the static and hosted builds share direct paths */
 import { ContactBand, SiteFooter, SiteHeader } from "./components";
 import { GetSmartHomeButton } from "./get-smart-home-modal";
 

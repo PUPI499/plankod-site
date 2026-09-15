@@ -1,72 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- static Hostland export uses plain image paths */
 import type { Metadata } from "next";
 import { ContactBand, SiteFooter, SiteHeader } from "../components";
-
-const projects = [
-  {
-    number: "01",
-    type: "Производственный объект",
-    title: "Вентиляция пищевого блока",
-    summary: "Комплексный проект для двухэтажного пищевого производства: от расчёта воздухообмена до питания оборудования и конструктивных узлов.",
-    facts: ["410 м²", "2 этажа", "2 месяца"],
-    scope: "ОВК · КР · ЭОМ",
-    image: "/images/projects/food-block.jpg",
-  },
-  {
-    number: "02",
-    type: "Производственный объект",
-    title: "Вентиляция прачечной",
-    summary: "Разделили чистые и загрязнённые процессы, предусмотрели удаление влаги, тепла и химических испарений, автоматику и пожарную блокировку.",
-    facts: ["202,8 м²", "3 раздела", "10,58 кВт"],
-    scope: "ОВК · КР · ЭОМ",
-    image: "/images/projects/laundry.jpg",
-  },
-  {
-    number: "03",
-    type: "Общественное здание",
-    title: "Дом культуры на 350 мест",
-    summary: "Спроектировали отопление и кондиционирование двухэтажного общественного здания с помещениями разной загрузки.",
-    facts: ["350 мест", "2 этажа", "30 раб. дней"],
-    scope: "Отопление · кондиционирование",
-    image: "/images/projects/culture-house.jpg",
-  },
-  {
-    number: "04",
-    type: "Комплекс зданий",
-    title: "Инженерные сети санатория",
-    summary: "Объединили наружное водоснабжение, тепловые сети, камеры, колодцы и подключения нескольких зданий в единую схему территории.",
-    facts: ["5 зданий", "2 вида сетей", "6 месяцев"],
-    scope: "ТС · НВ",
-    image: "/images/projects/sanatorium.jpg",
-  },
-  {
-    number: "05",
-    type: "Научно-медицинский объект",
-    title: "Переустройство помещений",
-    summary: "Увязали приточно-вытяжную вентиляцию с рекуперацией, силовые сети, освещение, кабельные трассы и заземление в существующем здании.",
-    facts: ["Рекуперация", "Вентиляция", "Электроснабжение"],
-    scope: "ОВК · ЭОМ",
-    image: "/images/projects/medical-rooms.jpg",
-  },
-  {
-    number: "06",
-    type: "Наружные сети",
-    title: "Городская водопроводная линия",
-    summary: "Разработали две линии водоснабжения с продольными профилями, узлами, колодцами и восстановлением покрытий после земляных работ.",
-    facts: ["169,8 м", "2 линии", "ПЭ100"],
-    scope: "Наружное водоснабжение",
-    image: "/images/projects/city-water.jpg",
-  },
-  {
-    number: "07",
-    type: "Административное здание",
-    title: "Ремонт подводящего водопровода",
-    summary: "Спроектировали подключение к существующим колодцам, проход в защитном футляре, земляные работы и восстановление территории.",
-    facts: ["48,44 м", "Подключение", "Восстановление"],
-    scope: "Наружное водоснабжение",
-    image: "/images/projects/admin-water.jpg",
-  },
-];
+import { projects } from "./data";
 
 export const metadata: Metadata = {
   title: "Проектирование и объекты — ПЛАНКОД",
@@ -113,12 +48,13 @@ export default function ProjectsPage() {
           <div className="real-projects-grid">
             {projects.map((project) => (
               <article className="real-project-card panel" key={project.number}>
-                <div className="project-drawing"><img src={project.image} alt={`Фрагмент рабочего чертежа: ${project.title}`} loading="lazy" /><span>{project.number} / {project.type}</span><b>рабочая документация</b></div>
+                <a className="project-drawing" href={`/projects/${project.slug}`}><img src={project.image} alt={`Фрагмент рабочего чертежа: ${project.title}`} loading="lazy" /><span>{project.number} / {project.type}</span><b>открыть проект ↗</b></a>
                 <div className="real-project-copy">
                   <small>{project.scope}</small>
-                  <h3>{project.title}</h3>
+                  <h3><a href={`/projects/${project.slug}`}>{project.title}</a></h3>
                   <p>{project.summary}</p>
                   <div className="real-project-facts">{project.facts.map((fact) => <span key={fact}>{fact}</span>)}</div>
+                  <a className="project-card-link" href={`/projects/${project.slug}`}>Смотреть проект <span>→</span></a>
                 </div>
               </article>
             ))}

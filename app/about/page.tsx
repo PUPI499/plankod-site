@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages -- direct paths keep the static and hosted builds consistent */
 import type { Metadata } from "next";
 import { ContactBand, SiteFooter, SiteHeader } from "../components";
 
