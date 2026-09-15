@@ -827,6 +827,11 @@ main { overflow-x:clip; }
 .products-hero-copy h1,.about-hero-copy h1 { overflow-wrap:normal; word-break:normal; hyphens:none; }
 .modal-links a:last-child { color:var(--ink); background:#fff; border:1px solid var(--line); }
 
+/* Portfolio cards sit on light surfaces inside the dark portfolio section. */
+.portfolio-section .real-project-copy p {
+  color:#353840!important;
+}
+
 @media (max-width:1040px) {
   .header { grid-template-columns:1fr auto; }
   .site-menu { justify-self:end; margin-left:auto; }
