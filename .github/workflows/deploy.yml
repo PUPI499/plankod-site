@@ -23,6 +23,12 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Validate mail handler without sending email
+        run: |
+          php -l work/contact.php
+          php work/check-contact.php
+          node work/check-contact-ui.mjs
+
       - name: Build
         run: npm run build
 

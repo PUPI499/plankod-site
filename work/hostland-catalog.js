@@ -271,6 +271,7 @@
     var submitBtn = form.querySelector("button.mail-link");
     var statusOk = form.querySelector(".form-status-ok");
     var statusError = form.querySelector(".form-status-error");
+    var requestInfo = form.querySelector(".form-request-id");
     if (!consent || !submitBtn || !nameInput || !contactInput || !messageInput) return;
     var pending = false;
     var sent = false;
@@ -289,6 +290,7 @@
           sent = false;
           submitBtn.textContent = "Отправить заявку";
           if (statusOk) statusOk.hidden = true;
+          if (requestInfo) requestInfo.hidden = true;
         }
         updateState();
       });
@@ -300,10 +302,13 @@
       if (pending || sent || !consent.checked || !fieldsFilled() || !form.reportValidity()) return;
       if (statusOk) statusOk.hidden = true;
       if (statusError) statusError.hidden = true;
+      if (requestInfo) requestInfo.hidden = true;
       submitBtn.disabled = true;
       submitBtn.textContent = "Отправляем…";
       pending = true;
       form.setAttribute("aria-busy", "true");
+      [nameInput, contactInput, messageInput].forEach(function (el) { el.readOnly = true; });
+      consent.disabled = true;
 
       var params = new URLSearchParams();
       params.set("name", nameInput.value);
@@ -327,7 +332,11 @@
           });
         })
         .then(function (result) {
-          if (result.ok && result.data && result.data.ok) {
+          if (requestInfo && result.data && /^[A-F0-9]{12}$/.test(result.data.request_id || "")) {
+            requestInfo.textContent = "Номер обращения: " + result.data.request_id;
+            requestInfo.hidden = false;
+          }
+          if (result.ok && result.data && result.data.ok && result.data.status === "queued") {
             sent = true;
             form.reset();
             submitBtn.textContent = "Отправлено ✓";
@@ -343,6 +352,8 @@
         .finally(function () {
           window.clearTimeout(timeout);
           pending = false;
+          [nameInput, contactInput, messageInput].forEach(function (el) { el.readOnly = false; });
+          consent.disabled = false;
           form.removeAttribute("aria-busy");
           updateState();
         });

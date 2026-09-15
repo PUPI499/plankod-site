@@ -1,8 +1,7 @@
 <?php
 // Скопируйте этот файл на Hostland в папку htdocs уровнем выше папки www,
-// назовите plankod-mail-config.php и укажите пароль почтового ящика.
+// назовите plankod-mail-config.php, только если нужно изменить получателя.
+// Локальная почтовая служба Hostland не требует пароля ящика в коде сайта.
 return [
-    'username' => 'info@plancod.ru',
-    'password' => 'ВСТАВЬТЕ_ПАРОЛЬ_ПОЧТОВОГО_ЯЩИКА',
     'recipient' => 'info@plancod.ru',
 ];

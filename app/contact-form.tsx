@@ -18,10 +18,11 @@ export function ContactForm() {
         <button type="submit" className="mail-link" disabled>Отправить заявку</button>
         <a className="telegram-link" href={TELEGRAM_LINK} target="_blank" rel="noopener noreferrer">Telegram</a>
       </div>
-      <p className="form-status form-status-ok" role="status" hidden>Заявка отправлена, ответим в течение одного рабочего дня.</p>
+      <p className="form-status form-status-ok" role="status" hidden>Заявка принята почтовой службой. Ответим в течение одного рабочего дня.</p>
       <p className="form-status form-status-error" role="alert" hidden>
         Не удалось подтвердить отправку. Ваш текст сохранён в форме. Попробуйте ещё раз или напишите нам в <a href={TELEGRAM_LINK} target="_blank" rel="noopener noreferrer">Telegram</a>.
       </p>
+      <p className="form-request-id" hidden />
       <noscript><p>Для отправки формы нужен JavaScript. Вы также можете написать на <a href="mailto:info@plancod.ru">info@plancod.ru</a> или в Telegram.</p></noscript>
     </form>
   );
