@@ -3,6 +3,7 @@
 // inlined CSS, standard filenames (index.html + friends), OG/meta tags,
 // and copies public assets. No Node server, no Cloudflare Worker needed.
 import { build } from "esbuild";
+import { createHash } from "node:crypto";
 import { readFile, writeFile, mkdir, copyFile, rm } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -150,6 +151,7 @@ try {
 }
 
 await copyFile(new URL("./hostland-catalog.js", import.meta.url), new URL("./catalog.js", OUT_DIR));
+const clientVersion = createHash("sha256").update(await readFile(new URL("./hostland-catalog.js", import.meta.url))).digest("hex").slice(0, 12);
 console.log("copied catalog.js");
 
 await copyFile(new URL("./contact.php", import.meta.url), new URL("./contact.php", OUT_DIR));
@@ -215,7 +217,7 @@ for (const route of routes) {
   const { default: Page } = await import(`${pathToFileURL(bundledPage.pathname).href}?v=${Date.now()}`);
   const page = route.params ? await Page({ params: Promise.resolve(route.params) }) : await Page();
   const body = localizeLinks(renderToStaticMarkup(page));
-  const scriptTag = route.clientScript ? `\n  <script defer src="/${route.clientScript}"></script>` : "";
+  const scriptTag = route.clientScript ? `\n  <script defer src="/${route.clientScript}?v=${clientVersion}"></script>` : "";
   const html = `<!doctype html>
 <html lang="ru">
 <head>
