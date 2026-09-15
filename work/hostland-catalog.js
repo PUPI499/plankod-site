@@ -124,6 +124,82 @@
   }
 })();
 
+// Project drawing lightbox for the static Hostland export.
+(function () {
+  "use strict";
+  var items = Array.prototype.slice.call(document.querySelectorAll(".case-gallery-item"));
+  if (!items.length) return;
+
+  var activeIndex = 0;
+  var previousOverflow = "";
+  var overlay = document.createElement("div");
+  overlay.className = "case-lightbox";
+  overlay.hidden = true;
+  overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
+  overlay.setAttribute("aria-label", "Просмотр проектного чертежа");
+  overlay.innerHTML =
+    '<button class="case-lightbox-close" type="button" aria-label="Закрыть">×</button>' +
+    '<button class="case-lightbox-arrow previous" type="button" aria-label="Предыдущее изображение">←</button>' +
+    '<figure><img alt=""><figcaption><span></span><b></b></figcaption></figure>' +
+    '<button class="case-lightbox-arrow next" type="button" aria-label="Следующее изображение">→</button>';
+  document.body.appendChild(overlay);
+
+  var image = overlay.querySelector("figure img");
+  var caption = overlay.querySelector("figcaption span");
+  var counter = overlay.querySelector("figcaption b");
+
+  function render() {
+    var source = items[activeIndex].querySelector("img");
+    image.src = source.src;
+    image.alt = source.alt;
+    caption.textContent = source.alt;
+    counter.textContent = String(activeIndex + 1) + " / " + String(items.length);
+  }
+
+  function open(index) {
+    activeIndex = index;
+    render();
+    overlay.hidden = false;
+    previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    overlay.querySelector(".case-lightbox-close").focus();
+  }
+
+  function close() {
+    overlay.hidden = true;
+    document.body.style.overflow = previousOverflow;
+    items[activeIndex].focus();
+  }
+
+  function move(step) {
+    activeIndex = (activeIndex + step + items.length) % items.length;
+    render();
+  }
+
+  items.forEach(function (item, index) {
+    item.addEventListener("click", function () { open(index); });
+  });
+  overlay.querySelector(".case-lightbox-close").addEventListener("click", close);
+  overlay.querySelector(".previous").addEventListener("click", function (event) { event.stopPropagation(); move(-1); });
+  overlay.querySelector(".next").addEventListener("click", function (event) { event.stopPropagation(); move(1); });
+  overlay.querySelector("figure").addEventListener("click", function (event) { event.stopPropagation(); });
+  overlay.addEventListener("click", close);
+  window.addEventListener("keydown", function (event) {
+    if (overlay.hidden) return;
+    if (event.key === "Tab") {
+      var controls = overlay.querySelectorAll("button");
+      var first = controls[0];
+      var last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+    if (event.key === "Escape") close();
+    if (event.key === "ArrowLeft") move(-1);
+    if (event.key === "ArrowRight") move(1);
+  });
+})();
+
 // "Получить умный дом" modal (point 6)
 (function () {
   "use strict";

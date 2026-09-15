@@ -9,6 +9,34 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 const OUT_DIR = new URL("../hostland-export/", import.meta.url);
 
+const projectRoutes = [
+  {
+    slug: "food-block-ventilation",
+    title: "Вентиляция пищевого блока",
+    description: "Комплексный проект вентиляции двухэтажного пищевого производства.",
+  },
+  {
+    slug: "laundry-ventilation",
+    title: "Вентиляция прачечной",
+    description: "Проект вентиляции прачечной с разделением чистых и загрязнённых процессов.",
+  },
+  {
+    slug: "culture-house-climate",
+    title: "Дом культуры на 350 мест",
+    description: "Отопление и кондиционирование двухэтажного общественного здания.",
+  },
+  {
+    slug: "sanatorium-utilities",
+    title: "Инженерные сети санатория",
+    description: "Капитальный ремонт наружного водоснабжения и тепловых сетей комплекса зданий.",
+  },
+  {
+    slug: "rcnn-renovation",
+    title: "Капитальный ремонт помещений ФГБНУ РЦНН",
+    description: "Вентиляция помещений в существующем здании: оборудование, трассы и монтажные решения.",
+  },
+];
+
 const routes = [
   {
     entry: "../app/page.tsx",
@@ -64,20 +92,30 @@ const routes = [
     ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
+  ...projectRoutes.map((project) => ({
+    entry: "../app/projects/[slug]/page.tsx",
+    bundle: `./tmp-project-${project.slug}.mjs`,
+    output: `projects/${project.slug}/index.html`,
+    title: `${project.title} — ПЛАНКОД`,
+    description: project.description,
+    ogImage: "https://plancod.ru/og.png",
+    clientScript: "catalog.js",
+    params: { slug: project.slug },
+  })),
 ];
 
 const LINK_MAP = {
-  'href="/#contact"': 'href="index.html#contact"',
-  'href="/smart-home"': 'href="smart-home.html"',
-  'href="/projects"': 'href="projects.html"',
-  'href="/products"': 'href="products.html"',
-  'href="/about"': 'href="about.html"',
-  'href="/privacy"': 'href="privacy.html"',
-  'href="/"': 'href="index.html"',
+  'href="/#contact"': 'href="/index.html#contact"',
+  'href="/smart-home"': 'href="/smart-home.html"',
+  'href="/projects"': 'href="/projects.html"',
+  'href="/products"': 'href="/products.html"',
+  'href="/about"': 'href="/about.html"',
+  'href="/privacy"': 'href="/privacy.html"',
+  'href="/"': 'href="/index.html"',
 };
 
 function localizeLinks(markup) {
-  let out = markup;
+  let out = markup.replace(/href="\/projects\/([^"#?]+)"/g, 'href="/projects/$1/"');
   for (const [from, to] of Object.entries(LINK_MAP)) out = out.replaceAll(from, to);
   return out;
 }
@@ -138,6 +176,7 @@ const sitemapUrls = [
   { path: "/products.html", priority: "0.8" },
   { path: "/about.html", priority: "0.6" },
   { path: "/privacy.html", priority: "0.3" },
+  ...projectRoutes.map((project) => ({ path: `/projects/${project.slug}/`, priority: "0.7" })),
 ];
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -165,17 +204,24 @@ for (const route of routes) {
     platform: "node",
     format: "esm",
     jsx: "automatic",
+    plugins: [{
+      name: "next-navigation-node-resolution",
+      setup(bundler) {
+        bundler.onResolve({ filter: /^next\/navigation$/ }, () => ({ path: "next/navigation.js", external: true }));
+      },
+    }],
     external: ["react", "react/jsx-runtime", "react-dom", "react-dom/server"],
   });
   const { default: Page } = await import(`${pathToFileURL(bundledPage.pathname).href}?v=${Date.now()}`);
-  const body = localizeLinks(renderToStaticMarkup(Page()));
-  const scriptTag = route.clientScript ? `\n  <script defer src="${route.clientScript}"></script>` : "";
+  const page = route.params ? await Page({ params: Promise.resolve(route.params) }) : await Page();
+  const body = localizeLinks(renderToStaticMarkup(page));
+  const scriptTag = route.clientScript ? `\n  <script defer src="/${route.clientScript}"></script>` : "";
   const html = `<!doctype html>
 <html lang="ru">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <title>${route.title}</title>
   <meta name="description" content="${route.description}">
   <meta property="og:type" content="website">
@@ -191,7 +237,13 @@ for (const route of routes) {
 </head>
 <body>${body}</body>
 </html>`;
-  await writeFile(new URL(route.output, OUT_DIR), html);
+  const outputFile = new URL(route.output, OUT_DIR);
+  await mkdir(new URL(".", outputFile), { recursive: true });
+  await writeFile(outputFile, html);
+  if (route.output === "projects.html") {
+    await mkdir(new URL("projects/", OUT_DIR), { recursive: true });
+    await writeFile(new URL("projects/index.html", OUT_DIR), html);
+  }
   await rm(bundledPage, { force: true });
   console.log("wrote", route.output);
 }
