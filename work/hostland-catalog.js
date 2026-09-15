@@ -207,12 +207,53 @@
   triggers.forEach(function (btn) {
     var overlay = btn.nextElementSibling;
     if (!overlay || !overlay.classList.contains("modal-overlay")) return;
-    btn.addEventListener("click", function () { overlay.hidden = false; });
+    var previousOverflow = "";
+    function close() {
+      overlay.hidden = true;
+      document.body.style.overflow = previousOverflow;
+      btn.focus();
+    }
+    btn.setAttribute("aria-haspopup", "dialog");
+    btn.addEventListener("click", function () {
+      previousOverflow = document.body.style.overflow;
+      overlay.hidden = false;
+      document.body.style.overflow = "hidden";
+      overlay.querySelector(".modal-close").focus();
+    });
     overlay.addEventListener("click", function (event) {
-      if (event.target === overlay) overlay.hidden = true;
+      if (event.target === overlay) close();
     });
     var closeBtn = overlay.querySelector(".modal-close");
-    if (closeBtn) closeBtn.addEventListener("click", function () { overlay.hidden = true; });
+    if (closeBtn) closeBtn.addEventListener("click", close);
+    overlay.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") { event.preventDefault(); close(); }
+      if (event.key !== "Tab") return;
+      var controls = overlay.querySelectorAll("button, a[href]");
+      var first = controls[0];
+      var last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    });
+  });
+})();
+
+// Native mobile navigation: close after selection, outside click or Escape.
+(function () {
+  "use strict";
+  document.querySelectorAll(".site-menu").forEach(function (menu) {
+    var summary = menu.querySelector("summary");
+    menu.addEventListener("toggle", function () {
+      summary.setAttribute("aria-label", menu.open ? "Закрыть меню" : "Открыть меню");
+    });
+    menu.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () { menu.open = false; });
+    });
+    document.addEventListener("click", function (event) {
+      if (menu.open && !menu.contains(event.target)) menu.open = false;
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && menu.open) { menu.open = false; summary.focus(); }
+    });
   });
 })();
 
@@ -231,37 +272,54 @@
     var statusOk = form.querySelector(".form-status-ok");
     var statusError = form.querySelector(".form-status-error");
     if (!consent || !submitBtn || !nameInput || !contactInput || !messageInput) return;
+    var pending = false;
+    var sent = false;
 
     function fieldsFilled() {
       return nameInput.value.trim() !== "" && contactInput.value.trim() !== "" && messageInput.value.trim() !== "";
     }
 
     function updateState() {
-      submitBtn.disabled = !(consent.checked && fieldsFilled());
+      submitBtn.disabled = pending || sent || !(consent.checked && fieldsFilled());
     }
 
     [nameInput, contactInput, messageInput].forEach(function (el) {
-      el.addEventListener("input", updateState);
+      el.addEventListener("input", function () {
+        if (sent) {
+          sent = false;
+          submitBtn.textContent = "Отправить заявку";
+          if (statusOk) statusOk.hidden = true;
+        }
+        updateState();
+      });
     });
     consent.addEventListener("change", updateState);
 
-    submitBtn.addEventListener("click", function () {
-      if (submitBtn.disabled) return;
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (pending || sent || !consent.checked || !fieldsFilled() || !form.reportValidity()) return;
       if (statusOk) statusOk.hidden = true;
       if (statusError) statusError.hidden = true;
       submitBtn.disabled = true;
       submitBtn.textContent = "Отправляем…";
+      pending = true;
+      form.setAttribute("aria-busy", "true");
 
       var params = new URLSearchParams();
       params.set("name", nameInput.value);
       params.set("contact", contactInput.value);
       params.set("message", messageInput.value);
       params.set("website", honeypot ? honeypot.value : "");
+      params.set("consent", "1");
+
+      var controller = new AbortController();
+      var timeout = window.setTimeout(function () { controller.abort(); }, 30000);
 
       fetch("/contact.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: params.toString(),
+        signal: controller.signal,
       })
         .then(function (response) {
           return response.json().catch(function () { return null; }).then(function (data) {
@@ -270,6 +328,8 @@
         })
         .then(function (result) {
           if (result.ok && result.data && result.data.ok) {
+            sent = true;
+            form.reset();
             submitBtn.textContent = "Отправлено ✓";
             if (statusOk) statusOk.hidden = false;
           } else {
@@ -278,8 +338,13 @@
         })
         .catch(function () {
           submitBtn.textContent = "Отправить заявку";
-          submitBtn.disabled = false;
           if (statusError) statusError.hidden = false;
+        })
+        .finally(function () {
+          window.clearTimeout(timeout);
+          pending = false;
+          form.removeAttribute("aria-busy");
+          updateState();
         });
     });
 

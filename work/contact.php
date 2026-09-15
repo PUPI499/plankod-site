@@ -6,9 +6,18 @@ header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Allow: POST');
     http_response_code(405);
     echo json_encode(['ok' => false, 'error' => 'method_not_allowed']);
     exit;
+}
+
+foreach (['name', 'contact', 'message', 'website', 'consent'] as $field) {
+    if (isset($_POST[$field]) && !is_string($_POST[$field])) {
+        http_response_code(400);
+        echo json_encode(['ok' => false, 'error' => 'invalid_fields']);
+        exit;
+    }
 }
 
 // Honeypot: скрытое поле, которое настоящие посетители не заполняют.
@@ -24,6 +33,12 @@ $message = trim($_POST['message'] ?? '');
 if ($name === '' || $contact === '' || $message === '') {
     http_response_code(400);
     echo json_encode(['ok' => false, 'error' => 'missing_fields']);
+    exit;
+}
+
+if (($_POST['consent'] ?? '') !== '1') {
+    http_response_code(400);
+    echo json_encode(['ok' => false, 'error' => 'consent_required']);
     exit;
 }
 

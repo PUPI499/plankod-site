@@ -63,7 +63,7 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      <SiteFooter />
+      <SiteFooter contactHref="/#contact" />
     </main>
   );
 }

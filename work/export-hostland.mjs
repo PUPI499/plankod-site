@@ -10,33 +10,17 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 const OUT_DIR = new URL("../hostland-export/", import.meta.url);
 
-const projectRoutes = [
-  {
-    slug: "food-block-ventilation",
-    title: "Вентиляция пищевого блока",
-    description: "Комплексный проект вентиляции двухэтажного пищевого производства.",
-  },
-  {
-    slug: "laundry-ventilation",
-    title: "Вентиляция прачечной",
-    description: "Проект вентиляции прачечной с разделением чистых и загрязнённых процессов.",
-  },
-  {
-    slug: "culture-house-climate",
-    title: "Дом культуры на 350 мест",
-    description: "Отопление и кондиционирование двухэтажного общественного здания.",
-  },
-  {
-    slug: "sanatorium-utilities",
-    title: "Инженерные сети санатория",
-    description: "Капитальный ремонт наружного водоснабжения и тепловых сетей комплекса зданий.",
-  },
-  {
-    slug: "rcnn-renovation",
-    title: "Капитальный ремонт помещений ФГБНУ РЦНН",
-    description: "Вентиляция помещений в существующем здании: оборудование, трассы и монтажные решения.",
-  },
-];
+// Pages, sitemap and link previews must use the same published project records.
+const dataBundle = new URL("./tmp-project-data.mjs", import.meta.url);
+await build({
+  entryPoints: [new URL("../app/projects/data.ts", import.meta.url).pathname],
+  outfile: dataBundle.pathname,
+  bundle: true,
+  platform: "node",
+  format: "esm",
+});
+const { projects: projectRoutes } = await import(`${dataBundle.href}?v=${Date.now()}`);
+await rm(dataBundle);
 
 const routes = [
   {
@@ -98,8 +82,8 @@ const routes = [
     bundle: `./tmp-project-${project.slug}.mjs`,
     output: `projects/${project.slug}/index.html`,
     title: `${project.title} — ПЛАНКОД`,
-    description: project.description,
-    ogImage: "https://plancod.ru/og.png",
+    description: project.summary,
+    ogImage: `https://plancod.ru${project.image}`,
     clientScript: "catalog.js",
     params: { slug: project.slug },
   })),
@@ -161,6 +145,7 @@ await copyFile(new URL("./calc.html", import.meta.url), new URL("./calc.html", O
 console.log("copied calc.html");
 
 const SITE_URL = "https://plancod.ru";
+const escapeAttribute = (value) => value.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 const lastmod = new Date().toISOString().slice(0, 10);
 
 const robotsTxt = `User-agent: *
@@ -217,6 +202,9 @@ for (const route of routes) {
   const { default: Page } = await import(`${pathToFileURL(bundledPage.pathname).href}?v=${Date.now()}`);
   const page = route.params ? await Page({ params: Promise.resolve(route.params) }) : await Page();
   const body = localizeLinks(renderToStaticMarkup(page));
+  const canonical = `${SITE_URL}/${route.output === "index.html" ? "" : route.output.replace(/\/index\.html$/, "/")}`;
+  const title = escapeAttribute(route.title);
+  const description = escapeAttribute(route.description);
   const scriptTag = route.clientScript ? `\n  <script defer src="/${route.clientScript}?v=${clientVersion}"></script>` : "";
   const html = `<!doctype html>
 <html lang="ru">
@@ -224,16 +212,20 @@ for (const route of routes) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <title>${route.title}</title>
-  <meta name="description" content="${route.description}">
+  <link rel="canonical" href="${canonical}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>${title}</title>
+  <meta name="description" content="${description}">
+  <meta property="og:url" content="${canonical}">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ru_RU">
-  <meta property="og:title" content="${route.title}">
-  <meta property="og:description" content="${route.description}">
+  <meta property="og:title" content="${title}">
+  <meta property="og:description" content="${description}">
   <meta property="og:image" content="${route.ogImage}">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${route.title}">
-  <meta name="twitter:description" content="${route.description}">
+  <meta name="twitter:title" content="${title}">
+  <meta name="twitter:description" content="${description}">
   <meta name="twitter:image" content="${route.ogImage}">
   <style>${css}</style>${scriptTag}
 </head>

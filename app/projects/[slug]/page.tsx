@@ -21,8 +21,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description: project.summary,
-    openGraph: { title, description: project.summary, images: [] },
-    twitter: { title, description: project.summary, images: [] },
+    openGraph: { title, description: project.summary, images: [`https://plancod.ru${project.image}`] },
+    twitter: { title, description: project.summary, images: [`https://plancod.ru${project.image}`] },
   };
 }
 

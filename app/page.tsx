@@ -192,7 +192,7 @@ export default function Home() {
           <p>ПЛАНКОД — один ответственный за подбор, оборудование, монтаж, настройку и дальнейшую работу системы.</p>
           <div className="comparison-points"><span><b>1</b>Проект</span><span><b>2</b>Оборудование</span><span><b>3</b>Монтаж</span><span><b>4</b>Сервис</span></div>
         </div>
-        <div className="comparison-table panel">
+        <div className="comparison-table panel" role="region" aria-label="Сравнение подходов — на телефоне таблица прокручивается вбок" tabIndex={0}>
           <div className="table-row table-head"><span>Что сравниваем</span><span>Обычная покупка</span><span>ПЛАНКОД</span></div>
           <div className="table-row"><b>Совместимость</b><span>разбираетесь сами</span><strong>проверяем до заказа</strong></div>
           <div className="table-row"><b>Монтаж</b><span>отдельный исполнитель</span><strong>одна команда</strong></div>

@@ -833,6 +833,33 @@ main { overflow-x:clip; }
   color:#353840!important;
 }
 
+/* Release QA: contrast, visible focus and safe dialog/form behaviour. */
+.case-result-metric p { color:#f0efff!important; }
+.case-result-metric > span { color:#c9c7ff; }
+.case-result-metric strong { font-size:clamp(48px,5.5vw,88px); line-height:1.05; }
+.integration-hub small,.integration-hub span { color:#62646d; }
+:where(a,button,summary,input,textarea):focus-visible { outline:3px solid #7772ee; outline-offset:4px; }
+.contact-form input:focus-visible,.contact-form textarea:focus-visible { outline:2px solid var(--blue); outline-offset:2px; border-color:var(--blue); }
+.contact-form input:not([type="checkbox"]),.contact-form textarea { font-size:16px; }
+.contact-form .consent-row input { flex:0 0 auto; width:18px; height:18px; accent-color:var(--blue); }
+.consent-row a,.form-status a,.legal-body a { text-decoration:underline; text-underline-offset:3px; }
+.contact-card .form-status-ok { color:#17613c!important; }
+.contact-card .form-status-error { color:#9e2828!important; }
+.modal-overlay { overflow-y:auto; }
+.modal-card { max-height:calc(100dvh - 40px); overflow:auto; }
+.modal-card > .micro-label { display:block; padding-right:35px; }
+.modal-close { width:44px; height:44px; top:12px; right:12px; }
+.modal-card > small { color:#62646d; font-size:13px; }
+.case-lightbox figure { height:calc(100dvh - 90px); }
+footer > nav { flex-wrap:wrap; }
+.faq-list summary { grid-template-columns:minmax(0,1fr) 28px; gap:10px; }
+.faq-list summary span { min-width:0; overflow-wrap:anywhere; }
+
+@media (prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto; }
+  *,*::before,*::after { transition:none!important; animation:none!important; }
+}
+
 @media (max-width:1040px) {
   .header { grid-template-columns:1fr auto; }
   .site-menu { justify-self:end; margin-left:auto; }
@@ -840,6 +867,8 @@ main { overflow-x:clip; }
   .portfolio-proof-grid article { min-height:300px; }
   .real-project-card:first-child { display:block; }
   .real-project-card:first-child .project-drawing { min-height:430px; }
+  .method-line,.about-cycle-grid { grid-template-columns:repeat(2,minmax(0,1fr)); overflow:visible; }
+  .method-line article,.about-cycle-grid article { min-height:240px; }
 }
 
 @media (max-width:640px) {
@@ -859,4 +888,21 @@ main { overflow-x:clip; }
   .case-evidence > span { top:25px; left:25px; }
   .catalog-buy { gap:12px; }
   .catalog-buy a { min-height:44px; padding:0 13px; }
+  .site-menu summary { width:44px; height:44px; }
+  .site-menu nav a { font-size:15px; }
+  .method-line,.about-cycle-grid { grid-template-columns:minmax(0,1fr); }
+  .method-line article,.about-cycle-grid article { min-height:0; padding:24px; }
+  .about-cycle-grid h3 { margin-top:20px; }
+  .method-line p { min-height:0; }
+  .kit-list > div { grid-template-columns:32px minmax(0,1fr); gap:12px; }
+  .kit-list p,.kit-list b { grid-column:2; }
+  .case-hero-copy { order:-1; min-height:0; }
+  .case-hero-copy .case-facts { margin-top:24px; }
+  .case-back-link { margin-bottom:28px; font-size:13px; }
+  .case-discuss-link { font-size:13px; }
+  .case-result-metric,.case-result-copy { min-height:360px; }
+  .case-result-copy p { margin-top:28px; }
+  .case-result-metric strong { font-size:clamp(52px,16vw,65px); line-height:1.05; }
+  .case-lightbox figure { height:calc(100dvh - 80px); }
+  .comparison-table::before { content:"Листайте таблицу вправо →"; display:block; position:sticky; left:0; margin:8px 0 16px; color:var(--blue); font-size:13px; }
 }

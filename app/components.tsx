@@ -12,6 +12,7 @@ const navigation = [
 ] as const;
 
 export function SiteHeader({ active = "home" }: { active?: SectionName }) {
+  const contactHref = active === "legal" ? "/#contact" : "#contact";
   return (
     <header className="header shell">
       <a className="logo" href="/" aria-label="ПЛАНКОД — главная">
@@ -22,12 +23,12 @@ export function SiteHeader({ active = "home" }: { active?: SectionName }) {
           <a key={key} className={active === key ? "active-link" : ""} aria-current={active === key ? "page" : undefined} href={href}>{label}</a>
         ))}
       </nav>
-      <a className="header-button" href="#contact">Оставить заявку <span>↗</span></a>
+      <a className="header-button" href={contactHref}>Оставить заявку <span>↗</span></a>
       <details className="site-menu">
         <summary aria-label="Открыть меню"><i /><i /></summary>
         <nav aria-label="Мобильная навигация">
           {navigation.map(([label, href, key]) => <a key={href} className={active === key ? "active-link" : ""} aria-current={active === key ? "page" : undefined} href={href}>{label}</a>)}
-          <a href="#contact">Контакты</a>
+          <a href={contactHref}>Контакты</a>
         </nav>
       </details>
     </header>
@@ -46,9 +47,9 @@ export function ContactBand({ eyebrow = "Начать с проекта", title 
           <a href="https://t.me/plancod" target="_blank" rel="noopener noreferrer">Отправить план в Telegram <span>↗</span></a>
         </div>
         <div className="contact-card panel">
-          <div><small>Email</small><strong>info@plancod.ru</strong></div>
+          <div><small>Email</small><strong><a href="mailto:info@plancod.ru">info@plancod.ru</a></strong></div>
           <div><small>Телефон</small><strong><a href="tel:+79518285872">+7 951 828-58-72</a></strong></div>
-          <div><small>Мессенджер</small><strong>Telegram</strong></div>
+          <div><small>Мессенджер</small><strong><a href="https://t.me/plancod" target="_blank" rel="noopener noreferrer">Telegram ↗</a></strong></div>
           <div><small>География</small><strong>Европейская часть России и Урал</strong></div>
           <ContactForm />
         </div>
@@ -57,17 +58,17 @@ export function ContactBand({ eyebrow = "Начать с проекта", title 
   );
 }
 
-export function SiteFooter() {
+export function SiteFooter({ contactHref = "#contact" }: { contactHref?: string }) {
   return (
     <footer className="shell">
       <a className="logo" href="/"><span>ПЛАН</span><i /><span>КОД</span></a>
       <p>Проектирование · инженерные системы · умный дом · оборудование · монтаж</p>
-      <nav>
+      <nav aria-label="Навигация в подвале">
         <a href="/">Главная</a>
         <a href="/smart-home">Умный дом</a>
         <a href="/projects">Проектирование и объекты</a>
         <a href="/products">Продукция</a>
-        <a href="#contact">Контакты</a>
+        <a href={contactHref}>Контакты</a>
         <a href="/about">О компании</a>
         <a href="/privacy">Политика конфиденциальности</a>
       </nav>

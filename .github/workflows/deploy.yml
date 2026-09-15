@@ -29,6 +29,9 @@ jobs:
       - name: Export static site for Hostland
         run: node work/export-hostland.mjs
 
+      - name: Check exported pages and links
+        run: node work/check-export.mjs
+
       # Uses the FTP/SFTP credentials for the Hostland account, stored as
       # repo secrets (Settings -> Secrets and variables -> Actions).
       # FTP_SERVER_DIR must be the document root for plancod.ru, e.g.
