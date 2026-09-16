@@ -212,6 +212,7 @@ for (const route of routes) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="yandex-verification" content="054b7e6184e46585">
+  <meta name="google-site-verification" content="unc-g3f3DDC7SPzOABLBE0PGNM4EcopoxhE1zEXYXXg">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="${canonical}">
   <link rel="preconnect" href="https://fonts.googleapis.com">

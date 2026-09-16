@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  verification: { yandex: "054b7e6184e46585" },
+  verification: {
+    yandex: "054b7e6184e46585",
+    google: "unc-g3f3DDC7SPzOABLBE0PGNM4EcopoxhE1zEXYXXg",
+  },
   title: "ПЛАНКОД — инженерное проектирование, вентиляция, климат и умный дом",
   description:
     "Проектируем вентиляцию, отопление и кондиционирование для дома, производства и коммерческих объектов. Монтаж, автоматизация и умный дом — в одном проекте.",
