@@ -38,6 +38,7 @@ for (const file of files) {
   if (file.endsWith("calc.html")) continue;
   assert.equal((html.match(/<h1[ >]/g) || []).length, 1, `Expected one h1: ${file}`);
   assert(html.includes('<html lang="ru">'), `Missing language: ${file}`);
+  assert(html.split('</head>')[0].includes('<meta name="yandex-verification" content="054b7e6184e46585">'), `Missing Yandex verification in head: ${file}`);
   assert(html.includes('<link rel="canonical"'), `Missing canonical: ${file}`);
   assert(html.includes('<meta property="og:url"'), `Missing share URL: ${file}`);
   if (!file.endsWith("privacy.html")) {
