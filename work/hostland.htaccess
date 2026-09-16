@@ -1,0 +1,18 @@
+# Canonical origin for plancod.ru. Keep certificate validation untouched.
+RewriteEngine On
+RewriteRule ^\.well-known/acme-challenge/ - [L]
+
+# Hostland can terminate TLS at its front proxy; check both TLS signals.
+RewriteCond %{HTTPS} !=on
+RewriteCond %{ENV:HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !^https$ [NC]
+RewriteRule ^ - [E=PLANKOD_CANONICAL_REDIRECT:1]
+RewriteCond %{HTTP_HOST} ^www\.plancod\.ru(?::[0-9]+)?$ [NC]
+RewriteRule ^ - [E=PLANKOD_CANONICAL_REDIRECT:1]
+
+# Preserve method and body if a form is submitted from a noncanonical origin.
+RewriteCond %{ENV:PLANKOD_CANONICAL_REDIRECT} =1
+RewriteCond %{REQUEST_METHOD} !^(GET|HEAD)$
+RewriteRule ^ https://plancod.ru%{REQUEST_URI} [R=308,L,NE]
+RewriteCond %{ENV:PLANKOD_CANONICAL_REDIRECT} =1
+RewriteRule ^ https://plancod.ru%{REQUEST_URI} [R=301,L,NE]

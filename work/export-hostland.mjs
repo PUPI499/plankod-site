@@ -108,6 +108,9 @@ function localizeLinks(markup) {
 await rm(OUT_DIR, { recursive: true, force: true });
 await mkdir(OUT_DIR, { recursive: true });
 
+await copyFile(new URL("./hostland.htaccess", import.meta.url), new URL("./.htaccess", OUT_DIR));
+console.log("copied .htaccess");
+
 const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 
 try {

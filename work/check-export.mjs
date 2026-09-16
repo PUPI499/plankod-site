@@ -5,6 +5,11 @@ import { resolve, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("../hostland-export/", import.meta.url)));
+assert.equal(
+  await readFile(join(root, ".htaccess"), "utf8"),
+  await readFile(new URL("./hostland.htaccess", import.meta.url), "utf8"),
+  "Canonical redirect rules must be included in every export",
+);
 async function walk(dir) {
   const files = [];
   for (const entry of await readdir(dir, { withFileTypes: true })) {
