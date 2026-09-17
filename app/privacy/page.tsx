@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main>
+    <main className="engineering-page page-privacy">
       <SiteHeader active="legal" />
 
       <section className="page-section shell legal-page" id="top">

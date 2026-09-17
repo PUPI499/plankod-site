@@ -11,15 +11,15 @@ export const metadata: Metadata = {
 
 export default function ProductsPage() {
   return (
-    <main>
+    <main className="engineering-page page-products">
       <SiteHeader active="products" />
 
       <section className="products-hero shell" id="top">
         <div className="products-hero-copy panel">
-          <span className="micro-label">Продукция / поставка и монтаж</span>
+          <span className="micro-label">Продукция / подбор оборудования</span>
           <h1>Устройства,<br />которые <em>работают</em><br />как одна система</h1>
-          <p>Подбираем устройства под задачу, проверяем совместимость, доставляем на дом и при необходимости устанавливаем.</p>
-          <div className="products-hero-points"><span>Умный дом</span><span>Gree / Midea</span><span>Доставка</span><span>Монтаж</span></div>
+          <p>Подбираем устройства под задачу объекта и проверяем совместимость с инженерными системами. Состав комплекта определяем на основе проекта.</p>
+          <div className="products-hero-points"><span>Умный дом</span><span>Климат</span><span>Управление</span><span>Безопасность</span></div>
         </div>
         <div className="products-showcase panel">
           <div className="showcase-device showcase-one"><i /><b>Датчик</b></div>
@@ -32,7 +32,7 @@ export default function ProductsPage() {
             <circle cx="50" cy="28" r="1.1" fill="#fff" /><circle cx="77" cy="28" r="1.1" fill="#fff" />
             <circle cx="50" cy="64" r="1.1" fill="#fff" /><circle cx="66" cy="64" r="1.1" fill="#fff" />
           </svg>
-          <div className="showcase-caption"><span>ПЛАНКОД / КАТАЛОГ</span><strong>подбор → поставка → монтаж</strong></div>
+          <div className="showcase-caption"><span>ПЛАНКОД / КАТАЛОГ</span><strong>задача → подбор → совместимость</strong></div>
         </div>
       </section>
 

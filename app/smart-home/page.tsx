@@ -3,23 +3,23 @@ import { ContactBand, SiteFooter, SiteHeader } from "../components";
 import { GetSmartHomeButton } from "../get-smart-home-modal";
 
 export const metadata: Metadata = {
-  title: "Умный дом под ключ — ПЛАНКОД",
+  title: "Проектирование умного дома — ПЛАНКОД",
   description: "Интеграция отопления, вентиляции, кондиционирования, света, безопасности и доступа с Алисой или Сбером.",
-  openGraph: { title: "Умный дом под ключ — ПЛАНКОД", description: "Инженерные системы, климат, безопасность и голосовое управление в одной системе.", images: [] },
-  twitter: { title: "Умный дом под ключ — ПЛАНКОД", description: "Инженерные системы и автоматизация дома.", images: [] },
+  openGraph: { title: "Проектирование умного дома — ПЛАНКОД", description: "Инженерные системы, климат, безопасность и голосовое управление в одной системе.", images: [] },
+  twitter: { title: "Проектирование умного дома — ПЛАНКОД", description: "Инженерные системы и автоматизация дома.", images: [] },
 };
 
 export default function SmartHomePage() {
   return (
-    <main>
+    <main className="engineering-page page-smart-home">
       <SiteHeader active="smart" />
 
       <section className="subhero shell" id="top">
         <div className="subhero-copy panel">
-          <span className="micro-label">Умный дом / проектирование и монтаж</span>
+          <span className="micro-label">Умный дом / проектирование</span>
           <h1>Инженерия дома.<br /><em>Под вашим</em><br />контролем.</h1>
-          <p>Управляйте отоплением, вентиляцией, кондиционированием, светом и безопасностью привычным способом: кнопкой, в приложении или голосом.</p>
-          <div className="subhero-actions"><GetSmartHomeButton label="Обсудить объект" /><b className="pill">Проект от 15 000 ₽</b></div>
+          <p>Проектируем управление отоплением, вентиляцией, кондиционированием, водоснабжением, светом и безопасностью. Умный дом можно заказать как самостоятельную услугу.</p>
+          <div className="subhero-actions"><GetSmartHomeButton label="Обсудить объект" /></div>
           <div className="subhero-note"><span className="pill">Алиса, Салют и совместимые системы</span><small>* Подтверждаем совместимость оборудования до закупки.</small></div>
         </div>
         <div className="integration-visual panel">
@@ -94,7 +94,7 @@ export default function SmartHomePage() {
         </div>
       </section>
 
-      <ContactBand eyebrow="Умный дом начинается с разговора" title={"Расскажите, что должен\nуметь ваш дом."} />
+      <ContactBand engineering eyebrow="Умный дом начинается с разговора" title={"Расскажите, что должен\nуметь ваш дом."} />
       <SiteFooter />
     </main>
   );

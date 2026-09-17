@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ContactBand, SiteFooter, SiteHeader } from "../components";
+import { EngineeringPanel, ContactBand, SiteFooter, SiteHeader } from "../components";
 
 export const metadata: Metadata = {
   title: "Проектирование — ПЛАНКОД",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function DesignPage() {
   return (
-    <main>
+    <main className="engineering-page page-design">
       <SiteHeader active="design" />
 
       <section className="portfolio-hero shell" id="top">
@@ -18,11 +18,10 @@ export default function DesignPage() {
           <span className="micro-label">Проектирование</span>
           <h1>Сначала<br /><em>решение.</em><br />Потом стройка.</h1>
           <p>Проектируем инженерные системы объектов любой сложности: от частного дома до производственного комплекса и коммерческого пространства. Учитываем монтаж, эксплуатацию и будущую автоматизацию.</p>
-          <div className="portfolio-facts"><span><b>с 2022</b> на рынке</span><span><b>1 подрядчик</b> проект + монтаж</span><span><b>HVAC</b> отопление · вентиляция · климат</span></div>
+          <a className="interior-cta" href="#contact">Обсудить проект <span>↗</span></a>
+          <div className="portfolio-facts"><span><b>с 2022</b> на рынке</span><span><b>Единый проект</b> согласованные системы</span><span><b>HVAC</b> отопление · вентиляция · климат</span></div>
         </div>
-        <div className="portfolio-hero-photo panel">
-          <div className="portfolio-stamp"><span>PORTFOLIO</span><b>ПЛАНКОД</b><small>частные · производственные · коммерческие</small></div>
-        </div>
+        <EngineeringPanel variant="design" />
       </section>
 
       <section className="design-capabilities shell">
@@ -31,7 +30,7 @@ export default function DesignPage() {
           <article><span>01</span><h3>Объекты любой сложности</h3><p>Частные дома, производственные цеха, кинозалы, отели, офисы, рестораны и комплексы зданий.</p><b><i>генеральные решения</i><em>расчёт по объекту</em></b></article>
           <article><span>02</span><h3>Вентиляция</h3><p>Приток, вытяжка, фильтрация и шум — от квартиры до цеха пищевого производства.</p><b><i>ОВ / промышленность</i><em>по исходным данным</em></b></article>
           <article><span>03</span><h3>Отопление</h3><p>Расчёты, оборудование, разводка, зоны, автоматика и управление температурой.</p><b><i>ОВ / автоматизация</i><em>по исходным данным</em></b></article>
-          <article><span>04</span><h3>Кондиционирование</h3><p>Подбор систем, размещение, дренаж, питание и интеграция в управление.</p><b><i>Gree / Midea / подбор</i><em>по составу системы</em></b></article>
+          <article><span>04</span><h3>Кондиционирование</h3><p>Подбор систем, размещение, дренаж, питание и интеграция в управление.</p><b><i>подбор по расчёту</i><em>по составу системы</em></b></article>
           <article><span>05</span><h3>Климат общественных пространств</h3><p>Кинозалы и залы: расчёт воздухообмена и бесшумных систем при полной посадке.</p><b><i>кинозалы / залы</i><em>расчёт по объекту</em></b></article>
           <article><span>06</span><h3>Фасадные системы обогрева</h3><p>Греющий кабель и панели против наледи и промерзания кровель, входов и фасадов.</p><b><i>антиобледенение</i><em>по исходным данным</em></b></article>
           <article><span>07</span><h3>Инженерия комплексов</h3><p>Генеральные решения для одного здания и для группы зданий на одной территории.</p><b><i>мастер-план</i><em>индивидуальный расчёт</em></b></article>
@@ -46,11 +45,11 @@ export default function DesignPage() {
           <div><span>01</span><h3>Расчёты</h3><p>Нагрузки, воздухообмены, мощности и параметры системы — по исходным данным объекта.</p></div>
           <div><span>02</span><h3>Планы и схемы</h3><p>Трассы, оборудование, подключения, узлы и отметки, необходимые для монтажа.</p></div>
           <div><span>03</span><h3>Спецификация</h3><p>Состав оборудования и материалов, чтобы закупка соответствовала проектному решению.</p></div>
-          <div><span>04</span><h3>Сопровождение</h3><p>Отвечаем на вопросы по документации и можем продолжить работу поставкой и монтажом.</p></div>
+          <div><span>04</span><h3>Сопровождение</h3><p>Разъясняем принятые решения и отвечаем на вопросы по проектной документации.</p></div>
         </div>
       </section>
 
-      <ContactBand eyebrow="Обсудить проектирование" title={"Есть объект?\nНачнём с исходных данных."} />
+      <ContactBand engineering eyebrow="Обсудить проектирование" title={"Есть объект?\nНачнём с исходных данных."} />
       <SiteFooter />
     </main>
   );

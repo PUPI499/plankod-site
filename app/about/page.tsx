@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages -- direct paths keep the static and hosted builds consistent */
 import type { Metadata } from "next";
-import { ContactBand, SiteFooter, SiteHeader } from "../components";
+import { EngineeringPanel, ContactBand, SiteFooter, SiteHeader } from "../components";
 
 export const metadata: Metadata = {
   title: "О компании — ПЛАНКОД",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main>
+    <main className="engineering-page page-about">
       <SiteHeader active="about" />
 
       <section className="about-hero shell" id="top">
@@ -19,15 +19,14 @@ export default function AboutPage() {
           <span className="micro-label">ПЛАНКОД / инженерная компания</span>
           <h1>Сначала проект.<br />Потом <em>оборудование.</em></h1>
           <p>С 2022 года проектируем и внедряем отопление, вентиляцию, кондиционирование и умный дом. Один подрядчик отвечает за расчёты, поставку, монтаж, настройку и дальнейший сервис.</p>
+          <a className="interior-cta" href="#contact">Обсудить проект <span>↗</span></a>
           <div className="about-facts">
             <span><b>с 2022</b> работаем на рынке</span>
             <span><b>1 команда</b> от проекта до запуска</span>
             <span><b>География</b> европейская часть России и Урал</span>
           </div>
         </div>
-        <div className="about-hero-photo panel">
-          <div className="about-photo-note"><span>ПОДХОД ПЛАНКОД</span><strong>Красивое управление начинается с точных расчётов.</strong></div>
-        </div>
+        <EngineeringPanel variant="about" />
       </section>
 
       <section className="page-section shell">
@@ -69,7 +68,7 @@ export default function AboutPage() {
         <a href="/projects">Перейти к проектам <span>↗</span></a>
       </section>
 
-      <ContactBand eyebrow="Начать с консультации" title={"Есть объект?\nДавайте обсудим задачу."} />
+      <ContactBand engineering eyebrow="Начать с консультации" title={"Есть объект?\nДавайте обсудим задачу."} />
       <SiteFooter />
     </main>
   );

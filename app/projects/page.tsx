@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- static Hostland export uses plain image paths */
 import type { Metadata } from "next";
-import { ContactBand, SiteFooter, SiteHeader } from "../components";
+import { EngineeringPanel, ContactBand, SiteFooter, SiteHeader } from "../components";
 import { projects } from "./data";
 
 export const metadata: Metadata = {
@@ -12,19 +12,18 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <main>
+    <main className="engineering-page page-projects">
       <SiteHeader active="projects" />
 
       <section className="portfolio-hero shell" id="top">
         <div className="portfolio-copy panel">
           <span className="micro-label">Проектирование и объекты</span>
-          <h1>Сначала<br /><em>решение.</em><br />Потом стройка.</h1>
+          <h1>Объекты.<br /><em>Задачи.</em><br />Решения.</h1>
           <p>Проектируем инженерные системы объектов любой сложности: от частного дома до производственного комплекса и коммерческого пространства. Учитываем монтаж, эксплуатацию и будущую автоматизацию.</p>
-          <div className="portfolio-facts"><span><b>с 2022</b> на рынке</span><span><b>1 подрядчик</b> проект + монтаж</span><span><b>HVAC</b> отопление · вентиляция · климат</span></div>
+          <a className="interior-cta" href="#portfolio">Смотреть объекты <span>↗</span></a>
+          <div className="portfolio-facts"><span><b>с 2022</b> на рынке</span><span><b>Единый проект</b> согласованные системы</span><span><b>HVAC</b> отопление · вентиляция · климат</span></div>
         </div>
-        <div className="portfolio-hero-photo panel">
-          <div className="portfolio-stamp"><span>PORTFOLIO</span><b>ПЛАНКОД</b><small>частные · производственные · коммерческие</small></div>
-        </div>
+        <EngineeringPanel variant="projects" />
       </section>
 
       <section className="design-capabilities shell">
@@ -33,7 +32,7 @@ export default function ProjectsPage() {
           <article><span>01</span><h3>Объекты любой сложности</h3><p>Частные дома, производственные цеха, кинозалы, отели, офисы, рестораны и комплексы зданий.</p><b><i>генеральные решения</i><em>расчёт по объекту</em></b></article>
           <article><span>02</span><h3>Вентиляция</h3><p>Приток, вытяжка, фильтрация и шум — от квартиры до цеха пищевого производства.</p><b><i>ОВ / промышленность</i><em>по исходным данным</em></b></article>
           <article><span>03</span><h3>Отопление</h3><p>Расчёты, оборудование, разводка, зоны, автоматика и управление температурой.</p><b><i>ОВ / автоматизация</i><em>по исходным данным</em></b></article>
-          <article><span>04</span><h3>Кондиционирование</h3><p>Подбор систем, размещение, дренаж, питание и интеграция в управление.</p><b><i>Gree / Midea / подбор</i><em>по составу системы</em></b></article>
+          <article><span>04</span><h3>Кондиционирование</h3><p>Подбор систем, размещение, дренаж, питание и интеграция в управление.</p><b><i>подбор по расчёту</i><em>по составу системы</em></b></article>
           <article><span>05</span><h3>Климат общественных пространств</h3><p>Кинозалы и залы: расчёт воздухообмена и бесшумных систем при полной посадке.</p><b><i>кинозалы / залы</i><em>расчёт по объекту</em></b></article>
           <article><span>06</span><h3>Фасадные системы обогрева</h3><p>Греющий кабель и панели против наледи и промерзания кровель, входов и фасадов.</p><b><i>антиобледенение</i><em>по исходным данным</em></b></article>
           <article><span>07</span><h3>Инженерия комплексов</h3><p>Генеральные решения для одного здания и для группы зданий на одной территории.</p><b><i>мастер-план</i><em>индивидуальный расчёт</em></b></article>
@@ -42,7 +41,7 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section className="portfolio-section">
+      <section className="portfolio-section" id="portfolio">
         <div className="shell">
           <div className="portfolio-heading"><div><span className="section-number">02</span><p>Выполненные проекты</p></div><h2>Не обещания.<br /><em>Рабочие чертежи.</em></h2><p>Показываем реальные завершённые проекты. Названия заказчиков, адреса и персональные данные не публикуем.</p></div>
           <div className="real-projects-grid">
@@ -68,11 +67,11 @@ export default function ProjectsPage() {
           <div><span>01</span><h3>Расчёты</h3><p>Нагрузки, воздухообмены, мощности и параметры системы — по исходным данным объекта.</p></div>
           <div><span>02</span><h3>Планы и схемы</h3><p>Трассы, оборудование, подключения, узлы и отметки, необходимые для монтажа.</p></div>
           <div><span>03</span><h3>Спецификация</h3><p>Состав оборудования и материалов, чтобы закупка соответствовала проектному решению.</p></div>
-          <div><span>04</span><h3>Сопровождение</h3><p>Отвечаем на вопросы по документации и можем продолжить работу поставкой и монтажом.</p></div>
+          <div><span>04</span><h3>Сопровождение</h3><p>Разъясняем принятые решения и отвечаем на вопросы по проектной документации.</p></div>
         </div>
       </section>
 
-      <ContactBand eyebrow="Обсудить проектирование" title={"Есть объект?\nНачнём с исходных данных."} />
+      <ContactBand engineering eyebrow="Обсудить проектирование" title={"Есть объект?\nНачнём с исходных данных."} />
       <SiteFooter />
     </main>
   );

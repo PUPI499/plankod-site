@@ -34,7 +34,7 @@ export default async function ProjectCasePage({ params }: PageProps) {
   const nextProject = projects[(projectIndex + 1) % projects.length];
 
   return (
-    <main>
+    <main className="engineering-page page-projects">
       <SiteHeader active="projects" />
 
       <section className="case-hero shell" id="top">
@@ -88,7 +88,7 @@ export default async function ProjectCasePage({ params }: PageProps) {
         </div>
       </section>
 
-      <ContactBand eyebrow="Обсудить похожий объект" title={"Есть задача?\nНачнём с исходных данных."} />
+      <ContactBand engineering eyebrow="Обсудить похожий объект" title={"Есть задача?\nНачнём с исходных данных."} />
       <SiteFooter />
     </main>
   );
