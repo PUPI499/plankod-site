@@ -51,3 +51,6 @@ jobs:
           local-dir: ./hostland-export/
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
           protocol: ftps
+
+      - name: Verify published homepage matches this build
+        run: node work/check-live.mjs
