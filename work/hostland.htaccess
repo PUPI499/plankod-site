@@ -2,6 +2,14 @@
 RewriteEngine On
 RewriteRule ^\.well-known/acme-challenge/ - [L]
 
+# Redirect only explicit requests, never Apache's internal DirectoryIndex lookup.
+# No replacement query string: preserve campaign parameters and browser fragments.
+RewriteCond %{THE_REQUEST} "\s/+index\.html(?:[?\s])"
+RewriteCond %{REQUEST_METHOD} !^(GET|HEAD)$
+RewriteRule ^index\.html$ https://plancod.ru/ [R=308,L,NE]
+RewriteCond %{THE_REQUEST} "\s/+index\.html(?:[?\s])"
+RewriteRule ^index\.html$ https://plancod.ru/ [R=301,L,NE]
+
 # Hostland can terminate TLS at its front proxy; check both TLS signals.
 RewriteCond %{HTTPS} !=on
 RewriteCond %{ENV:HTTPS} !=on

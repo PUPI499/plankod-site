@@ -23,11 +23,12 @@ const files = await walk(root);
 let references = 0;
 for (const file of files) {
   const html = await readFile(file, "utf8");
-  const pageUrl = new URL(file.slice(root.length), "https://plancod.ru/");
+  const pageUrl = new URL(file === join(root, "index.html") ? "/" : file.slice(root.length), "https://plancod.ru/");
   for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
     const value = match[1].replaceAll("&amp;", "&");
     const url = new URL(value, pageUrl);
     if (url.origin !== pageUrl.origin) continue;
+    assert.notEqual(url.pathname, "/index.html", `Use the canonical homepage URL in ${file}: ${value}`);
     let path = resolve(root, `.${decodeURIComponent(url.pathname)}`);
     assert(path === root || path.startsWith(`${root}/`), `Path escapes export: ${value}`);
     let info;
@@ -46,6 +47,9 @@ for (const file of files) {
   assert(html.split('</head>')[0].includes('<meta name="yandex-verification" content="054b7e6184e46585">'), `Missing Yandex verification in head: ${file}`);
   assert(html.split('</head>')[0].includes('<meta name="google-site-verification" content="unc-g3f3DDC7SPzOABLBE0PGNM4EcopoxhE1zEXYXXg">'), `Missing Google verification in head: ${file}`);
   assert(html.includes('<link rel="canonical"'), `Missing canonical: ${file}`);
+  if (file === join(root, "index.html")) {
+    assert(html.includes('<link rel="canonical" href="https://plancod.ru/">'), "Homepage canonical must be the root URL");
+  }
   assert(html.includes('<meta property="og:url"'), `Missing share URL: ${file}`);
   if (!file.endsWith("privacy.html")) {
     const form = html.match(/<form\b[^>]*class="contact-form"[^>]*>/)?.[0] || "";

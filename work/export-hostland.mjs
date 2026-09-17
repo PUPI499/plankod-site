@@ -99,14 +99,12 @@ const routes = [
 ];
 
 const LINK_MAP = {
-  'href="/#contact"': 'href="/index.html#contact"',
   'href="/smart-home"': 'href="/smart-home.html"',
   'href="/design"': 'href="/design.html"',
   'href="/projects"': 'href="/projects.html"',
   'href="/products"': 'href="/products.html"',
   'href="/about"': 'href="/about.html"',
   'href="/privacy"': 'href="/privacy.html"',
-  'href="/"': 'href="/index.html"',
 };
 
 function localizeLinks(markup) {
