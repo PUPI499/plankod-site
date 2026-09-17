@@ -51,7 +51,7 @@ export default function Home() {
         </div>
         <div className="hero-system panel" aria-label="Иллюстрация инженерных систем здания">
           <div className="hero-system-header"><span>PLANCOD / ENGINEERING MODEL</span><span>Аксонометрия</span></div>
-          <img src="/images/hero-building.webp" alt="Аксонометрическая иллюстрация здания с инженерными системами" className="hero-system-image" fetchPriority="high" />
+          <img src="/images/hero-building-clean.webp" alt="Аксонометрическая иллюстрация здания с инженерными системами" className="hero-system-image" fetchPriority="high" />
           <div className="hero-system-footer">
             <div className="hero-system-legend">
               <b>Инженерные разделы</b>
