@@ -42,6 +42,15 @@ const routes = [
     clientScript: "catalog.js",
   },
   {
+    entry: "../app/design/page.tsx",
+    bundle: "./tmp-design.mjs",
+    output: "design.html",
+    title: "Проектирование — ПЛАНКОД",
+    description: "Проектирование инженерных систем и состав проектной документации.",
+    ogImage: "https://plancod.ru/og.png",
+    clientScript: "catalog.js",
+  },
+  {
     entry: "../app/projects/page.tsx",
     bundle: "./tmp-projects.mjs",
     output: "projects.html",
@@ -92,6 +101,7 @@ const routes = [
 const LINK_MAP = {
   'href="/#contact"': 'href="/index.html#contact"',
   'href="/smart-home"': 'href="/smart-home.html"',
+  'href="/design"': 'href="/design.html"',
   'href="/projects"': 'href="/projects.html"',
   'href="/products"': 'href="/products.html"',
   'href="/about"': 'href="/about.html"',

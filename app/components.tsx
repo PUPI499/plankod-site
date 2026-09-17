@@ -1,23 +1,19 @@
 /* eslint-disable @next/next/no-html-link-for-pages -- plain anchors keep the downloadable static preview navigable */
 import { ContactForm } from "./contact-form";
 
-type SectionName = "home" | "smart" | "projects" | "products" | "about" | "legal";
+type SectionName = "home" | "design" | "smart" | "projects" | "products" | "about" | "legal";
 
 const navigation = [
   ["Главная", "/", "home"],
   ["Умный дом", "/smart-home", "smart"],
-  ["Проектирование и объекты", "/projects", "projects"],
+  ["Проектирование", "/design", "design"],
+  ["Объекты", "/projects", "projects"],
   ["Продукция", "/products", "products"],
-  ["О компании", "/about", "about"],
+  ["О нас", "/about", "about"],
 ] as const;
 
 export function SiteHeader({ active = "home" }: { active?: SectionName }) {
-  const items = active === "home" ? [
-    ["Проектирование", "#design", "design"],
-    ["Объекты", "#projects", "objects"],
-    ["Умный дом", "/smart-home", "smart"],
-    ["О компании", "/about", "about"],
-  ] : navigation;
+  const items = navigation;
   const contactHref = active === "legal" ? "/#contact" : "#contact";
   return (
     <header className="header shell">
@@ -72,10 +68,11 @@ export function SiteFooter({ contactHref = "#contact" }: { contactHref?: string 
       <nav aria-label="Навигация в подвале">
         <a href="/">Главная</a>
         <a href="/smart-home">Умный дом</a>
-        <a href="/projects">Проектирование и объекты</a>
+        <a href="/design">Проектирование</a>
+        <a href="/projects">Объекты</a>
         <a href="/products">Продукция</a>
         <a href={contactHref}>Контакты</a>
-        <a href="/about">О компании</a>
+        <a href="/about">О нас</a>
         <a href="/privacy">Политика конфиденциальности</a>
       </nav>
       <div className="footer-legal">
