@@ -28,7 +28,7 @@ const routes = [
     bundle: "./tmp-home.mjs",
     output: "index.html",
     title: "ПЛАНКОД — проектирование, инженерные системы и умный дом",
-    description: "Проектирование отопления, вентиляции и кондиционирования, монтаж, умный дом и поставка оборудования.",
+    description: "Проектирование и координация вентиляции, отопления, кондиционирования и электроснабжения. Умный дом — отдельная услуга.",
     ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
@@ -100,7 +100,7 @@ const LINK_MAP = {
 };
 
 function localizeLinks(markup) {
-  let out = markup.replace(/href="\/projects\/([^"#?]+)"/g, 'href="/projects/$1/"');
+  let out = markup.replace(/href="\/projects\/([^"#?]+)"/g, (_, slug) => 'href="/projects/' + slug.replace(/\/+$/, '') + '/"');
   for (const [from, to] of Object.entries(LINK_MAP)) out = out.replaceAll(from, to);
   return out;
 }

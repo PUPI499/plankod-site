@@ -266,6 +266,7 @@
     var nameInput = labels[0] && labels[0].querySelector("input");
     var contactInput = labels[1] && labels[1].querySelector("input");
     var messageInput = form.querySelector("textarea");
+    var objectType = form.querySelector('select[name="object_type"]');
     var honeypot = form.querySelector('input[name="website"]');
     var consent = form.querySelector('input[type="checkbox"]');
     var submitBtn = form.querySelector("button.mail-link");
@@ -313,7 +314,7 @@
       var params = new URLSearchParams();
       params.set("name", nameInput.value);
       params.set("contact", contactInput.value);
-      params.set("message", messageInput.value);
+      params.set("message", (objectType && objectType.value ? "Тип объекта: " + objectType.value + "\n\n" : "") + messageInput.value);
       params.set("website", honeypot ? honeypot.value : "");
       params.set("consent", "1");
 

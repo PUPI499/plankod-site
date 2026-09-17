@@ -52,7 +52,7 @@ for (const file of files) {
     assert(form.includes('action="/contact.php"') && form.includes('method="post"'), `Missing form: ${file}`);
     assert(html.includes('name="consent"'), `Missing consent: ${file}`);
   }
-  if (/projects\/.+\/index\.html$/.test(file)) {
+  if (/^\/projects\/.+\/index\.html$/.test(file.slice(root.length))) {
     assert(!html.includes('property="og:image" content="https://plancod.ru/og.png"'), `Generic project preview: ${file}`);
     assert(html.includes('class="case-gallery-item'), `Missing project drawings: ${file}`);
   }

@@ -12,11 +12,12 @@ for (const scenario of ['queued', 'rejected', 'unconfirmed']) {
   const name = element(), contact = element(), message = element(), consent = element();
   const button = element(), ok = element(), error = element(), info = element(), honey = element();
   const fields = [name, contact, message];
+  const objectType = element(); objectType.value = 'Частный дом';
   const form = {
     events: {},
     querySelectorAll() { return [{ querySelector: () => name }, { querySelector: () => contact }]; },
     querySelector(selector) { return { textarea: message, 'input[name="website"]': honey,
-      'input[type="checkbox"]': consent, 'button.mail-link': button, '.form-status-ok': ok,
+      'select[name="object_type"]': objectType, 'input[type="checkbox"]': consent, 'button.mail-link': button, '.form-status-ok': ok,
       '.form-status-error': error, '.form-request-id': info }[selector]; },
     addEventListener(type, handler) { this.events[type] = handler; },
     reportValidity() { return true; }, setAttribute() {}, removeAttribute() {},
@@ -29,6 +30,7 @@ for (const scenario of ['queued', 'rejected', 'unconfirmed']) {
     fetch: (_url, options) => {
       calls++;
       assert.equal(new URLSearchParams(options.body).get('consent'), '1');
+      assert.equal(new URLSearchParams(options.body).get('message'), 'Тип объекта: Частный дом\n\nQA');
       return new Promise(resolve => { finish = resolve; });
     },
   });
