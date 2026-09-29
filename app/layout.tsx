@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://plancod.ru"),
   verification: {
     yandex: "054b7e6184e46585",
     google: "unc-g3f3DDC7SPzOABLBE0PGNM4EcopoxhE1zEXYXXg",

@@ -1,5 +1,14 @@
 /* eslint-disable @next/next/no-img-element, @next/next/no-html-link-for-pages -- the static and hosted builds share direct paths */
+import type { Metadata } from "next";
 import { ContactBand, SiteFooter, SiteHeader } from "./components";
+
+export const metadata: Metadata = {
+  title: "ПЛАНКОД — проектирование, инженерные системы и умный дом",
+  description: "Проектирование и координация вентиляции, отопления, кондиционирования и электроснабжения. Умный дом — отдельная услуга.",
+  alternates: { canonical: "/" },
+  openGraph: { title: "ПЛАНКОД — проектирование, инженерные системы и умный дом", description: "Проектирование и координация вентиляции, отопления, кондиционирования и электроснабжения. Умный дом — отдельная услуга.", images: ["/og.png"] },
+  twitter: { title: "ПЛАНКОД — проектирование, инженерные системы и умный дом", description: "Проектирование и координация вентиляции, отопления, кондиционирования и электроснабжения. Умный дом — отдельная услуга.", images: ["/og.png"] },
+};
 
 const systems = [
   ["Вентиляция", "Приточные, вытяжные и комбинированные системы для жилых, коммерческих и производственных объектов."],

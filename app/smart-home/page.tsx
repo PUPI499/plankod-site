@@ -5,8 +5,8 @@ import { GetSmartHomeButton } from "../get-smart-home-modal";
 export const metadata: Metadata = {
   title: "Проектирование умного дома — ПЛАНКОД",
   description: "Интеграция отопления, вентиляции, кондиционирования, света, безопасности и доступа с Алисой или Сбером.",
-  openGraph: { title: "Проектирование умного дома — ПЛАНКОД", description: "Инженерные системы, климат, безопасность и голосовое управление в одной системе.", images: [] },
-  twitter: { title: "Проектирование умного дома — ПЛАНКОД", description: "Инженерные системы и автоматизация дома.", images: [] },
+  openGraph: { title: "Проектирование умного дома — ПЛАНКОД", description: "Инженерные системы, климат, безопасность и голосовое управление в одной системе.", images: ["/og.png"] },
+  twitter: { title: "Проектирование умного дома — ПЛАНКОД", description: "Инженерные системы и автоматизация дома.", images: ["/og.png"] },
 };
 
 export default function SmartHomePage() {

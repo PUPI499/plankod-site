@@ -4,8 +4,8 @@ import { SiteFooter, SiteHeader } from "../components";
 export const metadata: Metadata = {
   title: "Политика обработки персональных данных — ПЛАНКОД",
   description: "Политика ООО «Приоритет» в отношении обработки персональных данных пользователей сайта plancod.ru.",
-  openGraph: { title: "Политика обработки персональных данных — ПЛАНКОД", description: "Условия обработки персональных данных на сайте plancod.ru.", images: [] },
-  twitter: { title: "Политика обработки персональных данных — ПЛАНКОД", description: "Условия обработки персональных данных на сайте plancod.ru.", images: [] },
+  openGraph: { title: "Политика обработки персональных данных — ПЛАНКОД", description: "Условия обработки персональных данных на сайте plancod.ru.", images: ["/og.png"] },
+  twitter: { title: "Политика обработки персональных данных — ПЛАНКОД", description: "Условия обработки персональных данных на сайте plancod.ru.", images: ["/og.png"] },
 };
 
 export default function PrivacyPage() {

@@ -5,8 +5,8 @@ import { EngineeringPanel, ContactBand, SiteFooter, SiteHeader } from "../compon
 export const metadata: Metadata = {
   title: "О компании — ПЛАНКОД",
   description: "ПЛАНКОД проектирует, поставляет, монтирует и обслуживает инженерные системы и умный дом. На рынке с 2022 года.",
-  openGraph: { title: "О компании — ПЛАНКОД", description: "Один подрядчик: от инженерного проекта до запуска умного дома.", images: [] },
-  twitter: { title: "О компании — ПЛАНКОД", description: "Проектирование, поставка, монтаж и сервис инженерных систем.", images: [] },
+  openGraph: { title: "О компании — ПЛАНКОД", description: "Один подрядчик: от инженерного проекта до запуска умного дома.", images: ["/og.png"] },
+  twitter: { title: "О компании — ПЛАНКОД", description: "Проектирование, поставка, монтаж и сервис инженерных систем.", images: ["/og.png"] },
 };
 
 export default function AboutPage() {

@@ -5,8 +5,8 @@ import ProductCatalog from "./catalog";
 export const metadata: Metadata = {
   title: "Продукция для умного дома и кондиционирования — ПЛАНКОД",
   description: "Оборудование для умного дома, датчики, розетки, видеодомофоны и кондиционеры Gree и Midea с подбором, доставкой и монтажом.",
-  openGraph: { title: "Продукция для умного дома — ПЛАНКОД", description: "Совместимое оборудование, кондиционеры, доставка и монтаж.", images: [] },
-  twitter: { title: "Продукция для умного дома — ПЛАНКОД", description: "Оборудование и кондиционирование с подбором.", images: [] },
+  openGraph: { title: "Продукция для умного дома — ПЛАНКОД", description: "Совместимое оборудование, кондиционеры, доставка и монтаж.", images: ["/og.png"] },
+  twitter: { title: "Продукция для умного дома — ПЛАНКОД", description: "Оборудование и кондиционирование с подбором.", images: ["/og.png"] },
 };
 
 export default function ProductsPage() {
