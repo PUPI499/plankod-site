@@ -148,6 +148,7 @@ try {
 await copyFile(new URL("./hostland-catalog.js", import.meta.url), new URL("./catalog.js", OUT_DIR));
 const clientVersion = createHash("sha256").update(await readFile(new URL("./hostland-catalog.js", import.meta.url))).digest("hex").slice(0, 12);
 console.log("copied catalog.js");
+await copyFile(new URL("../public/metrika.js", import.meta.url), new URL("./metrika.js", OUT_DIR));
 
 await copyFile(new URL("./contact.php", import.meta.url), new URL("./contact.php", OUT_DIR));
 console.log("copied contact.php");
@@ -241,9 +242,10 @@ for (const route of routes) {
   <meta name="twitter:title" content="${title}">
   <meta name="twitter:description" content="${description}">
   <meta name="twitter:image" content="${route.ogImage}">
+  <script defer src="/metrika.js"></script>
   <style>${css}</style>${scriptTag}
 </head>
-<body>${body}</body>
+<body><noscript><div><img src="https://mc.yandex.ru/watch/113254722" style="position:absolute;left:-9999px" alt=""></div></noscript>${body}</body>
 </html>`;
   const outputFile = new URL(route.output, OUT_DIR);
   await mkdir(new URL(".", outputFile), { recursive: true });

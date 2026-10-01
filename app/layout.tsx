@@ -30,7 +30,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru">
-      <body>{children}</body>
+      <body>
+        <script defer src="/metrika.js" />
+        <noscript><div>
+          {/* eslint-disable-next-line @next/next/no-img-element -- analytics fallback pixel */}
+          <img src="https://mc.yandex.ru/watch/113254722" style={{ position: "absolute", left: "-9999px" }} alt="" />
+        </div></noscript>
+        {children}
+      </body>
     </html>
   );
 }
