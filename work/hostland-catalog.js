@@ -257,6 +257,34 @@
   });
 })();
 
+// Accessible service menu: hover, click and keyboard; native details works without JS.
+(function () {
+  document.querySelectorAll('.design-navigation').forEach(function (nav) {
+    var details = nav.querySelector('details');
+    var summary = details.querySelector('summary');
+    nav.addEventListener('mouseenter', function () { details.open = true; });
+    nav.addEventListener('mouseleave', function () { if (!nav.contains(document.activeElement)) details.open = false; });
+    nav.addEventListener('keydown', function (event) { if (event.key === 'Escape') { details.open = false; summary.focus(); } });
+    nav.addEventListener('focusout', function (event) { if (!nav.contains(event.relatedTarget)) details.open = false; });
+    document.addEventListener('click', function (event) { if (!nav.contains(event.target)) details.open = false; });
+  });
+  document.querySelectorAll('.project-selection').forEach(function (section) {
+    section.querySelectorAll('[data-project-filter]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var filter = button.dataset.projectFilter;
+        section.querySelectorAll('[data-project-filter]').forEach(function (item) { item.setAttribute('aria-pressed', String(item === button)); });
+        section.querySelectorAll('[data-project-directions]').forEach(function (card) { card.hidden = filter !== 'all' && !card.dataset.projectDirections.split(' ').includes(filter); });
+      });
+    });
+  });
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest('a');
+    if (!link || typeof window.ym !== 'function') return;
+    var goal = link.dataset.goal || (link.href.indexOf('https://t.me/plancod') === 0 ? 'telegram_click' : '');
+    if (goal) { try { window.ym(113254722, 'reachGoal', goal); } catch { /* Analytics must never block navigation. */ } }
+  });
+})();
+
 // Contact form: consent gate + real submission to contact.php (point 10)
 (function () {
   "use strict";
@@ -339,6 +367,7 @@
           }
           if (result.ok && result.data && result.data.ok && result.data.status === "queued") {
             sent = true;
+            if (typeof window.ym === "function") { try { window.ym(113254722, "reachGoal", "request_accepted"); } catch { /* Submission already succeeded. */ } }
             form.reset();
             submitBtn.textContent = "Отправлено ✓";
             if (statusOk) statusOk.hidden = false;

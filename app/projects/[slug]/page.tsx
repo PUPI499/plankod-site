@@ -49,7 +49,7 @@ export default async function ProjectCasePage({ params }: PageProps) {
           <h1>{project.title}</h1>
           <p>{project.summary}</p>
           <div className="case-facts">{project.facts.map((fact) => <span key={fact}>{fact}</span>)}</div>
-          <a className="case-discuss-link" href="#contact">Обсудить похожий объект <span>↗</span></a>
+          <a className="case-discuss-link" data-goal="discuss_project" href="#contact">Обсудить похожий объект <span>↗</span></a>
         </div>
       </section>
 
@@ -78,7 +78,7 @@ export default async function ProjectCasePage({ params }: PageProps) {
 
       <section className="case-result shell">
         <div className="case-result-metric panel"><span>03 / итог</span><strong>{project.metric}</strong><p>{project.metricText}</p></div>
-        <div className="case-result-copy panel"><h2>Проект, по которому<br /><em>можно работать.</em></h2><p>{project.result}</p><a href="#contact">Обсудить проект ↗</a></div>
+        <div className="case-result-copy panel"><h2>Проект, по которому<br /><em>можно работать.</em></h2><p>{project.result}</p><a data-goal="discuss_project" href="#contact">Обсудить проект ↗</a></div>
       </section>
 
       <section className="case-next">
@@ -88,7 +88,7 @@ export default async function ProjectCasePage({ params }: PageProps) {
         </div>
       </section>
 
-      <ContactBand engineering eyebrow="Обсудить похожий объект" title={"Есть задача?\nНачнём с исходных данных."} />
+      <ContactBand engineering context={`Интересует похожий объект: ${project.title}. Разделы: ${project.scope}.`} eyebrow="Обсудить похожий объект" title={"Есть задача?\nНачнём с исходных данных."} />
       <SiteFooter />
     </main>
   );

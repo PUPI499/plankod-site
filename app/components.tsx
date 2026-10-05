@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-html-link-for-pages -- plain anchors keep the downloadable static preview navigable */
+import services from "./design/services.json";
 import { ContactForm } from "./contact-form";
 
 type SectionName = "home" | "design" | "smart" | "projects" | "products" | "about" | "legal";
@@ -7,7 +8,6 @@ const navigation = [
   ["Главная", "/", "home"],
   ["Умный дом", "/smart-home", "smart"],
   ["Проектирование", "/design", "design"],
-  ["Объекты", "/projects", "projects"],
   ["Продукция", "/products", "products"],
   ["О нас", "/about", "about"],
 ] as const;
@@ -22,14 +22,14 @@ export function SiteHeader({ active = "home" }: { active?: SectionName }) {
       </a>
       <nav className="desktop-navigation" aria-label="Основная навигация">
         {items.map(([label, href, key]) => (
-          <a key={key} className={active === key ? "active-link" : ""} aria-current={active === key ? "page" : undefined} href={href}>{label}</a>
+          key === "design" ? <div className="design-navigation" key={key}><a className={active === "design" || active === "projects" ? "active-link" : ""} href="/design">Проектирование</a><details className="design-dropdown"><summary aria-label="Направления проектирования">⌄</summary><div className="design-menu"><div><strong>Инженерные системы</strong>{services.slice(0,6).map(s=><a key={s.slug} href={`/design/${s.slug}/`}>{s.name}</a>)}</div><div><strong>Комплексные задачи</strong>{services.slice(6).map(s=><a key={s.slug} href={`/design/${s.slug}/`}>{s.name}</a>)}<a href="/design#directions">Все направления →</a><a href="/design#portfolio">Примеры проектов →</a></div></div></details></div> : <a key={key} className={active === key ? "active-link" : ""} aria-current={active === key ? "page" : undefined} href={href}>{label}</a>
         ))}
       </nav>
       <a className="header-button" href={contactHref}>Обсудить проект <span>↗</span></a>
       <details className="site-menu">
         <summary aria-label="Открыть меню"><i /><i /></summary>
         <nav aria-label="Мобильная навигация">
-          {items.map(([label, href, key]) => <a key={href} className={active === key ? "active-link" : ""} aria-current={active === key ? "page" : undefined} href={href}>{label}</a>)}
+          {items.map(([label, href, key]) => key === "design" ? <div key={key} className="mobile-design"><a href="/design">Проектирование</a><details><summary>Направления ⌄</summary>{services.map(s=><a key={s.slug} href={`/design/${s.slug}/`}>{s.name}</a>)}<a href="/design#portfolio">Примеры проектов</a></details></div> : <a key={href} className={active === key ? "active-link" : ""} aria-current={active === key ? "page" : undefined} href={href}>{label}</a>)}
           <a href={contactHref}>Контакты</a>
         </nav>
       </details>
@@ -37,7 +37,7 @@ export function SiteHeader({ active = "home" }: { active?: SectionName }) {
   );
 }
 
-export function ContactBand({ eyebrow = "Начать с проекта", title = "Покажите объект.\nМы предложим систему.", engineering = false }: { eyebrow?: string; title?: string; engineering?: boolean }) {
+export function ContactBand({ eyebrow = "Начать с проекта", title = "Покажите объект.\nМы предложим систему.", engineering = false, context = "" }: { eyebrow?: string; title?: string; engineering?: boolean; context?: string }) {
   const lines = title.split("\n");
   return (
     <section className="contact-section" id="contact">
@@ -53,7 +53,7 @@ export function ContactBand({ eyebrow = "Начать с проекта", title 
           <div><small>Телефон</small><strong><a href="tel:+79518285872">+7 951 828-58-72</a></strong></div>
           <div><small>Мессенджер</small><strong><a href="https://t.me/plancod" target="_blank" rel="noopener noreferrer">Telegram ↗</a></strong></div>
           {!engineering && <div><small>География</small><strong>Европейская часть России и Урал</strong></div>}
-          <ContactForm engineering={engineering} />
+          <ContactForm engineering={engineering} context={context} />
         </div>
       </div>
     </section>
@@ -69,7 +69,7 @@ export function SiteFooter({ contactHref = "#contact" }: { contactHref?: string 
         <a href="/">Главная</a>
         <a href="/smart-home">Умный дом</a>
         <a href="/design">Проектирование</a>
-        <a href="/projects">Объекты</a>
+        <a href="/design#portfolio">Примеры проектов</a>
         <a href="/products">Продукция</a>
         <a href={contactHref}>Контакты</a>
         <a href="/about">О нас</a>

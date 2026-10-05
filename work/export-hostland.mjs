@@ -22,6 +22,8 @@ await build({
 const { projects: projectRoutes } = await import(`${dataBundle.href}?v=${Date.now()}`);
 await rm(dataBundle);
 
+const services = JSON.parse(await readFile(new URL("../app/design/services.json", import.meta.url), "utf8"));
+
 const routes = [
   {
     entry: "../app/page.tsx",
@@ -45,8 +47,8 @@ const routes = [
     entry: "../app/design/page.tsx",
     bundle: "./tmp-design.mjs",
     output: "design.html",
-    title: "Проектирование вентиляции, отопления и кондиционирования — ПЛАНКОД",
-    description: "Проектируем вентиляцию, отопление, кондиционирование и умный дом для частных, коммерческих и производственных объектов: расчёты, планы, схемы и спецификации.",
+    title: "Проектирование инженерных систем — направления и цены | ПЛАНКОД",
+    description: "Проектирование отопления, вентиляции, кондиционирования, ВК, электроснабжения и ИТП. Состав работ, стартовые цены и примеры проектной документации.",
     ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
@@ -73,7 +75,7 @@ const routes = [
     bundle: "./tmp-about.mjs",
     output: "about.html",
     title: "О компании — ПЛАНКОД",
-    description: "ПЛАНКОД — проектирование, поставка, монтаж и сервис инженерных систем и умного дома с 2022 года.",
+    description: "ПЛАНКОД — проектирование и координация инженерных систем. Умный дом — самостоятельное направление.",
     ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
@@ -86,6 +88,11 @@ const routes = [
     ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
+  ...services.map(service => ({
+    entry: "../app/design/[slug]/page.tsx", bundle: `./tmp-service-${service.slug}.mjs`,
+    output: `design/${service.slug}/index.html`, title: `${service.title} — ${service.price} | ПЛАНКОД`,
+    description: service.description, ogImage: "https://plancod.ru/og.png", clientScript: "catalog.js", params: {slug: service.slug},
+  })),
   ...projectRoutes.map((project) => ({
     entry: "../app/projects/[slug]/page.tsx",
     bundle: `./tmp-project-${project.slug}.mjs`,
@@ -110,6 +117,7 @@ const LINK_MAP = {
 function localizeLinks(markup) {
   let out = markup.replace(/href="\/projects\/([^"#?]+)"/g, (_, slug) => 'href="/projects/' + slug.replace(/\/+$/, '') + '/"');
   for (const [from, to] of Object.entries(LINK_MAP)) out = out.replaceAll(from, to);
+  out = out.replaceAll('href="/design#', 'href="/design.html#');
   return out;
 }
 
@@ -176,6 +184,7 @@ const sitemapUrls = [
   { path: "/products.html", priority: "0.8" },
   { path: "/about.html", priority: "0.6" },
   { path: "/privacy.html", priority: "0.3" },
+  ...services.map(service => ({path: `/design/${service.slug}/`, priority: "0.8"})),
   ...projectRoutes.map((project) => ({ path: `/projects/${project.slug}/`, priority: "0.7" })),
 ];
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>

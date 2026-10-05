@@ -26,21 +26,6 @@ export default function ProjectsPage() {
         <EngineeringPanel variant="projects" />
       </section>
 
-      <section className="design-capabilities shell">
-        <div className="page-heading"><span>01 / что проектируем</span><h2>Инженерия для<br /><em>реальных объектов</em></h2><p>Проект должен быть не только красивым на листе, но и понятным монтажнику, заказчику и сервисной команде — будь то квартира или производственный комплекс.</p></div>
-        <div className="design-list">
-          <article><span>01</span><h3>Объекты любой сложности</h3><p>Частные дома, производственные цеха, кинозалы, отели, офисы, рестораны и комплексы зданий.</p><b><i>генеральные решения</i><em>расчёт по объекту</em></b></article>
-          <article><span>02</span><h3>Вентиляция</h3><p>Приток, вытяжка, фильтрация и шум — от квартиры до цеха пищевого производства.</p><b><i>ОВ / промышленность</i><em>по исходным данным</em></b></article>
-          <article><span>03</span><h3>Отопление</h3><p>Расчёты, оборудование, разводка, зоны, автоматика и управление температурой.</p><b><i>ОВ / автоматизация</i><em>по исходным данным</em></b></article>
-          <article><span>04</span><h3>Кондиционирование</h3><p>Подбор систем, размещение, дренаж, питание и интеграция в управление.</p><b><i>подбор по расчёту</i><em>по составу системы</em></b></article>
-          <article><span>05</span><h3>Климат общественных пространств</h3><p>Кинозалы и залы: расчёт воздухообмена и бесшумных систем при полной посадке.</p><b><i>кинозалы / залы</i><em>расчёт по объекту</em></b></article>
-          <article><span>06</span><h3>Фасадные системы обогрева</h3><p>Греющий кабель и панели против наледи и промерзания кровель, входов и фасадов.</p><b><i>антиобледенение</i><em>по исходным данным</em></b></article>
-          <article><span>07</span><h3>Инженерия комплексов</h3><p>Генеральные решения для одного здания и для группы зданий на одной территории.</p><b><i>мастер-план</i><em>индивидуальный расчёт</em></b></article>
-          <article><span>08</span><h3>Умный дом</h3><p>Сценарии, датчики, исполнительные устройства и связь с инженерными системами.</p><b><i>проект + программирование</i><em>по составу системы</em></b></article>
-          <article><span>09</span><h3>Архитектурная концепция</h3><p>Общую концепцию дома обсуждаем как дополнительное направление, не заменяющее инженерный проект.</p><b><i>дополнительное направление</i><em>индивидуальный расчёт</em></b></article>
-        </div>
-      </section>
-
       <section className="portfolio-section" id="portfolio">
         <div className="shell">
           <div className="portfolio-heading"><div><span className="section-number">02</span><p>Выполненные проекты</p></div><h2>Не обещания.<br /><em>Рабочие чертежи.</em></h2><p>Показываем реальные завершённые проекты. Названия заказчиков, адреса и персональные данные не публикуем.</p></div>
@@ -53,6 +38,7 @@ export default function ProjectsPage() {
                   <h3><a href={`/projects/${project.slug}`}>{project.title}</a></h3>
                   <p>{project.summary}</p>
                   <div className="real-project-facts">{project.facts.map((fact) => <span key={fact}>{fact}</span>)}</div>
+                  <a className="project-discuss" data-goal="discuss_project" href={`/projects/${project.slug}/#contact`}>Обсудить похожий объект ↗</a>
                   <a className="project-card-link" href={`/projects/${project.slug}`}>Смотреть проект <span>→</span></a>
                 </div>
               </article>
