@@ -1076,6 +1076,7 @@ footer > nav { flex-wrap:wrap; }
 }
 
 /* Service navigation and landing pages */
+.header .desktop-navigation { align-items:center; }
 .design-navigation { display:flex; align-items:center; gap:6px; position:relative; }
 .design-dropdown>summary { cursor:pointer; list-style:none; width:26px; height:32px; display:grid; place-items:center; border-radius:8px; }
 .design-dropdown>summary::-webkit-details-marker { display:none; }
@@ -1145,3 +1146,6 @@ footer > nav { flex-wrap:wrap; }
 @media(max-width:640px) { .service-cards,.service-deliverables,.service-projects,.service-details,.service-inputs { grid-template-columns:1fr; }.service-hero-copy,.service-price { padding:28px 22px; }.service-hero-copy h1 { font-size:34px; }.service-card { padding:26px; }.service-card h3 { font-size:26px; }.service-project img { height:250px; }.service-context { padding:64px 0; }.service-price-note { padding-bottom:64px; }.service-price-note h2 { font-size:30px; }.service-project>div { padding:24px; } }
 .site-menu .mobile-design a { display:block; white-space:normal; }
 .site-menu .mobile-design details a { font-size:13px; line-height:1.4; }
+
+/* Shared vector arrows stay monochrome on desktop and mobile. */
+.arrow-icon { display:inline-block; width:1em; height:1em; flex-shrink:0; vertical-align:-.125em; }

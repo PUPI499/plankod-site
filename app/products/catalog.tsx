@@ -1,3 +1,4 @@
+import { ArrowIcon } from "../arrow-icon";
 const products = [
   { id: "leak", category: "Безопасность", title: "Контроль протечки", text: "Датчики, привод перекрытия и уведомления.", art: "catalog-leak" },
   { id: "socket", category: "Управление", title: "Умные розетки", text: "Удалённое включение и сценарии по расписанию.", art: "catalog-socket" },
@@ -20,14 +21,14 @@ export default function ProductCatalog() {
               <small>{item.category}</small>
               <h3>{item.title}</h3>
               <p>{item.text}</p>
-              <div className="catalog-buy"><strong>по запросу</strong><a href="#contact">Запросить подбор ↗</a></div>
+              <div className="catalog-buy"><strong>по запросу</strong><a href="#contact">Запросить подбор <ArrowIcon direction="up-right" /></a></div>
             </div>
           </article>
         ))}
       </div>
 
       <aside className="catalog-cart panel">
-        <div className="cart-head"><span>Подбор оборудования</span><b>→</b></div>
+        <div className="cart-head"><span>Подбор оборудования</span><b><ArrowIcon direction="right" /></b></div>
         <div className="catalog-request-copy">
           <strong>Получите совместимую комплектацию</strong>
           <p>Опишите объект и задачу. Подберём модели, проверим связь с умным домом и рассчитаем поставку с монтажом или без него.</p>
@@ -38,7 +39,7 @@ export default function ProductCatalog() {
           <li>актуальная стоимость</li>
           <li>наличие и доставка</li>
         </ul>
-        <a className="catalog-request-button" href="#contact">Описать задачу <span>↗</span></a>
+        <a className="catalog-request-button" href="#contact">Описать задачу <span><ArrowIcon direction="up-right" /></span></a>
         <p className="order-note">До заказа подтверждаем состав, цену, наличие, условия доставки и монтажа.</p>
       </aside>
     </div>

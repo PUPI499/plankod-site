@@ -1,3 +1,4 @@
+import { ArrowIcon } from "../arrow-icon";
 /* eslint-disable @next/next/no-html-link-for-pages -- direct paths keep the static and hosted builds consistent */
 import type { Metadata } from "next";
 import { EngineeringPanel, ContactBand, SiteFooter, SiteHeader } from "../components";
@@ -19,7 +20,7 @@ export default function AboutPage() {
           <span className="micro-label">ПЛАНКОД / инженерная компания</span>
           <h1>Сначала проект.<br />Потом <em>оборудование.</em></h1>
           <p>С 2022 года проектируем инженерные системы. Увязываем расчёты, оборудование и решения разных разделов. Развиваем умный дом как отдельное направление — со сценариями управления и взаимодействием систем.</p>
-          <a className="interior-cta" href="#contact">Обсудить проект <span>↗</span></a>
+          <a className="interior-cta" href="#contact">Обсудить проект <span><ArrowIcon direction="up-right" /></span></a>
           <div className="about-facts">
             <span><b>с 2022</b> работаем на рынке</span>
             <span><b>1 команда</b> согласованные решения</span>
@@ -65,7 +66,7 @@ export default function AboutPage() {
       <section className="about-proof shell">
         <div><span className="micro-label">Факты вместо громких обещаний</span><h2>Доверие подтверждают<br /><em>документы и объекты</em></h2></div>
         <p>До старта показываем состав проекта, фиксируем этапы, оборудование и смету. Материалы объектов публикуем после проверки данных и согласования с заказчиками.</p>
-        <a href="/design#portfolio">Перейти к проектам <span>↗</span></a>
+        <a href="/design#portfolio">Перейти к проектам <span><ArrowIcon direction="up-right" /></span></a>
       </section>
 
       <ContactBand engineering eyebrow="Начать с консультации" title={"Есть объект?\nДавайте обсудим задачу."} />

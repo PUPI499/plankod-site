@@ -1,4 +1,6 @@
 "use client";
+import { ArrowIcon } from "./arrow-icon";
+
 
 import { useState } from "react";
 
@@ -11,7 +13,7 @@ export function GetSmartHomeButton({ label = "Обсудить объект" }: 
   return (
     <>
       <button type="button" className="primary-button smart-home-cta" onClick={() => setOpen(true)}>
-        {label} <span>↗</span>
+        {label} <span><ArrowIcon direction="up-right" /></span>
       </button>
       <div className="modal-overlay" hidden={!open} role="dialog" aria-modal="true" aria-label="Обсудить объект" onClick={() => setOpen(false)}>
         <div className="modal-card" onClick={(event) => event.stopPropagation()}>
@@ -20,8 +22,8 @@ export function GetSmartHomeButton({ label = "Обсудить объект" }: 
           <h3>Выберите удобный способ связи</h3>
           <p>Ответим и предложим следующий шаг: короткий разговор о задаче или сразу расчёт.</p>
           <div className="modal-links">
-            <a href={TELEGRAM_LINK} target="_blank" rel="noopener noreferrer">Telegram <span>↗</span></a>
-            <a href={EMAIL_LINK}>Email <span>↗</span></a>
+            <a href={TELEGRAM_LINK} target="_blank" rel="noopener noreferrer">Telegram <span><ArrowIcon direction="up-right" /></span></a>
+            <a href={EMAIL_LINK}>Email <span><ArrowIcon direction="up-right" /></span></a>
           </div>
           <small>В Telegram можно сразу приложить планировку или фотографию объекта.</small>
         </div>

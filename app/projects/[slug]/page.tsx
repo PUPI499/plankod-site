@@ -1,3 +1,4 @@
+import { ArrowIcon } from "../../arrow-icon";
 /* eslint-disable @next/next/no-img-element, @next/next/no-html-link-for-pages -- direct paths keep the static and hosted builds consistent */
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -41,15 +42,15 @@ export default async function ProjectCasePage({ params }: PageProps) {
         <a className="case-hero-media panel" href={project.image} target="_blank" rel="noreferrer" aria-label="Открыть главный чертёж в полном размере">
           <img src={project.image} alt={`Главный чертёж: ${project.title}`} />
           <span>{project.number} / рабочая документация</span>
-          <b>Открыть полностью ↗</b>
+          <b>Открыть полностью <ArrowIcon direction="up-right" /></b>
         </a>
         <div className="case-hero-copy panel">
-          <a className="case-back-link" href="/projects">← Все объекты</a>
+          <a className="case-back-link" href="/projects"><ArrowIcon direction="left" /> Все объекты</a>
           <small>{project.scope}</small>
           <h1>{project.title}</h1>
           <p>{project.summary}</p>
           <div className="case-facts">{project.facts.map((fact) => <span key={fact}>{fact}</span>)}</div>
-          <a className="case-discuss-link" data-goal="discuss_project" href="#contact">Обсудить похожий объект <span>↗</span></a>
+          <a className="case-discuss-link" data-goal="discuss_project" href="#contact">Обсудить похожий объект <span><ArrowIcon direction="up-right" /></span></a>
         </div>
       </section>
 
@@ -78,13 +79,13 @@ export default async function ProjectCasePage({ params }: PageProps) {
 
       <section className="case-result shell">
         <div className="case-result-metric panel"><span>03 / итог</span><strong>{project.metric}</strong><p>{project.metricText}</p></div>
-        <div className="case-result-copy panel"><h2>Проект, по которому<br /><em>можно работать.</em></h2><p>{project.result}</p><a data-goal="discuss_project" href="#contact">Обсудить проект ↗</a></div>
+        <div className="case-result-copy panel"><h2>Проект, по которому<br /><em>можно работать.</em></h2><p>{project.result}</p><a data-goal="discuss_project" href="#contact">Обсудить проект <ArrowIcon direction="up-right" /></a></div>
       </section>
 
       <section className="case-next">
         <div className="shell case-next-inner">
           <div><span>Следующий объект / {nextProject.number}</span><h2>{nextProject.title}</h2></div>
-          <a href={`/projects/${nextProject.slug}`}>Смотреть следующий объект <span>→</span></a>
+          <a href={`/projects/${nextProject.slug}`}>Смотреть следующий объект <span><ArrowIcon direction="right" /></span></a>
         </div>
       </section>
 

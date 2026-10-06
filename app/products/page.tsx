@@ -1,3 +1,4 @@
+import { ArrowIcon } from "../arrow-icon";
 import type { Metadata } from "next";
 import { ContactBand, SiteFooter, SiteHeader } from "../components";
 import ProductCatalog from "./catalog";
@@ -32,7 +33,7 @@ export default function ProductsPage() {
             <circle cx="50" cy="28" r="1.1" fill="#fff" /><circle cx="77" cy="28" r="1.1" fill="#fff" />
             <circle cx="50" cy="64" r="1.1" fill="#fff" /><circle cx="66" cy="64" r="1.1" fill="#fff" />
           </svg>
-          <div className="showcase-caption"><span>ПЛАНКОД / КАТАЛОГ</span><strong>задача → подбор → совместимость</strong></div>
+          <div className="showcase-caption"><span>ПЛАНКОД / КАТАЛОГ</span><strong>задача <ArrowIcon direction="right" /> подбор <ArrowIcon direction="right" /> совместимость</strong></div>
         </div>
       </section>
 

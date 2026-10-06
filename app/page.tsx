@@ -1,3 +1,4 @@
+import { ArrowIcon } from "./arrow-icon";
 /* eslint-disable @next/next/no-img-element, @next/next/no-html-link-for-pages -- the static and hosted builds share direct paths */
 import type { Metadata } from "next";
 import { ContactBand, SiteFooter, SiteHeader } from "./components";
@@ -53,8 +54,8 @@ export default function Home() {
           <h1>Проектируем<br />инженерию здания<br /><em>как единую систему.</em></h1>
           <p>Вентиляция, отопление, кондиционирование, электроснабжение и автоматизация — согласованные между собой ещё до реализации.</p>
           <div className="hero-actions">
-            <a className="primary-button" href="#contact">Обсудить проект <span>↗</span></a>
-            <a className="quiet-link" href="#contact">Отправить план объекта ↓</a>
+            <a className="primary-button" href="#contact">Обсудить проект <span><ArrowIcon direction="up-right" /></span></a>
+            <a className="quiet-link" href="#contact">Отправить план объекта <ArrowIcon direction="down" /></a>
           </div>
           <p className="home-object-strip">Частные дома · Коммерческие · Общественные · Производственные объекты</p>
         </div>
@@ -75,7 +76,7 @@ export default function Home() {
         <div className="section-head"><div><span className="section-number">01</span><p>Подход</p></div><h2>Инженерные системы<br /><em>не существуют отдельно.</em></h2></div>
         <div className="home-approach-grid">
           <div className="home-approach-copy"><p>Вентиляция влияет на электроснабжение. Отопление — на автоматику. Кондиционирование — на планировку и размещение оборудования.</p><p>Поэтому мы рассматриваем инженерные системы во взаимосвязи и собираем решения в единый проект.</p><strong>Один объект.<br />Одна инженерная логика.</strong></div>
-          <div className="home-system-map panel"><span className="micro-label">Состав проекта — по задачам объекта</span><div className="home-map-core">ПЛАН <i>◆</i> КОД</div><div className="home-map-systems">{systems.map(([title], index) => <a key={title} href={`#system-${index + 1}`}><span>0{index + 1}</span>{title}<b>↗</b></a>)}</div></div>
+          <div className="home-system-map panel"><span className="micro-label">Состав проекта — по задачам объекта</span><div className="home-map-core">ПЛАН <i>◆</i> КОД</div><div className="home-map-systems">{systems.map(([title], index) => <a key={title} href={`#system-${index + 1}`}><span>0{index + 1}</span>{title}<b><ArrowIcon direction="up-right" /></b></a>)}</div></div>
         </div>
       </section>
 
@@ -92,7 +93,7 @@ export default function Home() {
       <section className="home-portfolio home-section" id="projects"><div className="shell">
         <div className="section-head inverse-head"><div><span className="section-number">04</span><p>Проекты</p></div><h2>Не галерея.<br /><em>Разбор инженерных решений.</em></h2></div>
         <p className="home-section-lead">Планы, аксонометрии и схемы из проектной документации ПЛАНКОД.</p>
-        <div className="home-project-grid">{featured.map(project => <article className="home-project-card panel" key={project.slug}><div className="home-project-image"><img src={`/images/projects/details/${project.image}`} alt={`${project.title} — ${project.scope.toLowerCase()}, проектная документация`} loading="lazy" /></div><div className="home-project-copy"><span className="micro-label">Инженерное проектирование</span><h3>{project.title}</h3><span className="home-project-scope">{project.scope}</span><p>{project.description}</p><a href={`/projects/${project.slug}/`}><strong>Смотреть проект ↗</strong></a><a className="project-discuss" data-goal="discuss_project" href={`/projects/${project.slug}/#contact`}>Обсудить похожий объект ↗</a></div></article>)}</div>
+        <div className="home-project-grid">{featured.map(project => <article className="home-project-card panel" key={project.slug}><div className="home-project-image"><img src={`/images/projects/details/${project.image}`} alt={`${project.title} — ${project.scope.toLowerCase()}, проектная документация`} loading="lazy" /></div><div className="home-project-copy"><span className="micro-label">Инженерное проектирование</span><h3>{project.title}</h3><span className="home-project-scope">{project.scope}</span><p>{project.description}</p><a href={`/projects/${project.slug}/`}><strong>Смотреть проект <ArrowIcon direction="up-right" /></strong></a><a className="project-discuss" data-goal="discuss_project" href={`/projects/${project.slug}/#contact`}>Обсудить похожий объект <ArrowIcon direction="up-right" /></a></div></article>)}</div>
       </div></section>
 
       <section className="home-section shell" id="result">
@@ -103,25 +104,25 @@ export default function Home() {
           <article><span>03</span><h3>Понятная инженерная логика</h3><p>Связи между разделами зафиксированы в документации для дальнейшей реализации.</p></article>
         </div>
         <div className="home-document-grid">
-          <a href="/projects/laundry-ventilation/"><img src="/images/projects/details/laundry-basement-combined.png" alt="Прачечная — общий план вентиляции" loading="lazy" /><span>01 / Прачечная · План вентиляции ↗</span></a>
-          <a href="/projects/food-block-ventilation/"><img src="/images/projects/details/food-block-floor1-combined.png" alt="Пищеблок — план вентиляции первого этажа" loading="lazy" /><span>02 / Пищеблок · План вентиляции ↗</span></a>
-          <a href="/projects/culture-house-climate/"><img src="/images/projects/details/culture-heating-plan-main.png" alt="Дом культуры — план отопления" loading="lazy" /><span>03 / Дом культуры · План отопления ↗</span></a>
+          <a href="/projects/laundry-ventilation/"><img src="/images/projects/details/laundry-basement-combined.png" alt="Прачечная — общий план вентиляции" loading="lazy" /><span>01 / Прачечная · План вентиляции <ArrowIcon direction="up-right" /></span></a>
+          <a href="/projects/food-block-ventilation/"><img src="/images/projects/details/food-block-floor1-combined.png" alt="Пищеблок — план вентиляции первого этажа" loading="lazy" /><span>02 / Пищеблок · План вентиляции <ArrowIcon direction="up-right" /></span></a>
+          <a href="/projects/culture-house-climate/"><img src="/images/projects/details/culture-heating-plan-main.png" alt="Дом культуры — план отопления" loading="lazy" /><span>03 / Дом культуры · План отопления <ArrowIcon direction="up-right" /></span></a>
         </div>
       </section>
 
       <section className="scenarios-section shell" id="smart-home">
-        <div className="scenario-copy panel"><span className="micro-label">06 / Умный дом</span><h2>Дом управляет инженерией<br /><em>без лишних действий.</em></h2><p>Проектируем объединённое управление климатом, освещением, шторами, защитой от протечек, доступом и видеонаблюдением.</p><p className="home-scenario-note">Состав системы и сценарии определяем по задачам объекта. Проектирование умного дома можно заказать отдельно.</p><a className="quiet-link" href="/smart-home">Подробнее об умном доме ↗</a></div>
+        <div className="scenario-copy panel"><span className="micro-label">06 / Умный дом</span><h2>Дом управляет инженерией<br /><em>без лишних действий.</em></h2><p>Проектируем объединённое управление климатом, освещением, шторами, защитой от протечек, доступом и видеонаблюдением.</p><p className="home-scenario-note">Состав системы и сценарии определяем по задачам объекта. Проектирование умного дома можно заказать отдельно.</p><a className="quiet-link" href="/smart-home">Подробнее об умном доме <ArrowIcon direction="up-right" /></a></div>
         <div className="scenario-board panel"><div className="board-head"><span>Примеры сценариев</span><b>SMART HOME</b></div><div className="scenario-list">
-          <article><i>01</i><div><h3>Я ушёл</h3><p>Свет выключен. Вода перекрыта. Безопасность активирована.</p></div><b>→</b></article>
-          <article className="active-scenario"><i>02</i><div><h3>Я дома</h3><p>Комфортный свет и климат.</p></div><b>→</b></article>
-          <article><i>03</i><div><h3>Спокойная ночь</h3><p>Дом переходит в ночной режим.</p></div><b>→</b></article>
-          <article><i>04</i><div><h3>Протечка</h3><p>Вода перекрывается, уведомление отправляется владельцу.</p></div><b>→</b></article>
+          <article><i>01</i><div><h3>Я ушёл</h3><p>Свет выключен. Вода перекрыта. Безопасность активирована.</p></div><b><ArrowIcon direction="right" /></b></article>
+          <article className="active-scenario"><i>02</i><div><h3>Я дома</h3><p>Комфортный свет и климат.</p></div><b><ArrowIcon direction="right" /></b></article>
+          <article><i>03</i><div><h3>Спокойная ночь</h3><p>Дом переходит в ночной режим.</p></div><b><ArrowIcon direction="right" /></b></article>
+          <article><i>04</i><div><h3>Протечка</h3><p>Вода перекрывается, уведомление отправляется владельцу.</p></div><b><ArrowIcon direction="right" /></b></article>
         </div><p className="home-scenario-disclaimer">Возможности зависят от выбранного оборудования и согласованного состава проекта.</p></div>
       </section>
 
       <section className="steps-section shell" id="install"><div className="section-head"><div><span className="section-number">07</span><p>Процесс</p></div><h2>От плана объекта<br /><em>до готовой документации.</em></h2></div><div className="steps-grid">{steps.map(([title, description], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{description}</p></article>)}</div></section>
 
-      <section className="home-about shell" id="about"><div className="home-about-label panel"><span className="micro-label">08 / ПЛАНКОД</span><div className="plan-code-mark"><span>ПЛАН</span><i>◆</i><span>КОД</span></div><p>Инженерное проектирование<br />Комплексная координация<br />Умный дом</p></div><div className="company-story panel"><h2>Сначала проект.<br /><em>Потом реализация.</em></h2><p>ПЛАНКОД — инженерная компания. Мы проектируем системы здания и координируем их между собой, чтобы подготовить согласованные решения для реализации.</p><div className="company-links"><a href="/about">Подробнее о ПЛАНКОД ↗</a></div></div></section>
+      <section className="home-about shell" id="about"><div className="home-about-label panel"><span className="micro-label">08 / ПЛАНКОД</span><div className="plan-code-mark"><span>ПЛАН</span><i>◆</i><span>КОД</span></div><p>Инженерное проектирование<br />Комплексная координация<br />Умный дом</p></div><div className="company-story panel"><h2>Сначала проект.<br /><em>Потом реализация.</em></h2><p>ПЛАНКОД — инженерная компания. Мы проектируем системы здания и координируем их между собой, чтобы подготовить согласованные решения для реализации.</p><div className="company-links"><a href="/about">Подробнее о ПЛАНКОД <ArrowIcon direction="up-right" /></a></div></div></section>
 
       <section className="faq-section shell"><div className="faq-title"><span className="section-number">09</span><h2>Нормальные<br /><em>сомнения.</em></h2></div><div className="faq-list">{questions.map(([question, answer], index) => <details key={question} open={index === 0}><summary>{question}<b>+</b></summary><p>{answer}</p></details>)}</div></section>
       <ContactBand engineering eyebrow="Начать проект" title={"Пришлите план объекта.\nПредложим состав проекта."} />

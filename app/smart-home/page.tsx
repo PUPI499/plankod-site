@@ -1,3 +1,4 @@
+import { ArrowIcon } from "../arrow-icon";
 import type { Metadata } from "next";
 import { ContactBand, SiteFooter, SiteHeader } from "../components";
 import { GetSmartHomeButton } from "../get-smart-home-modal";
@@ -40,7 +41,7 @@ export default function SmartHomePage() {
             <div className="system-chip"><i>03</i><b>Кондиционер</b><span>тихий режим</span></div>
             <div className="system-chip"><i>04</i><b>Безопасность</b><span>всё закрыто</span></div>
           </div>
-          <div className="voice-command">«Алиса, я дома»<b>→</b></div>
+          <div className="voice-command">«Алиса, я дома»<b><ArrowIcon direction="right" /></b></div>
         </div>
       </section>
 
@@ -73,7 +74,7 @@ export default function SmartHomePage() {
           <span className="micro-label">С чего можно начать</span>
           <h2>С одной задачи<br />или со всего<br /><em>дома сразу</em></h2>
           <p>Для готового интерьера — беспроводные устройства. Для стройки — полноценный проект с инженерией и автоматикой.</p>
-          <a href="/products">Перейти к продукции <span>↗</span></a>
+          <a href="/products">Перейти к продукции <span><ArrowIcon direction="up-right" /></span></a>
         </div>
         <div className="kit-list panel">
           <div><span>01</span><h3>Контроль протечек</h3><p>Датчики + привод перекрытия + уведомление</p><b>готовый дом</b></div>

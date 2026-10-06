@@ -1,3 +1,4 @@
+import { ArrowIcon } from "../arrow-icon";
 /* eslint-disable @next/next/no-img-element -- static Hostland export uses plain image paths */
 import type { Metadata } from "next";
 import { EngineeringPanel, ContactBand, SiteFooter, SiteHeader } from "../components";
@@ -20,7 +21,7 @@ export default function ProjectsPage() {
           <span className="micro-label">Проектирование и объекты</span>
           <h1>Объекты.<br /><em>Задачи.</em><br />Решения.</h1>
           <p>Проектируем инженерные системы объектов любой сложности: от частного дома до производственного комплекса и коммерческого пространства. Учитываем монтаж, эксплуатацию и будущую автоматизацию.</p>
-          <a className="interior-cta" href="#portfolio">Смотреть объекты <span>↗</span></a>
+          <a className="interior-cta" href="#portfolio">Смотреть объекты <span><ArrowIcon direction="up-right" /></span></a>
           <div className="portfolio-facts"><span><b>с 2022</b> на рынке</span><span><b>Единый проект</b> согласованные системы</span><span><b>HVAC</b> отопление · вентиляция · климат</span></div>
         </div>
         <EngineeringPanel variant="projects" />
@@ -32,14 +33,14 @@ export default function ProjectsPage() {
           <div className="real-projects-grid">
             {projects.map((project) => (
               <article className="real-project-card panel" key={project.number}>
-                <a className="project-drawing" href={`/projects/${project.slug}`}><img src={project.image} alt={`Фрагмент рабочего чертежа: ${project.title}`} loading="lazy" /><span>{project.number} / {project.type}</span><b>открыть проект ↗</b></a>
+                <a className="project-drawing" href={`/projects/${project.slug}`}><img src={project.image} alt={`Фрагмент рабочего чертежа: ${project.title}`} loading="lazy" /><span>{project.number} / {project.type}</span><b>открыть проект <ArrowIcon direction="up-right" /></b></a>
                 <div className="real-project-copy">
                   <small>{project.scope}</small>
                   <h3><a href={`/projects/${project.slug}`}>{project.title}</a></h3>
                   <p>{project.summary}</p>
                   <div className="real-project-facts">{project.facts.map((fact) => <span key={fact}>{fact}</span>)}</div>
-                  <a className="project-discuss" data-goal="discuss_project" href={`/projects/${project.slug}/#contact`}>Обсудить похожий объект ↗</a>
-                  <a className="project-card-link" href={`/projects/${project.slug}`}>Смотреть проект <span>→</span></a>
+                  <a className="project-discuss" data-goal="discuss_project" href={`/projects/${project.slug}/#contact`}>Обсудить похожий объект <ArrowIcon direction="up-right" /></a>
+                  <a className="project-card-link" href={`/projects/${project.slug}`}>Смотреть проект <span><ArrowIcon direction="right" /></span></a>
                 </div>
               </article>
             ))}

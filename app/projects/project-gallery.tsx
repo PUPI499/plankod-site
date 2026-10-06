@@ -1,4 +1,6 @@
 "use client";
+import { ArrowIcon } from "../arrow-icon";
+
 /* eslint-disable @next/next/no-img-element -- technical drawings must preserve their original dimensions */
 
 import { useEffect, useState } from "react";
@@ -39,7 +41,7 @@ export function ProjectGallery({ media }: { media: ProjectMedia[] }) {
           >
             <img src={item.src} alt={item.label} loading={index < 2 ? "eager" : "lazy"} />
             <span>{String(index + 1).padStart(2, "0")}</span>
-            <div><b>{item.label}</b><small>Увеличить ↗</small></div>
+            <div><b>{item.label}</b><small>Увеличить <ArrowIcon direction="up-right" /></small></div>
           </button>
         ))}
       </div>
@@ -47,12 +49,12 @@ export function ProjectGallery({ media }: { media: ProjectMedia[] }) {
       {active !== null && (
         <div className="case-lightbox" role="dialog" aria-modal="true" aria-label="Просмотр проектного чертежа" onClick={() => setActive(null)}>
           <button className="case-lightbox-close" type="button" aria-label="Закрыть" onClick={() => setActive(null)}>×</button>
-          <button className="case-lightbox-arrow previous" type="button" aria-label="Предыдущее изображение" onClick={(event) => { event.stopPropagation(); showPrevious(); }}>←</button>
+          <button className="case-lightbox-arrow previous" type="button" aria-label="Предыдущее изображение" onClick={(event) => { event.stopPropagation(); showPrevious(); }}><ArrowIcon direction="left" /></button>
           <figure onClick={(event) => event.stopPropagation()}>
             <img src={media[active].src} alt={media[active].label} />
             <figcaption><span>{media[active].label}</span><b>{active + 1} / {media.length}</b></figcaption>
           </figure>
-          <button className="case-lightbox-arrow next" type="button" aria-label="Следующее изображение" onClick={(event) => { event.stopPropagation(); showNext(); }}>→</button>
+          <button className="case-lightbox-arrow next" type="button" aria-label="Следующее изображение" onClick={(event) => { event.stopPropagation(); showNext(); }}><ArrowIcon direction="right" /></button>
         </div>
       )}
     </>
