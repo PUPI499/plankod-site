@@ -92,7 +92,7 @@ export function SiteFooter({ contactHref = "#contact" }: { contactHref?: string 
 export function EngineeringPanel({ variant }: { variant: "design" | "projects" | "about" }) {
   const content = {
     design: { label: "ИНЖЕНЕРНАЯ МОДЕЛЬ", title: "Одна система. Все связи.", image: "/images/hero-building-clean.webp", alt: "Аксонометрия инженерных систем здания", tags: ["01 / Расчёты", "02 / Чертежи", "03 / Спецификации"] },
-    projects: { label: "РАБОЧАЯ ДОКУМЕНТАЦИЯ", title: "Решения в деталях.", image: "/images/projects/details/food-block-3d-main.png", alt: "Аксонометрическая схема вентиляции из рабочего проекта", tags: ["Задача", "Решение", "Документация"] },
+    projects: { label: "РАБОЧАЯ ДОКУМЕНТАЦИЯ", title: "Решения в деталях.", image: "/images/projects/covers/food-block-20261009.webp", alt: "Аксонометрическая визуализация пищеблока", tags: ["Задача", "Решение", "Документация"] },
     about: { label: "ПОДХОД ПЛАНКОД", title: "Считаем. Согласовываем. Проектируем.", image: "/images/hero-building-clean.webp", alt: "Инженерные системы здания в единой модели", tags: ["Объект", "Инженерия", "Взаимосвязи"] },
   }[variant];
   return <div className={`interior-visual panel interior-visual-${variant}`}>

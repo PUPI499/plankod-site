@@ -39,9 +39,9 @@ export default async function ProjectCasePage({ params }: PageProps) {
       <SiteHeader active="projects" />
 
       <section className="case-hero shell" id="top">
-        <a className="case-hero-media panel" href={project.image} target="_blank" rel="noreferrer" aria-label="Открыть главный чертёж в полном размере">
-          <img src={project.image} alt={`Главный чертёж: ${project.title}`} />
-          <span>{project.number} / рабочая документация</span>
+        <a className="case-hero-media panel" href={project.image} target="_blank" rel="noreferrer" aria-label="Открыть изображение объекта в полном размере">
+          <img src={project.image} alt={`${project.imageLabel || "Рабочий чертёж"}: ${project.title}`} />
+          <span>{project.number} / {project.imageLabel || "рабочая документация"}</span>
           <b>Открыть полностью <ArrowIcon direction="up-right" /></b>
         </a>
         <div className="case-hero-copy panel">

@@ -13,6 +13,7 @@ export type PortfolioProject = {
   facts: string[];
   scope: string;
   image: string;
+  imageLabel?: string;
   statement: string;
   challengeLead: string;
   challenge: string;
@@ -36,7 +37,8 @@ export const projects: PortfolioProject[] = [
     summary: "Комплексный проект для двухэтажного пищевого производства: от расчёта воздухообмена до питания оборудования и конструктивных узлов.",
     facts: ["410 м²", "2 этажа", "2 месяца"],
     scope: "ОВК · КР · ЭОМ",
-    image: `${details}/food-block-3d-main.png`,
+    image: "/images/projects/covers/food-block-20261009.webp",
+    imageLabel: "Визуализация объекта",
     statement: "Воздухообмен следует логике производства",
     challengeLead: "У каждого помещения — свой источник загрязнений.",
     challenge: "В горячем цехе образуются тепло и запахи, в моечной — влага, а кладовым нужен отдельный режим. Одна общая вытяжка не решила бы эту задачу.",
@@ -47,7 +49,6 @@ export const projects: PortfolioProject[] = [
     metric: "7 зон",
     metricText: "с разными режимами воздухообмена",
     media: [
-      { src: `${details}/food-block-3d-main.png`, label: "Аксонометрия инженерных систем" },
       { src: `${details}/food-block-basement-combined.png`, label: "Цокольный этаж · общий план вентиляции" },
       { src: `${details}/food-block-basement-supply.png`, label: "Цокольный этаж · приточная система" },
       { src: `${details}/food-block-basement-exhaust.png`, label: "Цокольный этаж · вытяжная система" },
@@ -64,7 +65,8 @@ export const projects: PortfolioProject[] = [
     summary: "Разделили чистые и загрязнённые процессы, предусмотрели удаление влаги, тепла и испарений, автоматику и пожарную блокировку.",
     facts: ["202,8 м²", "3 раздела", "10,58 кВт"],
     scope: "ОВК · КР · ЭОМ",
-    image: `${details}/laundry-3d-main.png`,
+    image: "/images/projects/covers/laundry-20261009.webp",
+    imageLabel: "Визуализация объекта",
     statement: "Чистые и загрязнённые потоки не пересекаются",
     challengeLead: "Влажный воздух нельзя выпускать в соседние помещения.",
     challenge: "Работа оборудования создаёт избыток тепла и влаги. При неверном воздухообмене страдают люди, отделка и чистые зоны.",
@@ -75,7 +77,6 @@ export const projects: PortfolioProject[] = [
     metric: "3 раздела",
     metricText: "увязаны в одном комплекте документации",
     media: [
-      { src: `${details}/laundry-3d-main.png`, label: "Аксонометрия систем прачечной" },
       { src: `${details}/laundry-basement-combined.png`, label: "Цокольный этаж · общий план вентиляции" },
       { src: `${details}/laundry-basement-supply.png`, label: "Цокольный этаж · приточная система" },
       { src: `${details}/laundry-basement-exhaust.png`, label: "Цокольный этаж · вытяжная система" },
@@ -96,7 +97,8 @@ export const projects: PortfolioProject[] = [
     summary: "Отопление и кондиционирование двухэтажного общественного здания с помещениями разной загрузки.",
     facts: ["350 мест", "2 этажа", "30 раб. дней"],
     scope: "Отопление · кондиционирование",
-    image: `${details}/culture-heating-axon-main.png`,
+    image: "/images/projects/covers/culture-house-20261009.webp",
+    imageLabel: "Визуализация объекта",
     statement: "Полная загрузка зала учтена в проектных решениях",
     challengeLead: "Нагрузка на здание меняется в течение дня.",
     challenge: "Пустой зал и мероприятие на 350 человек требуют разных режимов. Инженерное оборудование не должно мешать акустике, архитектуре и работе общественных помещений.",
@@ -123,7 +125,8 @@ export const projects: PortfolioProject[] = [
     summary: "Капитальный ремонт наружного водоснабжения и тепловых сетей комплекса зданий на территории со сложным рельефом.",
     facts: ["комплекс зданий", "2 вида сетей", "генплан + профили"],
     scope: "ТС · НВ",
-    image: `${details}/sanatorium-combined-masterplan.png`,
+    image: "/images/projects/covers/sanatorium-20261009.webp",
+    imageLabel: "Визуализация объекта",
     statement: "Сети проходят через весь комплекс без конфликтов",
     challengeLead: "Новые трассы нужно встроить в действующую территорию.",
     challenge: "Между корпусами уже проходят коммуникации, дороги и существующие каналы. Для каждой линии требовалось проверить отметки, пересечения и точки подключения.",

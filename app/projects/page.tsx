@@ -33,7 +33,7 @@ export default function ProjectsPage() {
           <div className="real-projects-grid">
             {projects.map((project) => (
               <article className="real-project-card panel" key={project.number}>
-                <a className="project-drawing" href={`/projects/${project.slug}`}><img src={project.image} alt={`Фрагмент рабочего чертежа: ${project.title}`} loading="lazy" /><span>{project.number} / {project.type}</span><b>открыть проект <ArrowIcon direction="up-right" /></b></a>
+                <a className="project-drawing" href={`/projects/${project.slug}`}><img src={project.image} alt={`${project.imageLabel || "Фрагмент рабочего чертежа"}: ${project.title}`} loading="lazy" /><span>{project.number} / {project.type}</span><b>открыть проект <ArrowIcon direction="up-right" /></b></a>
                 <div className="real-project-copy">
                   <small>{project.scope}</small>
                   <h3><a href={`/projects/${project.slug}`}>{project.title}</a></h3>

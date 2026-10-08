@@ -1,3 +1,4 @@
+import { getProject } from "./projects/data";
 import { ArrowIcon } from "./arrow-icon";
 /* eslint-disable @next/next/no-img-element, @next/next/no-html-link-for-pages -- the static and hosted builds share direct paths */
 import type { Metadata } from "next";
@@ -26,9 +27,9 @@ const objects = [
 ];
 // Use existing drawings and project routes, without importing unverified metrics or deadlines.
 const featured = [
-  { slug: "laundry-ventilation", title: "Прачечная", image: "laundry-3d-main.png", scope: "Вентиляция", description: "Аксонометрии, планы приточных и вытяжных систем, элементы управления." },
-  { slug: "food-block-ventilation", title: "Пищеблок", image: "food-block-3d-main.png", scope: "Вентиляция", description: "Планы вентиляции по этажам и аксонометрия инженерных систем." },
-  { slug: "culture-house-climate", title: "Дом культуры", image: "culture-heating-axon-main.png", scope: "Отопление · Кондиционирование", description: "Планы отопления, размещение оборудования и схемы кондиционирования." },
+  { slug: "laundry-ventilation", title: "Прачечная", scope: "Вентиляция", description: "Аксонометрии, планы приточных и вытяжных систем, элементы управления." },
+  { slug: "food-block-ventilation", title: "Пищеблок", scope: "Вентиляция", description: "Планы вентиляции по этажам и аксонометрия инженерных систем." },
+  { slug: "culture-house-climate", title: "Дом культуры", scope: "Отопление · Кондиционирование", description: "Планы отопления, размещение оборудования и схемы кондиционирования." },
 ];
 const steps = [
   ["Получаем исходные данные", "План объекта, размеры, назначение помещений, пожелания и имеющиеся данные об оборудовании."],
@@ -93,7 +94,7 @@ export default function Home() {
       <section className="home-portfolio home-section" id="projects"><div className="shell">
         <div className="section-head inverse-head"><div><span className="section-number">04</span><p>Проекты</p></div><h2>Не галерея.<br /><em>Разбор инженерных решений.</em></h2></div>
         <p className="home-section-lead">Планы, аксонометрии и схемы из проектной документации ПЛАНКОД.</p>
-        <div className="home-project-grid">{featured.map(project => <article className="home-project-card panel" key={project.slug}><div className="home-project-image"><img src={`/images/projects/details/${project.image}`} alt={`${project.title} — ${project.scope.toLowerCase()}, проектная документация`} loading="lazy" /></div><div className="home-project-copy"><span className="micro-label">Инженерное проектирование</span><h3>{project.title}</h3><span className="home-project-scope">{project.scope}</span><p>{project.description}</p><a href={`/projects/${project.slug}/`}><strong>Смотреть проект <ArrowIcon direction="up-right" /></strong></a><a className="project-discuss" data-goal="discuss_project" href={`/projects/${project.slug}/#contact`}>Обсудить похожий объект <ArrowIcon direction="up-right" /></a></div></article>)}</div>
+        <div className="home-project-grid">{featured.map(project => <article className="home-project-card panel" key={project.slug}><div className="home-project-image"><img src={getProject(project.slug)!.image} alt={`${project.title} — визуализация объекта`} loading="lazy" /></div><div className="home-project-copy"><span className="micro-label">Инженерное проектирование</span><h3>{project.title}</h3><span className="home-project-scope">{project.scope}</span><p>{project.description}</p><a href={`/projects/${project.slug}/`}><strong>Смотреть проект <ArrowIcon direction="up-right" /></strong></a><a className="project-discuss" data-goal="discuss_project" href={`/projects/${project.slug}/#contact`}>Обсудить похожий объект <ArrowIcon direction="up-right" /></a></div></article>)}</div>
       </div></section>
 
       <section className="home-section shell" id="result">

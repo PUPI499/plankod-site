@@ -1149,3 +1149,6 @@ footer > nav { flex-wrap:wrap; }
 
 /* Shared vector arrows stay monochrome on desktop and mobile. */
 .arrow-icon { display:inline-block; width:1em; height:1em; flex-shrink:0; vertical-align:-.125em; }
+
+/* Show the complete project cover, including its labels, at every breakpoint. */
+.project-drawing img { object-fit:contain; filter:none; background:#f5f7f9; }
