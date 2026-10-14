@@ -156,6 +156,9 @@ try {
 await copyFile(new URL("./hostland-catalog.js", import.meta.url), new URL("./catalog.js", OUT_DIR));
 const clientVersion = createHash("sha256").update(await readFile(new URL("./hostland-catalog.js", import.meta.url))).digest("hex").slice(0, 12);
 console.log("copied catalog.js");
+await build({ entryPoints: [new URL("./hostland-carousel.ts", import.meta.url).pathname], outfile: new URL("./homepage-carousel.js", OUT_DIR).pathname, bundle: true, minify: true, platform: "browser", target: "es2020" });
+const carouselVersion = createHash("sha256").update(await readFile(new URL("./homepage-carousel.js", OUT_DIR))).digest("hex").slice(0,12);
+
 await copyFile(new URL("../public/metrika.js", import.meta.url), new URL("./metrika.js", OUT_DIR));
 
 await copyFile(new URL("./contact.php", import.meta.url), new URL("./contact.php", OUT_DIR));
@@ -227,7 +230,7 @@ for (const route of routes) {
   const canonical = `${SITE_URL}/${route.output === "index.html" ? "" : route.output.replace(/\/index\.html$/, "/")}`;
   const title = escapeAttribute(route.title);
   const description = escapeAttribute(route.description);
-  const scriptTag = route.clientScript ? `\n  <script defer src="/${route.clientScript}?v=${clientVersion}"></script>` : "";
+  const scriptTag = (route.output === "index.html" ? `<script defer src="/homepage-carousel.js?v=${carouselVersion}"></script>` : "") + (route.clientScript ? `\n  <script defer src="/${route.clientScript}?v=${clientVersion}"></script>` : "");
   const html = `<!doctype html>
 <html lang="ru">
 <head>

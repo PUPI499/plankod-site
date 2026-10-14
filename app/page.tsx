@@ -1,3 +1,4 @@
+import { HomeCarousel } from "./home-carousel";
 import { getProject } from "./projects/data";
 import { ArrowIcon } from "./arrow-icon";
 /* eslint-disable @next/next/no-img-element, @next/next/no-html-link-for-pages -- the static and hosted builds share direct paths */
@@ -49,29 +50,7 @@ export default function Home() {
   return (
     <main className="engineering-home">
       <SiteHeader active="home" />
-      <section className="hero shell" id="top">
-        <div className="hero-copy panel">
-          <div className="eyebrow"><span>Инженерное проектирование</span></div>
-          <h1>Проектируем<br />инженерию здания<br /><em>как единую систему.</em></h1>
-          <p>Вентиляция, отопление, кондиционирование, электроснабжение и автоматизация — согласованные между собой ещё до реализации.</p>
-          <div className="hero-actions">
-            <a className="primary-button" href="#contact">Обсудить проект <span><ArrowIcon direction="up-right" /></span></a>
-            <a className="quiet-link" href="#contact">Отправить план объекта <ArrowIcon direction="down" /></a>
-          </div>
-          <p className="home-object-strip">Частные дома · Коммерческие · Общественные · Производственные объекты</p>
-        </div>
-        <div className="hero-system panel" aria-label="Иллюстрация инженерных систем здания">
-          <div className="hero-system-header"><span>PLANCOD / ENGINEERING MODEL</span><span>Аксонометрия</span></div>
-          <img src="/images/hero-building-clean.webp" alt="Аксонометрическая иллюстрация здания с инженерными системами" className="hero-system-image" fetchPriority="high" />
-          <div className="hero-system-footer">
-            <div className="hero-system-legend">
-              <b>Инженерные разделы</b>
-              {["Вентиляция", "Отопление", "Электроснабжение", "Автоматизация"].map((label, index) => <div key={label}><i>0{index + 1}</i><span>{label}</span></div>)}
-            </div>
-            <div className="hero-system-caption">Один объект. Одна инженерная логика.</div>
-          </div>
-        </div>
-      </section>
+      <HomeCarousel />
 
       <section className="home-approach shell home-section" id="approach">
         <div className="section-head"><div><span className="section-number">01</span><p>Подход</p></div><h2>Инженерные системы<br /><em>не существуют отдельно.</em></h2></div>
