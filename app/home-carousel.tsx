@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { BrandSignature } from "./brand-signature";
 import { ArrowIcon } from "./arrow-icon";
 import { initHomeCarousel } from "./home-carousel-controller";
 
@@ -18,7 +19,7 @@ export function HomeCarousel() {
         <div className="showcase-shade" />
         <div className="showcase-masthead">
           <p className="showcase-eyebrow"><span>0{i + 1}</span>{slide.label}</p>
-          <div className="showcase-signature"><span>ПЛАНКОД /</span><strong>{i === 0 ? "Жить комфортно." : i === 1 ? "Управлять просто." : "Думать системно."}</strong></div>
+          <BrandSignature className="showcase-signature" slogan={i === 0 ? "Жить комфортно." : i === 1 ? "Управлять просто." : "Думать системно."} />
         </div>
         <div className="showcase-copy">{i === 0 ? <h1>{slide.title}</h1> : <h2>{slide.title}</h2>}<p className="showcase-description">{slide.description}</p><a className="showcase-cta" href={slide.href}>{slide.action}<span><ArrowIcon /></span></a><p className="showcase-detail">{slide.detail}</p></div>
       </article>)}

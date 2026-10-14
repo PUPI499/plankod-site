@@ -56,7 +56,7 @@ export default function ProductsPage() {
       </section>
 
       <ContactBand eyebrow="Не нашли нужное оборудование?" title={"Опишите задачу.\nПодберём комплект вручную."} />
-      <SiteFooter />
+      <SiteFooter slogan="Управлять просто." />
     </main>
   );
 }

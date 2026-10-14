@@ -1,3 +1,4 @@
+import { BrandSignature, type BrandSlogan } from "./brand-signature";
 import { ArrowIcon } from "./arrow-icon";
 /* eslint-disable @next/next/no-html-link-for-pages -- plain anchors keep the downloadable static preview navigable */
 import services from "./design/services.json";
@@ -61,10 +62,10 @@ export function ContactBand({ eyebrow = "Начать с проекта", title 
   );
 }
 
-export function SiteFooter({ contactHref = "#contact" }: { contactHref?: string }) {
+export function SiteFooter({ contactHref = "#contact", slogan = "Жить комфортно." }: { contactHref?: string; slogan?: BrandSlogan }) {
   return (
     <footer className="shell">
-      <a className="logo" href="/"><span>ПЛАН</span><i /><span>КОД</span></a>
+      <a className="footer-brand-link" href="/" aria-label="ПЛАНКОД — главная"><BrandSignature className="footer-signature" slogan={slogan} /></a>
       <p>Проектирование · координация инженерных систем · умный дом</p>
       <nav aria-label="Навигация в подвале">
         <a href="/">Главная</a>

@@ -90,7 +90,7 @@ export default async function ProjectCasePage({ params }: PageProps) {
       </section>
 
       <ContactBand engineering context={`Интересует похожий объект: ${project.title}. Разделы: ${project.scope}.`} eyebrow="Обсудить похожий объект" title={"Есть задача?\nНачнём с исходных данных."} />
-      <SiteFooter />
+      <SiteFooter slogan="Думать системно." />
     </main>
   );
 }

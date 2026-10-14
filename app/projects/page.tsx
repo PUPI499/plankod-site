@@ -59,7 +59,7 @@ export default function ProjectsPage() {
       </section>
 
       <ContactBand engineering eyebrow="Обсудить проектирование" title={"Есть объект?\nНачнём с исходных данных."} />
-      <SiteFooter />
+      <SiteFooter slogan="Думать системно." />
     </main>
   );
 }
