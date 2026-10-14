@@ -77,9 +77,6 @@ export function SiteFooter({ contactHref = "#contact" }: { contactHref?: string 
         <a href="/privacy">Политика конфиденциальности</a>
       </nav>
       <div className="footer-legal">
-        <span>ООО «Приоритет»</span>
-        <span>ИНН 6150063674</span>
-        <span>ОГРН 1106183001980</span>
         <a href="tel:+79518285872">+7 951 828-58-72</a>
         <a href="mailto:info@plancod.ru">info@plancod.ru</a>
       </div>
