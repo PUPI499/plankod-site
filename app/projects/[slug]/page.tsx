@@ -1,3 +1,4 @@
+import { BrandSignature } from "../../brand-signature";
 import { ArrowIcon } from "../../arrow-icon";
 /* eslint-disable @next/next/no-img-element, @next/next/no-html-link-for-pages -- direct paths keep the static and hosted builds consistent */
 import type { Metadata } from "next";
@@ -35,10 +36,11 @@ export default async function ProjectCasePage({ params }: PageProps) {
   const nextProject = projects[(projectIndex + 1) % projects.length];
 
   return (
-    <main className="engineering-page page-projects">
+    <main className="engineering-page premium-page page-projects">
       <SiteHeader active="projects" />
 
       <section className="case-hero shell" id="top">
+        <div className="case-masthead"><span>Объекты / {project.number}</span><BrandSignature slogan="Думать системно." /></div>
         <a className="case-hero-media panel" href={project.image} target="_blank" rel="noreferrer" aria-label="Открыть изображение объекта в полном размере">
           <img src={project.image} alt={`${project.imageLabel || "Рабочий чертёж"}: ${project.title}`} />
           <span>{project.number} / {project.imageLabel || "рабочая документация"}</span>

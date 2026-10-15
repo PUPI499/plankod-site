@@ -1,4 +1,5 @@
 import { ArrowIcon } from "../arrow-icon";
+import { PageHero } from "../page-hero";
 import type { Metadata } from "next";
 import { ContactBand, SiteFooter, SiteHeader } from "../components";
 import { GetSmartHomeButton } from "../get-smart-home-modal";
@@ -12,38 +13,11 @@ export const metadata: Metadata = {
 
 export default function SmartHomePage() {
   return (
-    <main className="engineering-page page-smart-home">
+    <main className="engineering-page premium-page page-smart-home">
       <SiteHeader active="smart" />
 
-      <section className="subhero shell" id="top">
-        <div className="subhero-copy panel">
-          <span className="micro-label">Умный дом / проектирование</span>
-          <h1>Инженерия дома.<br /><em>Под вашим</em><br />контролем.</h1>
-          <p>Проектируем управление отоплением, вентиляцией, кондиционированием, водоснабжением, светом и безопасностью. Умный дом можно заказать как самостоятельную услугу.</p>
-          <div className="subhero-actions"><GetSmartHomeButton label="Обсудить объект" /></div>
-          <div className="subhero-note"><span className="pill">Алиса, Салют и совместимые системы</span><small>* Подтверждаем совместимость оборудования до закупки.</small></div>
-        </div>
-        <div className="integration-visual panel">
-          <div className="visual-grid" />
-          <div className="integration-hub"><small>ПЛАНКОД</small><strong>ДОМ</strong><span>все системы на связи</span></div>
-          <svg className="integration-traces" viewBox="0 0 760 56" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M380 0 V18 H90 V56 M380 18 H283 V56 M380 18 H477 V56 M380 18 H670 V56" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth="1.5" />
-            <circle cx="380" cy="0" r="4.5" fill="#9f9cf0" />
-            <circle cx="380" cy="18" r="3.5" fill="#fff" />
-            <circle cx="90" cy="56" r="3.5" fill="#fff" />
-            <circle cx="283" cy="56" r="3.5" fill="#fff" />
-            <circle cx="477" cy="56" r="3.5" fill="#fff" />
-            <circle cx="670" cy="56" r="3.5" fill="#fff" />
-          </svg>
-          <div className="integration-chips">
-            <div className="system-chip"><i>01</i><b>Отопление</b><span>22° · норма</span></div>
-            <div className="system-chip"><i>02</i><b>Вентиляция</b><span>воздух · чисто</span></div>
-            <div className="system-chip"><i>03</i><b>Кондиционер</b><span>тихий режим</span></div>
-            <div className="system-chip"><i>04</i><b>Безопасность</b><span>всё закрыто</span></div>
-          </div>
-          <div className="voice-command">«Алиса, я дома»<b><ArrowIcon direction="right" /></b></div>
-        </div>
-      </section>
+      <PageHero topic="Умный дом" title={<>Инженерия дома.<br />Под вашим контролем.</>} description="Проектируем управление отоплением, вентиляцией, кондиционированием, водоснабжением, светом и безопасностью. Умный дом можно заказать как самостоятельную услугу." image="/images/home/smart-living.webp" mobileImage="/images/home/smart-living-mobile.webp" slogan="Жить комфортно." action={<GetSmartHomeButton label="Обсудить объект" />} facts={["Климат и свет", "Безопасность", "Единые сценарии"]} />
+      <div className="page-caption shell"><span>Алиса, Салют и совместимые системы</span><span>Совместимость оборудования подтверждаем до закупки.</span></div>
 
       <section className="page-section shell">
         <div className="page-heading capability-heading"><span>01 / возможности</span><h2>Не отдельные функции.<br /><em>Цельный дом.</em></h2><p>Сценарии проектируются вместе с инженерными системами.</p></div>

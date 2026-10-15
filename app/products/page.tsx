@@ -1,4 +1,4 @@
-import { ArrowIcon } from "../arrow-icon";
+import { PageHero } from "../page-hero";
 import type { Metadata } from "next";
 import { ContactBand, SiteFooter, SiteHeader } from "../components";
 import ProductCatalog from "./catalog";
@@ -12,32 +12,12 @@ export const metadata: Metadata = {
 
 export default function ProductsPage() {
   return (
-    <main className="engineering-page page-products">
+    <main className="engineering-page premium-page page-products">
       <SiteHeader active="products" />
 
-      <section className="products-hero shell" id="top">
-        <div className="products-hero-copy panel">
-          <span className="micro-label">Продукция / подбор оборудования</span>
-          <h1>Устройства,<br />которые <em>работают</em><br />как одна система</h1>
-          <p>Подбираем устройства под задачу объекта и проверяем совместимость с инженерными системами. Состав комплекта определяем на основе проекта.</p>
-          <div className="products-hero-points"><span>Умный дом</span><span>Климат</span><span>Управление</span><span>Безопасность</span></div>
-        </div>
-        <div className="products-showcase panel">
-          <div className="showcase-device showcase-one"><i /><b>Датчик</b></div>
-          <div className="showcase-device showcase-two"><i /><b>Розетка</b></div>
-          <div className="showcase-device showcase-three"><i /><b>Домофон</b></div>
-          <svg className="showcase-traces" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M50 20 V70 M50 33 H22 M50 28 H77 M50 64 H66" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth=".6" vectorEffect="non-scaling-stroke" />
-            <circle cx="50" cy="45" r="1.6" fill="#9f9cf0" />
-            <circle cx="50" cy="33" r="1.1" fill="#fff" /><circle cx="22" cy="33" r="1.1" fill="#fff" />
-            <circle cx="50" cy="28" r="1.1" fill="#fff" /><circle cx="77" cy="28" r="1.1" fill="#fff" />
-            <circle cx="50" cy="64" r="1.1" fill="#fff" /><circle cx="66" cy="64" r="1.1" fill="#fff" />
-          </svg>
-          <div className="showcase-caption"><span>ПЛАНКОД / КАТАЛОГ</span><strong>задача <ArrowIcon direction="right" /> подбор <ArrowIcon direction="right" /> совместимость</strong></div>
-        </div>
-      </section>
+      <PageHero topic="Оборудование" title={<>Устройства.<br />Одна система.</>} description="Подбираем устройства под задачу объекта и проверяем совместимость с инженерными системами. Состав комплекта определяем на основе проекта." image="/images/home/smart-equipment.webp" mobileImage="/images/home/smart-equipment-mobile.webp" slogan="Управлять просто." theme="page-cover-equipment" actionLabel="Выбрать оборудование" actionHref="#catalog" facts={["Умный дом", "Климат и управление", "Безопасность"]} />
 
-      <section className="catalog-section shell">
+      <section className="catalog-section shell" id="catalog">
         <div className="catalog-heading"><span>01 / каталог</span><h2>Выберите направление.<br /><em>Совместимость проверим мы.</em></h2><p>Показываем основные категории. Конкретные модели, стоимость и наличие подтверждаем после проверки задачи и совместимости.</p></div>
         <ProductCatalog />
       </section>

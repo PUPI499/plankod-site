@@ -1,7 +1,8 @@
+import { PageHero } from "../page-hero";
 import { ArrowIcon } from "../arrow-icon";
 /* eslint-disable @next/next/no-img-element -- static Hostland export uses plain image paths */
 import type { Metadata } from "next";
-import { EngineeringPanel, ContactBand, SiteFooter, SiteHeader } from "../components";
+import { ContactBand, SiteFooter, SiteHeader } from "../components";
 import { projects } from "./data";
 
 export const metadata: Metadata = {
@@ -13,19 +14,10 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <main className="engineering-page page-projects">
+    <main className="engineering-page premium-page page-projects">
       <SiteHeader active="projects" />
 
-      <section className="portfolio-hero shell" id="top">
-        <div className="portfolio-copy panel">
-          <span className="micro-label">Проектирование и объекты</span>
-          <h1>Объекты.<br /><em>Задачи.</em><br />Решения.</h1>
-          <p>Проектируем инженерные системы объектов любой сложности: от частного дома до производственного комплекса и коммерческого пространства. Учитываем монтаж, эксплуатацию и будущую автоматизацию.</p>
-          <a className="interior-cta" href="#portfolio">Смотреть объекты <span><ArrowIcon direction="up-right" /></span></a>
-          <div className="portfolio-facts"><span><b>с 2022</b> на рынке</span><span><b>Единый проект</b> согласованные системы</span><span><b>HVAC</b> отопление · вентиляция · климат</span></div>
-        </div>
-        <EngineeringPanel variant="projects" />
-      </section>
+      <PageHero topic="Объекты и решения" title={<>За каждым объектом —<br />свой проект.</>} description="Проектируем инженерные системы: от частного дома до производственного комплекса и коммерческого пространства. Учитываем монтаж, эксплуатацию и будущую автоматизацию." image="/images/home/engineering-warm.webp" mobileImage="/images/home/engineering-warm-mobile.webp" slogan="Думать системно." theme="page-cover-engineering" actionLabel="Смотреть объекты" actionHref="#portfolio" facts={["Задачи объектов", "Проектные решения", "Рабочие чертежи"]} />
 
       <section className="portfolio-section" id="portfolio">
         <div className="shell">

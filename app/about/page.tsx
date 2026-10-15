@@ -1,7 +1,8 @@
+import { PageHero } from "../page-hero";
 import { ArrowIcon } from "../arrow-icon";
 /* eslint-disable @next/next/no-html-link-for-pages -- direct paths keep the static and hosted builds consistent */
 import type { Metadata } from "next";
-import { EngineeringPanel, ContactBand, SiteFooter, SiteHeader } from "../components";
+import { ContactBand, SiteFooter, SiteHeader } from "../components";
 
 export const metadata: Metadata = {
   title: "О компании — ПЛАНКОД",
@@ -12,23 +13,10 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="engineering-page page-about">
+    <main className="engineering-page premium-page page-about">
       <SiteHeader active="about" />
 
-      <section className="about-hero shell" id="top">
-        <div className="about-hero-copy panel">
-          <span className="micro-label">ПЛАНКОД / инженерная компания</span>
-          <h1>Сначала проект.<br />Потом <em>оборудование.</em></h1>
-          <p>С 2022 года проектируем инженерные системы. Увязываем расчёты, оборудование и решения разных разделов. Развиваем умный дом как отдельное направление — со сценариями управления и взаимодействием систем.</p>
-          <a className="interior-cta" href="#contact">Обсудить проект <span><ArrowIcon direction="up-right" /></span></a>
-          <div className="about-facts">
-            <span><b>с 2022</b> работаем на рынке</span>
-            <span><b>1 команда</b> согласованные решения</span>
-            <span><b>География</b> европейская часть России и Урал</span>
-          </div>
-        </div>
-        <EngineeringPanel variant="about" />
-      </section>
+      <PageHero topic="О компании" title={<>Сначала проект.<br />Потом оборудование.</>} description="С 2022 года проектируем инженерные системы. Увязываем расчёты, оборудование и решения разных разделов. Развиваем умный дом как отдельное направление — со сценариями управления и взаимодействием систем." image="/images/about-work.jpg" slogan="Жить комфортно." theme="page-cover-about" facts={["На рынке с 2022 года", "Согласованные решения", "Европейская часть России и Урал"]} />
 
       <section className="page-section shell">
         <div className="page-heading"><span>01 / как работаем</span><h2>Решения<br /><em>согласованы</em></h2><p>Рассматриваем инженерные системы во взаимосвязи и фиксируем принятые решения в документации.</p></div>
