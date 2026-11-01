@@ -6,8 +6,6 @@ const products = [
   { id: "hub", category: "Система", title: "Центры управления", text: "Связывают совместимые датчики и сценарии.", art: "catalog-hub" },
   { id: "relay", category: "Электрика", title: "Умные реле", text: "Управление светом и нагрузками из сценариев.", art: "catalog-relay" },
   { id: "thermostat", category: "Климат", title: "Термостаты и датчики", text: "Температура, влажность и управление зонами.", art: "catalog-thermostat" },
-  { id: "gree", category: "Кондиционирование", title: "Кондиционеры Gree", text: "Серию и мощность подбираем по помещению.", art: "catalog-ac" },
-  { id: "midea", category: "Кондиционирование", title: "Кондиционеры Midea", text: "Поставка, монтаж и совместимое управление.", art: "catalog-ac dark-ac" },
 ];
 
 export default function ProductCatalog() {
@@ -31,7 +29,7 @@ export default function ProductCatalog() {
         <div className="cart-head"><span>Подбор оборудования</span><b><ArrowIcon direction="right" /></b></div>
         <div className="catalog-request-copy">
           <strong>Получите совместимую комплектацию</strong>
-          <p>Опишите объект и задачу. Подберём модели, проверим связь с умным домом и рассчитаем поставку с монтажом или без него.</p>
+          <p>Опишите объект и задачу. Подберём модели, проверим связь с умным домом и подготовим предложение по поставке.</p>
         </div>
         <ul className="catalog-request-list">
           <li>модель и мощность</li>
@@ -40,7 +38,7 @@ export default function ProductCatalog() {
           <li>наличие и доставка</li>
         </ul>
         <a className="catalog-request-button" href="#contact">Описать задачу <span><ArrowIcon direction="up-right" /></span></a>
-        <p className="order-note">До заказа подтверждаем состав, цену, наличие, условия доставки и монтажа.</p>
+        <p className="order-note">До заказа подтверждаем состав, цену, наличие, условия поставки.</p>
       </aside>
     </div>
   );

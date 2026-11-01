@@ -52,7 +52,7 @@ for (const file of files) {
   }
   assert(html.includes('<meta property="og:url"'), `Missing share URL: ${file}`);
   if (!file.endsWith("privacy.html")) {
-    const form = html.match(/<form\b[^>]*class="contact-form"[^>]*>/)?.[0] || "";
+    const form = html.match(/<form\b[^>]*class="contact-form(?: [^"]*)?"[^>]*>/)?.[0] || "";
     assert(form.includes('action="/contact.php"') && form.includes('method="post"'), `Missing form: ${file}`);
     assert(html.includes('name="consent"'), `Missing consent: ${file}`);
   }

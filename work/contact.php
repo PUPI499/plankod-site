@@ -19,7 +19,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     respond(405, ['ok' => false, 'error' => 'method_not_allowed']);
 }
 
-foreach (['name', 'contact', 'message', 'website', 'consent'] as $field) {
+foreach (['name', 'contact', 'message', 'website', 'consent', 'service', 'page_path', 'referrer_host', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'] as $field) {
     if (isset($_POST[$field]) && !is_string($_POST[$field])) {
         respond(400, ['ok' => false, 'error' => 'invalid_fields']);
     }
@@ -43,6 +43,20 @@ if (preg_match('/[\r\n\x00]/', $name . $contact) || strpos($message, "\0") !== f
     respond(400, ['ok' => false, 'error' => 'invalid_fields']);
 }
 
+// Optional lead context: included in the enquiry, never used for headers or routing.
+$context = [];
+$service = trim($_POST['service'] ?? '');
+if ($service !== '' && !in_array($service, ['b2b_supply', 'equipment', 'private_home', 'smart_design'], true)) {
+    respond(400, ['ok' => false, 'error' => 'invalid_service']);
+}
+foreach (['service', 'page_path', 'referrer_host', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'] as $key) {
+    $value = trim($_POST[$key] ?? '');
+    if (strlen($value) > 1000 || preg_match('/[\r\n\x00]/', $value)) {
+        respond(400, ['ok' => false, 'error' => 'invalid_context']);
+    }
+    if ($value !== '') $context[] = $key . ': ' . $value;
+}
+
 try {
     $requestId = strtoupper(bin2hex(random_bytes(6)));
     $config = [];
@@ -62,7 +76,8 @@ try {
     }
     $subject = '=?UTF-8?B?' . base64_encode('Заявка с сайта ПЛАНКОД') . '?=';
     $body = "Заявка с сайта plancod.ru\nНомер: {$requestId}\n\n"
-        . "Имя: {$name}\nКонтакт: {$contact}\n\nЗадача:\n{$message}\n";
+        . "Имя: {$name}\nКонтакт: {$contact}\n\nЗадача:\n{$message}\n"
+        . ($context ? "\nИсточник и направление:\n" . implode("\n", $context) . "\n" : "");
     $headers = [
         'Date: ' . date(DATE_RFC2822),
         'Message-ID: <' . strtolower($requestId) . '.' . time() . '@plancod.ru>',

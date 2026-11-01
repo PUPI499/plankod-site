@@ -2,12 +2,17 @@
 RewriteEngine On
 RewriteRule ^\.well-known/acme-challenge/ - [L]
 
+# Preserve external links and campaign parameters of the old smart-home page.
+RewriteCond %{REQUEST_METHOD} !^(GET|HEAD)$
+RewriteRule ^smart-home(?:\.html|/)?$ https://plancod.ru/smart-systems/home/ [R=308,L,NE]
+RewriteRule ^smart-home(?:\.html|/)?$ https://plancod.ru/smart-systems/home/ [R=301,L,NE]
+
 # Legacy application routes must reach the published HTML pages, including
 # /design/ which is also the parent directory of the individual services.
 # Match only these top-level routes; preserve every nested service/project URL.
 RewriteCond %{REQUEST_METHOD} !^(GET|HEAD)$
-RewriteRule ^(smart-home|design|projects|products|about|privacy)/?$ https://plancod.ru/$1.html [R=308,L,NE]
-RewriteRule ^(smart-home|design|projects|products|about|privacy)/?$ https://plancod.ru/$1.html [R=301,L,NE]
+RewriteRule ^(design|projects|products|about|privacy)/?$ https://plancod.ru/$1.html [R=308,L,NE]
+RewriteRule ^(design|projects|products|about|privacy)/?$ https://plancod.ru/$1.html [R=301,L,NE]
 
 # Redirect only explicit requests, never Apache's internal DirectoryIndex lookup.
 # No replacement query string: preserve campaign parameters and browser fragments.

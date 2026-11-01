@@ -1,3 +1,4 @@
+import { SmartLink } from "./smart-systems/sections";
 import { HomeCarousel } from "./home-carousel";
 import { getProject } from "./projects/data";
 import { ArrowIcon } from "./arrow-icon";
@@ -90,15 +91,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="scenarios-section shell" id="smart-home">
-        <div className="scenario-copy panel"><span className="micro-label">06 / Умный дом</span><h2>Дом управляет инженерией<br /><em>без лишних действий.</em></h2><p>Проектируем объединённое управление климатом, освещением, шторами, защитой от протечек, доступом и видеонаблюдением.</p><p className="home-scenario-note">Состав системы и сценарии определяем по задачам объекта. Проектирование умного дома можно заказать отдельно.</p><a className="quiet-link" href="/smart-home">Подробнее об умном доме <ArrowIcon direction="up-right" /></a></div>
-        <div className="scenario-board panel"><div className="board-head"><span>Примеры сценариев</span><b>SMART HOME</b></div><div className="scenario-list">
-          <article><i>01</i><div><h3>Я ушёл</h3><p>Свет выключен. Вода перекрыта. Безопасность активирована.</p></div><b><ArrowIcon direction="right" /></b></article>
-          <article className="active-scenario"><i>02</i><div><h3>Я дома</h3><p>Комфортный свет и климат.</p></div><b><ArrowIcon direction="right" /></b></article>
-          <article><i>03</i><div><h3>Спокойная ночь</h3><p>Дом переходит в ночной режим.</p></div><b><ArrowIcon direction="right" /></b></article>
-          <article><i>04</i><div><h3>Протечка</h3><p>Вода перекрывается, уведомление отправляется владельцу.</p></div><b><ArrowIcon direction="right" /></b></article>
-        </div><p className="home-scenario-disclaimer">Возможности зависят от выбранного оборудования и согласованного состава проекта.</p></div>
-      </section>
+      <section className="ss-home-promo shell" id="smart-home"><div><span className="ss-eyebrow">06 / Умные системы · Гостиницы и бизнес</span><h2>Интеллектуальные решения для современных зданий</h2><p>Оборудование автоматизации для гостиниц, бизнеса и частных домов. Инженерное проектирование интеллектуальных систем управления.</p><SmartLink href="/smart-systems/hotels/">Оборудование для бизнеса</SmartLink><br /><SmartLink href="/smart-systems/design/" quiet>Проектирование умного дома</SmartLink></div><figure><img src="/images/smart-systems/hub-v2-card.webp" alt="Концептуальная визуализация интеллектуального здания" loading="lazy"/><figcaption>Концепция интеллектуального здания</figcaption></figure></section>
 
       <section className="steps-section shell" id="install"><div className="section-head"><div><span className="section-number">07</span><p>Процесс</p></div><h2>От плана объекта<br /><em>до готовой документации.</em></h2></div><div className="steps-grid">{steps.map(([title, description], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{description}</p></article>)}</div></section>
 

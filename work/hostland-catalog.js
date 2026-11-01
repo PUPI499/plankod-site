@@ -262,8 +262,14 @@
   document.querySelectorAll('.design-navigation').forEach(function (nav) {
     var details = nav.querySelector('details');
     var summary = details.querySelector('summary');
-    nav.addEventListener('mouseenter', function () { details.open = true; });
-    nav.addEventListener('mouseleave', function () { if (!nav.contains(document.activeElement)) details.open = false; });
+    var openedByHover = false;
+    nav.addEventListener('mouseenter', function () { openedByHover = !details.open; details.open = true; });
+    summary.addEventListener('click', function (event) {
+      // A first pointer click must not immediately close a menu just opened by hover.
+      if (event.detail > 0 && openedByHover && details.open) event.preventDefault();
+      openedByHover = false;
+    });
+    nav.addEventListener('mouseleave', function () { openedByHover = false; if (!nav.contains(document.activeElement)) details.open = false; });
     nav.addEventListener('keydown', function (event) { if (event.key === 'Escape') { details.open = false; summary.focus(); } });
     nav.addEventListener('focusout', function (event) { if (!nav.contains(event.relatedTarget)) details.open = false; });
     document.addEventListener('click', function (event) { if (!nav.contains(event.target)) details.open = false; });
@@ -280,7 +286,7 @@
   document.addEventListener('click', function (event) {
     var link = event.target.closest('a');
     if (!link || typeof window.ym !== 'function') return;
-    var goal = link.dataset.goal || (link.href.indexOf('https://t.me/plancod') === 0 ? 'telegram_click' : '');
+    var goal = link.dataset.goal || (link.href.indexOf('tel:') === 0 ? 'phone_click' : '') || (link.href.indexOf('https://t.me/plancod') === 0 ? 'telegram_click' : '');
     if (goal) { try { window.ym(113254722, 'reachGoal', goal); } catch { /* Analytics must never block navigation. */ } }
   });
 })();
@@ -288,7 +294,7 @@
 // Contact form: consent gate + real submission to contact.php (point 10)
 (function () {
   "use strict";
-  var forms = Array.prototype.slice.call(document.querySelectorAll(".contact-form"));
+  var forms = Array.prototype.slice.call(document.querySelectorAll(".contact-form:not([data-smart-form])"));
   forms.forEach(function (form) {
     var labels = form.querySelectorAll("label");
     var nameInput = labels[0] && labels[0].querySelector("input");

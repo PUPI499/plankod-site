@@ -1,3 +1,5 @@
+(function () {
+if (["localhost", "127.0.0.1", "::1", "[::1]"].includes(location.hostname)) return;
 // Yandex.Metrika — shared by the application and the static Hostland export.
 (function(m,e,t,r,i,k,a){
     m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -7,3 +9,5 @@
 })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=113254722', 'ym');
 
 window.ym(113254722, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+
+})();

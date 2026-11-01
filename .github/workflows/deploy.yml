@@ -36,7 +36,9 @@ jobs:
         run: node work/export-hostland.mjs
 
       - name: Check exported pages and links
-        run: node work/check-export.mjs
+        run: |
+          node work/check-export.mjs
+          node work/check-smart-systems.mjs
 
       # Uses the FTP/SFTP credentials for the Hostland account, stored as
       # repo secrets (Settings -> Secrets and variables -> Actions).

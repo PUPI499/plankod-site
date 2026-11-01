@@ -24,6 +24,11 @@ await rm(dataBundle);
 
 const services = JSON.parse(await readFile(new URL("../app/design/services.json", import.meta.url), "utf8"));
 
+const smartBundle = new URL('./tmp-smart-data.mjs',import.meta.url);
+await build({entryPoints:[new URL('../app/smart-systems/data.ts',import.meta.url).pathname],outfile:smartBundle.pathname,bundle:true,platform:'node',format:'esm'});
+const {smartDirections,smartHub}=await import(smartBundle.href);
+await rm(smartBundle);
+
 const routes = [
   {
     entry: "../app/page.tsx",
@@ -34,15 +39,8 @@ const routes = [
     ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
-  {
-    entry: "../app/smart-home/page.tsx",
-    bundle: "./tmp-smart.mjs",
-    output: "smart-home.html",
-    title: "Умный дом под ключ — ПЛАНКОД",
-    description: "Интеграция отопления, вентиляции, кондиционирования и безопасности в умный дом.",
-    ogImage: "https://plancod.ru/og.png",
-    clientScript: "catalog.js",
-  },
+  {entry:'../app/smart-systems/page.tsx',bundle:'./tmp-smart-hub.mjs',output:'smart-systems/index.html',title:smartHub.title,description:smartHub.description,ogImage:'https://plancod.ru/images/smart-systems/hub-v2.webp',clientScript:'catalog.js',smart:true},
+  ...smartDirections.map(item=>({entry:'../app/smart-systems/[slug]/page.tsx',bundle:`./tmp-smart-${item.slug}.mjs`,output:`smart-systems/${item.slug}/index.html`,title:item.seoTitle,description:item.seoDescription,ogImage:`https://plancod.ru${item.image}`,clientScript:'catalog.js',smart:true,params:{slug:item.slug}})),
   {
     entry: "../app/design/page.tsx",
     bundle: "./tmp-design.mjs",
@@ -65,8 +63,8 @@ const routes = [
     entry: "../app/products/page.tsx",
     bundle: "./tmp-products.mjs",
     output: "products.html",
-    title: "Продукция для умного дома — ПЛАНКОД",
-    description: "Оборудование для умного дома и кондиционирования с подбором, доставкой и монтажом.",
+    title: "Продукция ПЛАНКОД — подбор решений для объекта",
+    description: "Обзор направлений оборудования ПЛАНКОД. Подбор устройств автоматизации по задачам объекта и согласование условий поставки.",
     ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
@@ -106,7 +104,7 @@ const routes = [
 ];
 
 const LINK_MAP = {
-  'href="/smart-home"': 'href="/smart-home.html"',
+  'href="/smart-home"': 'href="/smart-systems/home/"',
   'href="/design"': 'href="/design.html"',
   'href="/projects"': 'href="/projects.html"',
   'href="/products"': 'href="/products.html"',
@@ -154,6 +152,8 @@ try {
 }
 
 await copyFile(new URL("./hostland-catalog.js", import.meta.url), new URL("./catalog.js", OUT_DIR));
+await copyFile(new URL('./smart-systems.js',import.meta.url),new URL('./smart-systems.js',OUT_DIR));
+const smartVersion=createHash('sha256').update(await readFile(new URL('./smart-systems.js',import.meta.url))).digest('hex').slice(0,12);
 const clientVersion = createHash("sha256").update(await readFile(new URL("./hostland-catalog.js", import.meta.url))).digest("hex").slice(0, 12);
 console.log("copied catalog.js");
 await build({ entryPoints: [new URL("./hostland-carousel.ts", import.meta.url).pathname], outfile: new URL("./homepage-carousel.js", OUT_DIR).pathname, bundle: true, minify: true, platform: "browser", target: "es2020" });
@@ -181,7 +181,8 @@ console.log("wrote robots.txt");
 
 const sitemapUrls = [
   { path: "/", priority: "1.0" },
-  { path: "/smart-home.html", priority: "0.8" },
+  { path: "/smart-systems/", priority: "0.8" },
+  ...smartDirections.map(item=>({path:`/smart-systems/${item.slug}/`,priority:"0.8"})),
   { path: "/design.html", priority: "0.8" },
   { path: "/projects.html", priority: "0.8" },
   { path: "/products.html", priority: "0.8" },
@@ -230,7 +231,7 @@ for (const route of routes) {
   const canonical = `${SITE_URL}/${route.output === "index.html" ? "" : route.output.replace(/\/index\.html$/, "/")}`;
   const title = escapeAttribute(route.title);
   const description = escapeAttribute(route.description);
-  const scriptTag = (route.output === "index.html" ? `<script defer src="/homepage-carousel.js?v=${carouselVersion}"></script>` : "") + (route.clientScript ? `\n  <script defer src="/${route.clientScript}?v=${clientVersion}"></script>` : "");
+  const scriptTag = `<script defer src="/smart-systems.js?v=${smartVersion}"></script>` + (route.output === "index.html" ? `<script defer src="/homepage-carousel.js?v=${carouselVersion}"></script>` : "") + (route.clientScript ? `\n  <script defer src="/${route.clientScript}?v=${clientVersion}"></script>` : "");
   const html = `<!doctype html>
 <html lang="ru">
 <head>

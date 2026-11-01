@@ -2,13 +2,14 @@ import { BrandSignature, type BrandSlogan } from "./brand-signature";
 import { ArrowIcon } from "./arrow-icon";
 /* eslint-disable @next/next/no-html-link-for-pages -- plain anchors keep the downloadable static preview navigable */
 import services from "./design/services.json";
+import { smartDirections } from "./smart-systems/data";
 import { ContactForm } from "./contact-form";
 
 type SectionName = "home" | "design" | "smart" | "projects" | "products" | "about" | "legal";
 
 const navigation = [
   ["Главная", "/", "home"],
-  ["Умный дом", "/smart-home", "smart"],
+  ["Умные системы", "/smart-systems/", "smart"],
   ["Проектирование", "/design", "design"],
   ["Продукция", "/products", "products"],
   ["О нас", "/about", "about"],
@@ -24,14 +25,14 @@ export function SiteHeader({ active = "home" }: { active?: SectionName }) {
       </a>
       <nav className="desktop-navigation" aria-label="Основная навигация">
         {items.map(([label, href, key]) => (
-          key === "design" ? <div className="design-navigation" key={key}><a className={active === "design" || active === "projects" ? "active-link" : ""} href="/design">Проектирование</a><details className="design-dropdown"><summary aria-label="Направления проектирования"><ArrowIcon direction="chevron-down" /></summary><div className="design-menu"><div><strong>Инженерные системы</strong>{services.slice(0,6).map(s=><a key={s.slug} href={`/design/${s.slug}/`}>{s.name}</a>)}</div><div><strong>Комплексные задачи</strong>{services.slice(6).map(s=><a key={s.slug} href={`/design/${s.slug}/`}>{s.name}</a>)}<a href="/design#directions">Все направления <ArrowIcon direction="right" /></a><a href="/design#portfolio">Примеры проектов <ArrowIcon direction="right" /></a></div></div></details></div> : <a key={key} className={active === key ? "active-link" : ""} aria-current={active === key ? "page" : undefined} href={href}>{label}</a>
+          key === "smart" ? <div className="design-navigation smart-navigation" key={key}><a className={active === "smart" ? "active-link" : ""} href="/smart-systems/">Умные системы</a><details className="design-dropdown"><summary aria-label="Направления умных систем"><ArrowIcon direction="chevron-down" /></summary><div className="design-menu"><div><strong>Умные системы</strong>{smartDirections.map(s=><a key={s.slug} href={`/smart-systems/${s.slug}/`}>{s.name}<small>{s.features.join(" · ")}</small></a>)}</div></div></details></div> : key === "design" ? <div className="design-navigation" key={key}><a className={active === "design" || active === "projects" ? "active-link" : ""} href="/design">Проектирование</a><details className="design-dropdown"><summary aria-label="Направления проектирования"><ArrowIcon direction="chevron-down" /></summary><div className="design-menu"><div><strong>Инженерные системы</strong>{services.slice(0,6).map(s=><a key={s.slug} href={`/design/${s.slug}/`}>{s.name}</a>)}</div><div><strong>Комплексные задачи</strong>{services.slice(6).map(s=><a key={s.slug} href={`/design/${s.slug}/`}>{s.name}</a>)}<a href="/design#directions">Все направления <ArrowIcon direction="right" /></a><a href="/design#portfolio">Примеры проектов <ArrowIcon direction="right" /></a></div></div></details></div> : <a key={key} className={active === key ? "active-link" : ""} aria-current={active === key ? "page" : undefined} href={href}>{label}</a>
         ))}
       </nav>
       <a className="header-button" href={contactHref}>Обсудить проект <span><ArrowIcon direction="up-right" /></span></a>
       <details className="site-menu">
         <summary aria-label="Открыть меню"><i /><i /></summary>
         <nav aria-label="Мобильная навигация">
-          {items.map(([label, href, key]) => key === "design" ? <div key={key} className="mobile-design"><a href="/design">Проектирование</a><details><summary>Направления <ArrowIcon direction="chevron-down" /></summary>{services.map(s=><a key={s.slug} href={`/design/${s.slug}/`}>{s.name}</a>)}<a href="/design#portfolio">Примеры проектов</a></details></div> : <a key={href} className={active === key ? "active-link" : ""} aria-current={active === key ? "page" : undefined} href={href}>{label}</a>)}
+          {items.map(([label, href, key]) => key === "smart" ? <div key={key} className="mobile-design"><a href="/smart-systems/">Умные системы</a><details><summary>Решения и услуги <ArrowIcon direction="chevron-down" /></summary>{smartDirections.map(s=><a key={s.slug} href={`/smart-systems/${s.slug}/`}>{s.name}</a>)}</details></div> : key === "design" ? <div key={key} className="mobile-design"><a href="/design">Проектирование</a><details><summary>Направления <ArrowIcon direction="chevron-down" /></summary>{services.map(s=><a key={s.slug} href={`/design/${s.slug}/`}>{s.name}</a>)}<a href="/design#portfolio">Примеры проектов</a></details></div> : <a key={href} className={active === key ? "active-link" : ""} aria-current={active === key ? "page" : undefined} href={href}>{label}</a>)}
           <a href={contactHref}>Контакты</a>
         </nav>
       </details>
@@ -66,10 +67,10 @@ export function SiteFooter({ contactHref = "#contact", slogan = "Жить ком
   return (
     <footer className="shell">
       <a className="footer-brand-link" href="/" aria-label="ПЛАНКОД — главная"><BrandSignature className="footer-signature" slogan={slogan} /></a>
-      <p>Проектирование · координация инженерных систем · умный дом</p>
+      <p>Проектирование · координация инженерных систем · умные системы</p>
       <nav aria-label="Навигация в подвале">
         <a href="/">Главная</a>
-        <a href="/smart-home">Умный дом</a>
+        <a href="/smart-systems/">Умные системы</a>
         <a href="/design">Проектирование</a>
         <a href="/design#portfolio">Примеры проектов</a>
         <a href="/products">Продукция</a>

@@ -16,6 +16,7 @@ function mail($to, $subject, $body, $headers, $params) {
         && strpos($headers, "\r\nBcc:") === false
         && strpos(base64_decode($body), 'Тестовая заявка') !== false
         && strpos($subject, '=?UTF-8?B?') === 0;
+    if ($GLOBALS['scenario'] === 'smart_context') $valid = $valid && strpos(base64_decode($body), 'service: b2b_supply') !== false && strpos(base64_decode($body), 'utm_source: yandex') !== false;
     if (!$valid) throw new \RuntimeException('Malformed test message');
     if ($GLOBALS['scenario'] === 'exception') throw new \RuntimeException('PRIVATE INTERNAL ERROR');
     return $GLOBALS['scenario'] !== 'rejected';
@@ -33,6 +34,11 @@ $cases = [
     'honeypot' => [400, false, 0],
     'long' => [400, false, 0],
     'fixed_recipient' => [200, true, 1],
+    'smart_context' => [200, true, 1],
+    'invalid_service' => [400, false, 0],
+    'context_array' => [400, false, 0],
+    'context_injection' => [400, false, 0],
+    'context_length' => [400, false, 0],
 ];
 
 if (!isset($argv[1])) {
@@ -40,7 +46,7 @@ if (!isset($argv[1])) {
         passthru(escapeshellarg(PHP_BINARY) . ' ' . escapeshellarg(__FILE__) . ' ' . escapeshellarg($case), $code);
         if ($code !== 0) exit($code);
     }
-    echo "Mail handler: 11 tests passed, no real email sent.\n";
+    echo "Mail handler: 16 tests passed, no real email sent.\n";
     exit;
 }
 
@@ -60,6 +66,12 @@ if ($scenario === 'fixed_recipient') {
     $_POST['recipient'] = 'bad@example.invalid';
     $_POST['from'] = 'bad@example.invalid';
 }
+
+if ($scenario === 'smart_context') $_POST += ['service' => 'b2b_supply', 'page_path' => '/smart-systems/hotels/', 'utm_source' => 'yandex'];
+if ($scenario === 'invalid_service') $_POST['service'] = 'unknown';
+if ($scenario === 'context_array') $_POST['utm_source'] = ['bad'];
+if ($scenario === 'context_injection') $_POST['utm_source'] = "yandex\r\nInjected: bad";
+if ($scenario === 'context_length') $_POST['utm_source'] = str_repeat('x', 1001);
 
 ob_start();
 register_shutdown_function(function () use ($scenario, $cases) {
