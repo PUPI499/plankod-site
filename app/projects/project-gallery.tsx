@@ -39,7 +39,7 @@ export function ProjectGallery({ media }: { media: ProjectMedia[] }) {
             onClick={() => setActive(index)}
             aria-label={`Открыть изображение: ${item.label}`}
           >
-            <img src={item.src} alt={item.label} loading={index < 2 ? "eager" : "lazy"} />
+            <img src={item.src} alt={item.label} loading="lazy" />
             <span>{String(index + 1).padStart(2, "0")}</span>
             <div><b>{item.label}</b><small>Увеличить <ArrowIcon direction="up-right" /></small></div>
           </button>

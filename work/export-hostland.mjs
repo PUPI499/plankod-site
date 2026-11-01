@@ -47,7 +47,7 @@ const routes = [
     output: "design.html",
     title: "Проектирование инженерных систем — направления и цены | ПЛАНКОД",
     description: "Проектирование отопления, вентиляции, кондиционирования, ВК, электроснабжения и ИТП. Состав работ, стартовые цены и примеры проектной документации.",
-    ogImage: "https://plancod.ru/og.png",
+    ogImage: "https://plancod.ru/images/design/hub-v1.webp",
     clientScript: "catalog.js",
   },
   {
@@ -56,7 +56,7 @@ const routes = [
     output: "projects.html",
     title: "Выполненные проекты: вентиляция, отопление, инженерные сети — ПЛАНКОД",
     description: "Реальные проекты ПЛАНКОД: вентиляция пищевого блока и прачечной, отопление и кондиционирование дома культуры, инженерные сети санатория. Фрагменты рабочих чертежей.",
-    ogImage: "https://plancod.ru/og.png",
+    ogImage: "https://plancod.ru/images/design/portfolio-v1.webp",
     clientScript: "catalog.js",
   },
   {
@@ -89,7 +89,7 @@ const routes = [
   ...services.map(service => ({
     entry: "../app/design/[slug]/page.tsx", bundle: `./tmp-service-${service.slug}.mjs`,
     output: `design/${service.slug}/index.html`, title: `${service.title} — ${service.price} | ПЛАНКОД`,
-    description: service.description, ogImage: "https://plancod.ru/og.png", clientScript: "catalog.js", params: {slug: service.slug},
+    description: service.description, ogImage: `https://plancod.ru/images/design/${service.slug}-v1.webp`, clientScript: "catalog.js", params: {slug: service.slug},
   })),
   ...projectRoutes.map((project) => ({
     entry: "../app/projects/[slug]/page.tsx",
@@ -125,7 +125,7 @@ await mkdir(OUT_DIR, { recursive: true });
 await copyFile(new URL("./hostland.htaccess", import.meta.url), new URL("./.htaccess", OUT_DIR));
 console.log("copied .htaccess");
 
-const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8") + "\n" + await readFile(new URL("../app/design/editorial.css", import.meta.url), "utf8");
 
 try {
   await copyFile(new URL("../public/og.png", import.meta.url), new URL("./og.png", OUT_DIR));

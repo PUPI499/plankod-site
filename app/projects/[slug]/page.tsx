@@ -1,98 +1,33 @@
-import { BrandSignature } from "../../brand-signature";
-import { ArrowIcon } from "../../arrow-icon";
-/* eslint-disable @next/next/no-img-element, @next/next/no-html-link-for-pages -- direct paths keep the static and hosted builds consistent */
+/* eslint-disable @next/next/no-img-element -- original project documentation */
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ArrowIcon } from "../../arrow-icon";
+import { BrandSignature } from "../../brand-signature";
 import { ContactBand, SiteFooter, SiteHeader } from "../../components";
+import { EngineeringCrumbs, EngineeringHeading } from "../../design/editorial";
+import services from "../../design/services.json";
 import { getProject, projects } from "../data";
 import { ProjectGallery } from "../project-gallery";
-
-type PageProps = { params: Promise<{ slug: string }> };
-
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+type Props={params:Promise<{slug:string}>};
+export const dynamicParams=false;
+export function generateStaticParams(){return projects.map(p=>({slug:p.slug}));}
+export async function generateMetadata({params}:Props):Promise<Metadata>{
+ const {slug}=await params;const p=getProject(slug);if(!p)return {};
+ return {title:p.title+" — ПЛАНКОД",description:p.summary,alternates:{canonical:"/projects/"+slug+"/"},openGraph:{title:p.title,description:p.summary,images:[p.image]},twitter:{title:p.title,description:p.summary,images:[p.image]}};
 }
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const project = getProject(slug);
-  if (!project) return {};
-  const title = `${project.title} — ПЛАНКОД`;
-  return {
-    title,
-    description: project.summary,
-    openGraph: { title, description: project.summary, images: [`https://plancod.ru${project.image}`] },
-    twitter: { title, description: project.summary, images: [`https://plancod.ru${project.image}`] },
-  };
-}
-
-export default async function ProjectCasePage({ params }: PageProps) {
-  const { slug } = await params;
-  const project = getProject(slug);
-  if (!project) notFound();
-  const projectIndex = projects.findIndex((item) => item.slug === project.slug);
-  const nextProject = projects[(projectIndex + 1) % projects.length];
-
-  return (
-    <main className="engineering-page premium-page page-projects">
-      <SiteHeader active="projects" />
-
-      <section className="case-hero shell" id="top">
-        <div className="case-masthead"><span>Объекты / {project.number}</span><BrandSignature slogan="Думать системно." /></div>
-        <a className="case-hero-media panel" href={project.image} target="_blank" rel="noreferrer" aria-label="Открыть изображение объекта в полном размере">
-          <img src={project.image} alt={`${project.imageLabel || "Рабочий чертёж"}: ${project.title}`} />
-          <span>{project.number} / {project.imageLabel || "рабочая документация"}</span>
-          <b>Открыть полностью <ArrowIcon direction="up-right" /></b>
-        </a>
-        <div className="case-hero-copy panel">
-          <a className="case-back-link" href="/projects"><ArrowIcon direction="left" /> Все объекты</a>
-          <small>{project.scope}</small>
-          <h1>{project.title}</h1>
-          <p>{project.summary}</p>
-          <div className="case-facts">{project.facts.map((fact) => <span key={fact}>{fact}</span>)}</div>
-          <a className="case-discuss-link" data-goal="discuss_project" href="#contact">Обсудить похожий объект <span><ArrowIcon direction="up-right" /></span></a>
-        </div>
-      </section>
-
-      <section className="case-story shell">
-        <div className="case-story-heading">
-          <span>01 / логика проекта</span>
-          <h2>{project.statement}</h2>
-          <p>Показываем не просто изображения листов, а задачу, принятое решение и результат для заказчика.</p>
-        </div>
-        <div className="case-story-list">
-          <article><span>01 / задача</span><h3>{project.challengeLead}</h3><p>{project.challenge}</p></article>
-          <article><span>02 / решение</span><h3>{project.solutionLead}</h3><p>{project.solution}</p></article>
-          <article><span>03 / результат</span><h3>{project.resultLead}</h3><p>{project.result}</p></article>
-        </div>
-      </section>
-
-      <section className="case-gallery-section">
-        <div className="shell">
-          <div className="case-gallery-heading">
-            <div><span>02 / материалы объекта</span><h2>Проект<br /><em>в деталях</em></h2></div>
-            <p>Нажмите на лист, чтобы рассмотреть обозначения, размеры и монтажные отметки. В полноэкранном режиме работают стрелки клавиатуры и кнопки навигации.</p>
-          </div>
-          <ProjectGallery media={project.media} />
-        </div>
-      </section>
-
-      <section className="case-result shell">
-        <div className="case-result-metric panel"><span>03 / итог</span><strong>{project.metric}</strong><p>{project.metricText}</p></div>
-        <div className="case-result-copy panel"><h2>Проект, по которому<br /><em>можно работать.</em></h2><p>{project.result}</p><a data-goal="discuss_project" href="#contact">Обсудить проект <ArrowIcon direction="up-right" /></a></div>
-      </section>
-
-      <section className="case-next">
-        <div className="shell case-next-inner">
-          <div><span>Следующий объект / {nextProject.number}</span><h2>{nextProject.title}</h2></div>
-          <a href={`/projects/${nextProject.slug}`}>Смотреть следующий объект <span><ArrowIcon direction="right" /></span></a>
-        </div>
-      </section>
-
-      <ContactBand engineering context={`Интересует похожий объект: ${project.title}. Разделы: ${project.scope}.`} eyebrow="Обсудить похожий объект" title={"Есть задача?\nНачнём с исходных данных."} />
-      <SiteFooter slogan="Думать системно." />
-    </main>
-  );
+export default async function ProjectCasePage({params}:Props){
+ const {slug}=await params;const p=getProject(slug);if(!p)notFound();
+ const next=projects[(projects.findIndex(item=>item.slug===slug)+1)%projects.length];
+ const directions=services.filter(s=>s.projects.includes(slug));
+ return <main className="engineering-page premium-page eng-page eng-case-page"><SiteHeader active="projects"/><EngineeringCrumbs title={p.title} portfolio/>
+ <section className="eng-case-hero shell" id="top"><div className="eng-case-masthead"><span>ПРОЕКТ / {p.number}</span><BrandSignature slogan="Думать системно."/></div>
+ <div className="eng-case-intro"><span className="eng-kicker">{p.type}</span><h1>{p.title}</h1><p>{p.summary}</p><a className="eng-button" data-goal="discuss_project" href="#contact">Обсудить похожий объект<ArrowIcon direction="up-right"/></a><a className="eng-link" href="#drawings">Смотреть чертежи<ArrowIcon direction="down"/></a></div>
+ <figure className={"eng-case-image"+(!p.imageLabel?" is-drawing":"")}><a href={p.image} target="_blank" rel="noreferrer" aria-label="Открыть главное изображение"><img src={"/images/design/case-"+slug+"-v1.webp"} alt={p.title+" — "+(p.imageLabel||"рабочий чертёж")} fetchPriority="high"/></a><figcaption>{p.imageLabel?"Концептуальная визуализация объекта · не фотография реализации":"Фрагмент рабочей документации"}</figcaption></figure>
+ <div className="eng-case-facts"><div><span>РАЗДЕЛЫ ПРОЕКТА</span><strong>{p.scope}</strong></div>{p.facts.map(fact=><div key={fact}><strong>{fact}</strong></div>)}</div></section>
+ <section className="eng-section shell"><EngineeringHeading index="01 / ЗАДАЧА И РЕШЕНИЕ" title={p.statement}>Инженерная логика проекта — от условий объекта до комплекта документации.</EngineeringHeading><div className="eng-case-story">{[["Задача",p.challengeLead,p.challenge],["Решение",p.solutionLead,p.solution],["Документация",p.resultLead,p.result]].map(([label,title,text],i)=><article key={label}><span className="eng-kicker">0{i+1} / {label}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
+ <section className="eng-drawing-section" id="drawings"><div className="shell"><EngineeringHeading index="02 / ПРОЕКТНАЯ ДОКУМЕНТАЦИЯ" title={<>Детали,<br/><em>которые имеют значение.</em></>}>Откройте лист, чтобы рассмотреть трассы, оборудование и отметки. В просмотре доступны стрелки клавиатуры и увеличение изображения средствами браузера.</EngineeringHeading><ProjectGallery media={p.media}/></div></section>
+ <section className="eng-section shell"><div className="eng-case-result"><div><span className="eng-kicker">В ДОКУМЕНТАЦИИ</span><strong>{p.metric}</strong><p>{p.metricText}</p></div><div><h2>Результат —<br/>согласованные решения.</h2><p>{p.result}</p></div></div></section>
+ <section className="eng-section shell eng-related"><EngineeringHeading index="03 / НАПРАВЛЕНИЯ ПРОЕКТИРОВАНИЯ" title="Решения для вашего объекта.">Рассмотрите соответствующие услуги и передайте исходные данные для обсуждения.</EngineeringHeading><div>{directions.map(s=><a href={"/design/"+s.slug+"/"} key={s.slug}>{s.name}<ArrowIcon direction="up-right"/></a>)}</div></section>
+ <section className="eng-next shell"><div><span className="eng-kicker">СЛЕДУЮЩИЙ ПРОЕКТ / {next.number}</span><h2>{next.title}</h2></div><a className="eng-button" href={"/projects/"+next.slug+"/"}>Рассмотреть проект<ArrowIcon direction="right"/></a></section>
+ <ContactBand engineering context={"Интересует похожий объект: "+p.title+". Разделы: "+p.scope+"."} eyebrow="ОБСУДИТЬ ПОХОЖИЙ ОБЪЕКТ" title={"Есть задача?\nНачнём с исходных данных."}/><SiteFooter slogan="Думать системно."/></main>;
 }
