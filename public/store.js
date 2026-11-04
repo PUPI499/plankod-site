@@ -18,3 +18,30 @@ panel.addEventListener("keydown",e=>{if(!root.classList.contains("filters-open")
 inputs.forEach(i=>i.addEventListener("change",render));sort.addEventListener("change",render);root.querySelector("[data-reset-filters]").addEventListener("click",()=>{inputs.forEach(i=>i.checked=false);render();});render();
 });
 })();
+
+document.querySelectorAll("[data-store-config]").forEach(form=>{
+const status=form.parentElement.querySelector("[data-config-status]"),result=form.parentElement.querySelector("[data-config-results]");
+let records;
+form.addEventListener("submit",async e=>{
+e.preventDefault(); const data=new FormData(form),tasks=data.getAll("task"),system=data.get("ecosystem"),budget=Number(data.get("budget")),object=form.elements.object.selectedOptions[0].textContent;
+result.replaceChildren();if(!tasks.length){status.textContent="Выберите хотя бы одну задачу.";return;}
+status.textContent="Подбираем состав…";form.querySelector("button").disabled=true;result.setAttribute("aria-busy","true");
+try{
+if(!records){const response=await fetch("/store-products.json");if(!response.ok)throw new Error("catalog");records=await response.json();}
+const ids=system==="rubetek"?["rubetek-re-3315",...(tasks.includes("Безопасность")?["rubetek-rs-3215","rubetek-rs-3225"]:[]),...(tasks.includes("Климат")?["rubetek-rc-3605"]:[]),...(tasks.includes("Освещение")?["rubetek-rs-3205"]:[])]:["wiren-board-8",...(tasks.includes("Климат")?["wb-msw-v4"]:[]),...(tasks.includes("Освещение")?["wb-mr6c-v3"]:[])];
+const items=ids.map(id=>records.find(p=>p.slug===id)).filter(Boolean);
+const known=items.every(p=>Number.isFinite(p.price)),total=items.reduce((sum,p)=>sum+(p.price||0),0);
+const heading=document.createElement("h3");heading.textContent=object+" / "+(system==="rubetek"?"Rubetek":"Wiren Board");result.appendChild(heading);
+const list=document.createElement("ul");items.forEach(p=>{const li=document.createElement("li"),link=document.createElement("a");link.href="/products/"+p.slug+"/";link.textContent=p.name;li.appendChild(link);list.appendChild(li);});result.appendChild(list);
+function note(text){const p=document.createElement("p");p.textContent=text;result.appendChild(p);}
+note(system==="rubetek"?"Устройства RF 868 МГц работают через RE-3315. Нужны питание, настройка и подходящие условия радиосвязи. Для освещения проверяется схема подключения и нагрузка.":"Проводные устройства Modbus RTU. Дополнительно нужны питание, кабельная инфраструктура и настройка контроллера. Опции датчика микроклимата выбираются отдельно.");
+if(tasks.includes("Климат"))note("Этот состав контролирует микроклимат. Исполнительные устройства для отопления, охлаждения или увлажнения подбираются отдельно.");
+if(tasks.includes("Безопасность"))note(system==="rubetek"?"Для перекрытия воды отдельно нужны электроприводы кранов.":"В каталоге пока нет подтверждённого комплекта датчиков безопасности для этой подборки. Специалист дополнит состав.");
+status.textContent=known?(budget&&total>budget?"Стоимость состава превышает выбранный бюджет.":"Стоимость выбранного оборудования: "+total.toLocaleString("ru-RU")+" ₽."):"Состав подобран. Цены уточняются — соответствие "+(budget?"бюджету до "+budget.toLocaleString("ru-RU")+" ₽":"вашему бюджету")+" подтвердим в предложении.";
+const contact=document.createElement("a");contact.href="#contact";contact.className="store-primary";contact.textContent="Обсудить этот состав →";
+contact.addEventListener("click",()=>{const field=document.querySelector("#contact textarea");if(field){field.value="Подбор оборудования: "+object+"; "+tasks.join(", ")+"; бюджет: "+(budget?budget+" ₽":"уточнить")+"; "+items.map(p=>p.name).join(", ")+". ";field.dispatchEvent(new Event("input",{bubbles:true}));}});
+result.appendChild(contact);
+}catch{status.textContent="Не удалось загрузить каталог. Попробуйте ещё раз или отправьте задачу через форму ниже.";}
+finally{form.querySelector("button").disabled=false;result.removeAttribute("aria-busy");}
+});
+});

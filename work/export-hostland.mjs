@@ -123,6 +123,7 @@ const LINK_MAP = {
 function localizeLinks(markup) {
   let out = markup.replace(/href="\/projects\/([^"#?]+)"/g, (_, slug) => 'href="/projects/' + slug.replace(/\/+$/, '') + '/"');
   for (const [from, to] of Object.entries(LINK_MAP)) out = out.replaceAll(from, to);
+  out = out.replaceAll('href="/products#', 'href="/products.html#');
   out = out.replaceAll('href="/design#', 'href="/design.html#');
   return out;
 }
@@ -163,6 +164,7 @@ try {
 await copyFile(new URL("../public/store.js",import.meta.url),new URL("./store.js",OUT_DIR));
 const storeVersion=createHash("sha256").update(await readFile(new URL("../public/store.js",import.meta.url))).digest("hex").slice(0,12);
 const {cp}=await import("node:fs/promises");
+await writeFile(new URL("./store-products.json",OUT_DIR),JSON.stringify(storeProducts));
 await cp(new URL("../public/assets/",import.meta.url),new URL("./assets/",OUT_DIR),{recursive:true});
 
 await copyFile(new URL("./hostland-catalog.js", import.meta.url), new URL("./catalog.js", OUT_DIR));

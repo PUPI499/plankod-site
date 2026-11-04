@@ -1,0 +1,36 @@
+{
+  "status": "unpublished-template",
+  "note": "Не публиковать как выполненные проекты без подтверждающих материалов.",
+  "cases": [
+    {
+      "title": "Квартира: безопасность и климат",
+      "brand": "Rubetek",
+      "object": null,
+      "scope": null,
+      "equipment": null,
+      "photos": [],
+      "permission": null,
+      "result": null
+    },
+    {
+      "title": "Частный дом: управление освещением",
+      "brand": "Wiren Board",
+      "object": null,
+      "scope": null,
+      "equipment": null,
+      "photos": [],
+      "permission": null,
+      "result": null
+    },
+    {
+      "title": "Коммерческий объект: управление KNX",
+      "brand": null,
+      "object": null,
+      "scope": null,
+      "equipment": null,
+      "photos": [],
+      "permission": null,
+      "result": null
+    }
+  ]
+}

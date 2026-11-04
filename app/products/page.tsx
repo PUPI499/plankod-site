@@ -1,3 +1,4 @@
+import {Configurator} from "./kits";
 /* eslint-disable @next/next/no-html-link-for-pages -- shared static export */
 import { PageHero } from "../page-hero";
 import type { Metadata } from "next";
@@ -23,6 +24,7 @@ export default function ProductsPage() {
         <p className="ss-fine">Для гостиниц, бизнеса и частных домов доступна <a href="/smart-systems/equipment/">категорийная витрина с запросом стоимости оборудования</a>.</p><p className="store-directory-link"><a href="/brands/">Все бренды и поставщики →</a></p><ProductCatalog />
       </section>
 
+      <Configurator />
       <section className="buy-process">
         <div className="shell">
           <div className="page-heading"><span>02 / как купить</span><h2>Сначала проверяем.<br /><em>Потом оформляем.</em></h2></div>
