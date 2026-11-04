@@ -1,6 +1,7 @@
 /* Static-export catalog interactions. No payment or supplier requests. */
 (function(){
 "use strict";
+document.querySelectorAll("[data-product-gallery]").forEach(g=>{g.querySelectorAll("[data-gallery-src]").forEach(b=>b.addEventListener("click",()=>{g.querySelector("[data-gallery-main]").src=b.dataset.gallerySrc;g.querySelectorAll("[data-gallery-src]").forEach(t=>t.setAttribute("aria-pressed",String(t===b)));}));});
 document.querySelectorAll("[data-store-catalog]").forEach(function(root){
 const grid=root.querySelector("[data-store-grid]"), cards=Array.from(grid.querySelectorAll("[data-store-card]")), panel=root.querySelector("[data-store-filters]"),open=root.querySelector("[data-open-filters]"),close=root.querySelector("[data-close-filters]"),sort=root.querySelector("[data-store-sort]");
 root.classList.add("store-ready");open.hidden=false;close.hidden=false;
