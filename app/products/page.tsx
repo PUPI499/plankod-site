@@ -6,8 +6,9 @@ import { ContactBand, SiteFooter, SiteHeader } from "../components";
 import ProductCatalog from "./catalog";
 
 export const metadata: Metadata = {
-  title: "Продукция ПЛАНКОД — подбор решений для объекта",
-  description: "Обзор направлений оборудования ПЛАНКОД. Подбор устройств автоматизации по задачам объекта; спецификацию, доступность и условия поставки согласовываем отдельно.",
+  title: "Каталог оборудования умного дома — ПЛАНКОД",
+  alternates: {canonical: "/products.html"},
+  description: "Датчики, контроллеры и модули Rubetek, Wiren Board и Zennio: характеристики, фильтры и подбор по задачам. Стоимость и условия поставки по запросу.",
   openGraph: { title: "Продукция для умного дома — ПЛАНКОД", description: "Подбор оборудования автоматизации по задачам объекта.", images: ["/og.png"] },
   twitter: { title: "Продукция для умного дома — ПЛАНКОД", description: "Категории оборудования и инженерный подход к подбору.", images: ["/og.png"] },
 };

@@ -39,6 +39,7 @@ jobs:
         run: |
           node work/check-export.mjs
           node work/check-smart-systems.mjs
+          node work/check-store.mjs
 
       # Uses the FTP/SFTP credentials for the Hostland account, stored as
       # repo secrets (Settings -> Secrets and variables -> Actions).

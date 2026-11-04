@@ -322,5 +322,148 @@
     "source": "https://wirenboard.com/en/contents/product/wb-mai6/",
     "brand": "wiren-board",
     "image": "/assets/img/wb-mai6.webp"
+  },
+  {
+    "slug": "zennio-maxinbox-16-v4",
+    "name": "Zennio MAXinBOX 16 v4",
+    "description": "Многофункциональный актуатор KNX Secure с 16 выходами. Режимы выходов задаются при настройке.",
+    "purpose": [
+      "Освещение",
+      "Контроллеры и модули"
+    ],
+    "specs": {
+      "Артикул": "ZIOMB16V4",
+      "Выходы": "16",
+      "Монтаж": "DIN-рейка, 8 модулей",
+      "Связь": "KNX TP, KNX Secure"
+    },
+    "scenarios": [
+      "Коммутация групп освещения по командам KNX.",
+      "Управление совместимыми приводами штор при соответствующей настройке выходов."
+    ],
+    "source": "https://www.zennio.com/product/maxinbox-16-v4/",
+    "supplierSource": "https://knx24.com/catalog/goods/zennio-ziomb16v4-aktuator-maxinbox-16-v4/",
+    "brand": "knx24",
+    "manufacturer": "Zennio",
+    "image": "/assets/img/zennio-maxinbox-16-v4.webp",
+    "protocols": [
+      "KNX"
+    ],
+    "platforms": [
+      "KNX-шина"
+    ],
+    "price": null,
+    "gallery": [],
+    "documents": [],
+    "compatibility": [
+      "Оборудование KNX; необходимы спроектированная шина, питание и настройка ETS. Состав системы и параметры нагрузок проверяются по документации производителя."
+    ]
+  },
+  {
+    "slug": "zennio-shutter-8ch-v3",
+    "name": "Zennio MAXinBOX SHUTTER 8CH v3",
+    "description": "Актуатор KNX для управления восемью каналами штор и жалюзи.",
+    "purpose": [
+      "Контроллеры и модули"
+    ],
+    "specs": {
+      "Артикул": "ZIOMBSH8V3",
+      "Каналы": "8",
+      "Монтаж": "DIN-рейка, 8 модулей",
+      "Связь": "KNX TP, KNX Secure"
+    },
+    "scenarios": [
+      "Групповое открытие и закрытие совместимых жалюзи.",
+      "Управление отдельными приводами через настроенные команды KNX."
+    ],
+    "source": "https://www.zennio.com/product/maxinbox-shutter-8ch-v3/",
+    "supplierSource": "https://knx24.com/catalog/goods/zennio-ziombsh8v3-maxinbox-shutter-8ch-v3/",
+    "brand": "knx24",
+    "manufacturer": "Zennio",
+    "image": "/assets/img/zennio-shutter-8ch-v3.webp",
+    "protocols": [
+      "KNX"
+    ],
+    "platforms": [
+      "KNX-шина"
+    ],
+    "price": null,
+    "gallery": [],
+    "documents": [],
+    "compatibility": [
+      "Оборудование KNX; необходимы спроектированная шина, питание и настройка ETS. Состав системы и параметры нагрузок проверяются по документации производителя."
+    ]
+  },
+  {
+    "slug": "zennio-hospitality-v3",
+    "name": "Zennio MAXinBOX Hospitality v3",
+    "description": "Контроллер двух- и четырёхтрубных фанкойлов с аналогово-цифровыми входами и поддержкой KNX Secure.",
+    "purpose": [
+      "Климат",
+      "Контроллеры и модули"
+    ],
+    "specs": {
+      "Артикул": "ZCLHP126V3",
+      "Входы": "6 аналогово-цифровых",
+      "Монтаж": "DIN-рейка, 4,5 модуля",
+      "Связь": "KNX, KNX Secure"
+    },
+    "scenarios": [
+      "Управление совместимым фанкойлом в гостиничном номере.",
+      "Обработка сигналов датчиков и кнопок в настроенной системе KNX."
+    ],
+    "source": "https://www.zennio.com/es/producto/maxinbox-hospitality-v3/",
+    "supplierSource": "https://knx24.com/catalog/goods/zennio-zclhp126v3-kontroller-fankoyla-maxinbox-hospitality-v3/",
+    "brand": "knx24",
+    "manufacturer": "Zennio",
+    "image": "/assets/img/zennio-hospitality-v3.webp",
+    "protocols": [
+      "KNX"
+    ],
+    "platforms": [
+      "KNX-шина"
+    ],
+    "price": null,
+    "gallery": [],
+    "documents": [],
+    "compatibility": [
+      "Оборудование KNX; необходимы спроектированная шина, питание и настройка ETS. Состав системы и параметры нагрузок проверяются по документации производителя."
+    ]
+  },
+  {
+    "slug": "zennio-kipi-sc",
+    "name": "Интерфейс Zennio KIPI SC",
+    "description": "Интерфейс для связи Ethernet с сетью KNX TP, программирования и мониторинга устройств.",
+    "purpose": [
+      "Контроллеры и модули"
+    ],
+    "specs": {
+      "Артикул": "ZSYKIPISC",
+      "Связь": "KNXnet/IP Tunneling; KNX Secure",
+      "Монтаж": "DIN-рейка, 2 модуля",
+      "Соединения": "До 5 параллельных соединений",
+      "Внешнее питание": "Не требуется"
+    },
+    "scenarios": [
+      "Программирование устройств KNX через Ethernet.",
+      "Мониторинг телеграмм сети KNX из совместимого ПО."
+    ],
+    "source": "https://www.zennio.com/product/kipi-sc/",
+    "supplierSource": "https://knx24.com/catalog/goods/zennio-zsykipisc-interfeys-knx-ip-s-knx-secure-kipi-sc/",
+    "brand": "knx24",
+    "manufacturer": "Zennio",
+    "image": "/assets/img/zennio-kipi-sc.webp",
+    "protocols": [
+      "KNX"
+    ],
+    "platforms": [
+      "KNX-шина"
+    ],
+    "price": null,
+    "gallery": [],
+    "documents": [],
+    "compatibility": [
+      "Оборудование KNX; необходимы спроектированная шина, питание и настройка ETS. Состав системы и параметры нагрузок проверяются по документации производителя."
+    ]
   }
 ]

@@ -1,5 +1,5 @@
 import records from "./items.json";
-export type Product = {slug:string;brand:string;name:string;description:string;image:string;gallery?:string[];purpose:string[];protocols:string[];platforms:string[];specs:Record<string,string>;compatibility:string[];scenarios:string[];documents?:{title:string;url:string}[];video?:string;price:number|null;introduced?:string;source:string};
+export type Product = {slug:string;brand:string;manufacturer?:string;supplierSource?:string;name:string;description:string;image:string;gallery?:string[];purpose:string[];protocols:string[];platforms:string[];specs:Record<string,string>;compatibility:string[];scenarios:string[];documents?:{title:string;url:string}[];video?:string;price:number|null;introduced?:string;source:string};
 export const products = records as Product[];
 export const brands = [
  {slug:"rubetek",name:"Rubetek",kind:"Производитель",description:"Rubetek выпускает оборудование для умного дома: датчики безопасности, устройства управления электропитанием и видеонаблюдения. Решения подбираются под задачи квартиры или частного дома. В каталоге представлены датчики RF 868 МГц и совместимый блок управления. Для работы датчиков нужен хаб; одинаковое название экосистемы не означает совместимость любых поколений устройств.",audience:"Квартиры и частные дома",source:"https://shop.rubetek.com/catalog/"},
