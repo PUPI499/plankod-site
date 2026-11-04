@@ -6,11 +6,11 @@ const TELEGRAM_LINK = "https://t.me/plancod";
 
 export function ContactForm({ engineering = false, context = "" }: { engineering?: boolean; context?: string }) {
   return (
-    <form className="contact-form" action="/contact.php" method="post" aria-label="Заявка на проектирование">
+    <form className="contact-form" action="/contact.php" method="post" aria-label={engineering ? "Заявка на проектирование" : "Обсуждение задачи"}>
       <label>Как к вам обращаться<input name="name" autoComplete="name" placeholder="Имя" maxLength={60} required /></label>
       <label>Как с вами связаться<input name="contact" autoComplete="tel" placeholder="Телефон, email или Telegram" maxLength={90} required /></label>
       {engineering && <label>Тип объекта<select name="object_type" defaultValue=""><option value="" disabled>Выберите тип объекта</option><option>Частный дом</option><option>Коммерческий</option><option>Общественный</option><option>Производственный</option></select></label>}
-      <label>Что нужно спроектировать?<textarea defaultValue={context ? context + "\n\nОб объекте: " : ""} name="message" rows={4} placeholder="Инженерные разделы, назначение объекта и ваши пожелания" maxLength={5000} required /></label>
+      <label>{engineering ? "Что нужно спроектировать?" : "Какое оборудование или решение вам нужно?"}<textarea defaultValue={context ? context + "\n\nОб объекте: " : ""} name="message" rows={4} placeholder={engineering ? "Инженерные разделы, назначение объекта и ваши пожелания" : "Модели, количество, назначение объекта и ваши пожелания"} maxLength={5000} required /></label>
       {engineering && <p className="form-plan-note">План или файл можно отправить в <a href={TELEGRAM_LINK} target="_blank" rel="noopener noreferrer">Telegram <ArrowIcon direction="up-right" /></a> или на <a href="mailto:info@plancod.ru">info@plancod.ru</a>.</p>}
       <input type="text" name="website" className="hp-field" tabIndex={-1} autoComplete="off" aria-hidden="true" />
       <div className="consent-row">

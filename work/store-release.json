@@ -1,6 +1,6 @@
 {
-  "status": "prepared-awaiting-visual-qa",
-  "date": "2026-11-04",
+  "status": "verified-ready-to-publish",
+  "date": "2026-11-05",
   "scope": [
     "Каталог: 13 моделей, 4 раздела производителей/поставщиков",
     "Фильтры по назначению, протоколу, платформе и бренду; сортировка",
@@ -15,8 +15,8 @@
     "links": "45 pages; 3406 local references passed",
     "behavior": "combined filtering, reset, empty, price/date sorting, KNX attribution, configurator composition and budget disclosure passed",
     "html": "20 affected pages checked for duplicate IDs, nested interactive elements and image alt",
-    "browser": "blocked: Mac locked; 360/768/1440 screenshots and actual interaction verification pending",
-    "deployment": "not pushed; awaiting mandatory visual QA before deployment"
+    "browser": "Safari Responsive Design: 360/768/1440 grids, mobile combined filters and Escape close, scenario results, brands, mobile product and homepage task kits verified",
+    "deployment": "ready for GitHub main publication"
   },
   "remaining": [
     "CleverHome: нет ссылки и подтверждения производителя; раздел с явным сообщением о подготовке, без выдуманных товаров",
