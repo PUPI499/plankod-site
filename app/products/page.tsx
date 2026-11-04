@@ -19,8 +19,8 @@ export default function ProductsPage() {
       <PageHero topic="Оборудование" title={<>Устройства.<br />Одна система.</>} description="Подбираем устройства под задачу объекта и проверяем совместимость с инженерными системами. Состав комплекта определяем на основе проекта." image="/images/home/smart-equipment.webp" mobileImage="/images/home/smart-equipment-mobile.webp" slogan="Управлять просто." theme="page-cover-equipment" actionLabel="Выбрать оборудование" actionHref="#catalog" facts={["Умный дом", "Климат и управление", "Безопасность"]} />
 
       <section className="catalog-section shell" id="catalog">
-        <div className="catalog-heading"><span>01 / каталог</span><h2>Выберите направление.<br /><em>Совместимость проверим мы.</em></h2><p>Показываем основные категории. Конкретные модели, стоимость и наличие подтверждаем после проверки задачи и совместимости.</p></div>
-        <p className="ss-fine">Для гостиниц, бизнеса и частных домов доступна <a href="/smart-systems/equipment/">категорийная витрина с запросом стоимости оборудования</a>.</p><ProductCatalog />
+        <div className="catalog-heading"><span>01 / каталог</span><h2>Оборудование.<br /><em>По задачам вашего объекта.</em></h2><p>Выбирайте модели по назначению и протоколу. Стоимость, комплектацию и наличие подтвердим в предложении.</p></div>
+        <p className="ss-fine">Для гостиниц, бизнеса и частных домов доступна <a href="/smart-systems/equipment/">категорийная витрина с запросом стоимости оборудования</a>.</p><p className="store-directory-link"><a href="/brands/">Все бренды и поставщики →</a></p><ProductCatalog />
       </section>
 
       <section className="buy-process">

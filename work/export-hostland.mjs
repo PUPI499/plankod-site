@@ -29,7 +29,15 @@ await build({entryPoints:[new URL('../app/smart-systems/data.ts',import.meta.url
 const {smartDirections,smartHub}=await import(smartBundle.href);
 await rm(smartBundle);
 
+const storeBundle = new URL("./tmp-store-data.mjs", import.meta.url);
+await build({entryPoints:[new URL("../app/products/data.ts",import.meta.url).pathname],outfile:storeBundle.pathname,bundle:true,platform:"node",format:"esm"});
+const {brands:storeBrands,products:storeProducts}=await import(storeBundle.href);
+await rm(storeBundle);
+
 const routes = [
+{entry:"../app/brands/page.tsx",bundle:"./tmp-brands.mjs",output:"brands/index.html",title:"Бренды и поставщики оборудования — ПЛАНКОД",description:"Выбор оборудования умного дома по производителям и задачам объекта.",ogImage:"https://plancod.ru/og.png",clientScript:"catalog.js"},
+...storeBrands.map(b=>({entry:"../app/brands/[slug]/page.tsx",bundle:"./tmp-brand-"+b.slug+".mjs",output:"brands/"+b.slug+"/index.html",title:b.name+" — оборудование | ПЛАНКОД",description:b.description,ogImage:"https://plancod.ru/og.png",clientScript:"catalog.js",params:{slug:b.slug}})),
+...storeProducts.map(p=>({entry:"../app/products/[slug]/page.tsx",bundle:"./tmp-item-"+p.slug+".mjs",output:"products/"+p.slug+"/index.html",title:p.name+" — подбор и поставка | ПЛАНКОД",description:p.description,ogImage:"https://plancod.ru"+p.image,clientScript:"catalog.js",params:{slug:p.slug}})),
   {
     entry: "../app/page.tsx",
     bundle: "./tmp-home.mjs",
@@ -125,7 +133,8 @@ await mkdir(OUT_DIR, { recursive: true });
 await copyFile(new URL("./hostland.htaccess", import.meta.url), new URL("./.htaccess", OUT_DIR));
 console.log("copied .htaccess");
 
-const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8") + "\n" + await readFile(new URL("../app/design/editorial.css", import.meta.url), "utf8");
+const storeCss = await readFile(new URL("../app/products/store.css",import.meta.url),"utf8");
+const css = storeCss + "\n" + await readFile(new URL("../app/globals.css", import.meta.url), "utf8") + "\n" + await readFile(new URL("../app/design/editorial.css", import.meta.url), "utf8");
 
 try {
   await copyFile(new URL("../public/og.png", import.meta.url), new URL("./og.png", OUT_DIR));
@@ -150,6 +159,11 @@ try {
 } catch (err) {
   if (err.code !== "ENOENT") console.warn("WARN: could not copy public/images/ —", err.message);
 }
+
+await copyFile(new URL("../public/store.js",import.meta.url),new URL("./store.js",OUT_DIR));
+const storeVersion=createHash("sha256").update(await readFile(new URL("../public/store.js",import.meta.url))).digest("hex").slice(0,12);
+const {cp}=await import("node:fs/promises");
+await cp(new URL("../public/assets/",import.meta.url),new URL("./assets/",OUT_DIR),{recursive:true});
 
 await copyFile(new URL("./hostland-catalog.js", import.meta.url), new URL("./catalog.js", OUT_DIR));
 await copyFile(new URL('./smart-systems.js',import.meta.url),new URL('./smart-systems.js',OUT_DIR));
@@ -231,7 +245,7 @@ for (const route of routes) {
   const canonical = `${SITE_URL}/${route.output === "index.html" ? "" : route.output.replace(/\/index\.html$/, "/")}`;
   const title = escapeAttribute(route.title);
   const description = escapeAttribute(route.description);
-  const scriptTag = `<script defer src="/smart-systems.js?v=${smartVersion}"></script>` + (route.output === "index.html" ? `<script defer src="/homepage-carousel.js?v=${carouselVersion}"></script>` : "") + (route.clientScript ? `\n  <script defer src="/${route.clientScript}?v=${clientVersion}"></script>` : "");
+  const scriptTag = `<script defer src="/store.js?v=${storeVersion}"></script>` + `<script defer src="/smart-systems.js?v=${smartVersion}"></script>` + (route.output === "index.html" ? `<script defer src="/homepage-carousel.js?v=${carouselVersion}"></script>` : "") + (route.clientScript ? `\n  <script defer src="/${route.clientScript}?v=${clientVersion}"></script>` : "");
   const html = `<!doctype html>
 <html lang="ru">
 <head>
