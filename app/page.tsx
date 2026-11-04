@@ -1,3 +1,4 @@
+import { HomeBrands } from "./products/brands";
 import { SmartLink, SmartHeading, DirectionCards } from "./smart-systems/sections";
 import { SmartInquiry } from "./smart-systems/inquiry";
 import { HomeCarousel } from "./home-carousel";
@@ -61,6 +62,7 @@ export default function Home() {
         <div className="home-smart-caption"><span>Иллюстрации направлений — концептуальные визуализации.</span><SmartLink href="/smart-systems/" quiet>Все возможности умных систем</SmartLink></div>
       </section>
 
+      <HomeBrands />
       <section className="home-approach shell home-section" id="approach">
         <div className="section-head"><div><span className="section-number">02</span><p>Инженерный подход</p></div><h2>Инженерные системы<br /><em>не существуют отдельно.</em></h2></div>
         <div className="home-approach-grid">

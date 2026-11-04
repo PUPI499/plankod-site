@@ -1,3 +1,5 @@
-import {brands,brandHref} from "../products/data";import {SiteHeader,SiteFooter,ContactBand} from "../components";
+import {BrandCards} from "../products/brands";
+import {StoreHeading} from "../products/ui";
+import {SiteHeader,SiteFooter,ContactBand} from "../components";
 export const metadata={title:"Бренды и поставщики оборудования — ПЛАНКОД",description:"Оборудование умного дома: производители и поставщики, подбор по задачам объекта.",alternates:{canonical:"/brands/"}};
-export default function BrandsPage(){return <main className="engineering-page store-page"><SiteHeader active="products"/><section className="shell store-section"><h1>Бренды и поставщики.</h1><div className="store-brand-list">{brands.map(b=><article key={b.slug}><small>{b.kind}</small><h2><a href={brandHref(b.slug)}>{b.name}</a></h2><p>{b.description}</p></article>)}</div></section><ContactBand/><SiteFooter/></main>}
+export default function BrandsPage(){return <main className="engineering-page store-page"><SiteHeader active="products"/><section className="shell store-section"><h1>Оборудование с характером.</h1><StoreHeading tag="Каталог / бренды" title="От устройства к системе." text="Изучите линейки оборудования и выберите модели для своего объекта. Совместимость и поставку согласуем отдельно."/><BrandCards/></section><ContactBand/><SiteFooter/></main>}

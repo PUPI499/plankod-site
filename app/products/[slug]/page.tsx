@@ -1,0 +1,8 @@
+/* eslint-disable @next/next/no-img-element -- static export */
+import {notFound} from "next/navigation";
+import {products,priceText} from "../data";
+import {CatalogBreadcrumbs} from "../ui";
+import {SiteHeader,SiteFooter,ContactBand} from "../../components";
+export function generateStaticParams(){return products.map(p=>({slug:p.slug}));}
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const p=products.find(x=>x.slug===slug);return p?{title:p.name+" — подбор и поставка | ПЛАНКОД",description:p.description,alternates:{canonical:"/products/"+slug+"/"},openGraph:{images:[p.image]}}:{};}
+export default async function ProductPage({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const p=products.find(x=>x.slug===slug);if(!p)notFound();return <main className="engineering-page premium-page store-page"><SiteHeader active="products"/><CatalogBreadcrumbs brand={p.brand} product={p.name}/><section className="shell store-section store-product-hero"><div className="store-product-image"><img src={p.image} alt={p.name} width="800" height="800"/></div><div className="store-product-summary"><span>Оборудование / {p.protocols.join(" · ")}</span><h1>{p.name}</h1><p>{p.description}</p><strong className="store-product-price">{priceText(p)}</strong><a className="store-primary" href="#contact">Запросить предложение →</a><p className="store-fine">До заказа подтвердим совместимость, комплектацию, стоимость и наличие.</p></div></section><ContactBand context={"Оборудование: "+p.name} title={"Обсудим поставку.\nПод вашу задачу."}/><SiteFooter slogan="Управлять просто."/></main>}

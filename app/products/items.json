@@ -1,1 +1,326 @@
-[]
+[
+  {
+    "price": null,
+    "gallery": [],
+    "documents": [
+      {
+        "title": "Инструкция производителя (PDF)",
+        "url": "https://shop.rubetek.com/upload/iblock/b95/b950d84d1a2bcdbcbe116c0a5fdfd142.pdf"
+      }
+    ],
+    "platforms": [],
+    "scenarios": [
+      "Уведомление при появлении воды под стиральной машиной.",
+      "Перекрытие воды через RE-3315 и отдельно подобранные электроприводы кранов."
+    ],
+    "compatibility": [
+      "Требуется совместимый хаб Rubetek, например RE-3315; напрямую к Wi-Fi датчик не подключается."
+    ],
+    "specs": {
+      "Протокол": "RF 868 МГц",
+      "Питание": "3 В, батарея CR2032",
+      "Дальность связи": "До 200 м на открытой местности",
+      "Рабочая температура": "0…+40 °C"
+    },
+    "purpose": [
+      "Безопасность"
+    ],
+    "protocols": [
+      "RF 868 МГц"
+    ],
+    "slug": "rubetek-rs-3225",
+    "brand": "rubetek",
+    "name": "Датчик протечки RS-3225",
+    "description": "Контролирует появление воды на контактной паре и передаёт сигнал совместимому хабу.",
+    "image": "/assets/img/rubetek-rs-3225.webp",
+    "source": "https://shop.rubetek.com/catalog/datchiki/datchik-protechki-vody-rs-3225/"
+  },
+  {
+    "price": null,
+    "gallery": [],
+    "documents": [
+      {
+        "title": "Инструкция производителя (PDF)",
+        "url": "https://shop.rubetek.com/upload/iblock/508/508eac105d10d182be2eeecd6c6e69ed.pdf"
+      }
+    ],
+    "platforms": [],
+    "scenarios": [
+      "Уведомление об открытии входной двери через хаб.",
+      "Включение света через RE-3315 при открытии двери."
+    ],
+    "compatibility": [
+      "Требуется совместимый хаб Rubetek, например RE-3315; напрямую к Wi-Fi датчик не подключается."
+    ],
+    "specs": {
+      "Протокол": "RF 868 МГц",
+      "Питание": "3 В, батарея CR1632",
+      "Дальность связи": "До 200 м на открытой местности",
+      "Рабочая температура": "0…+40 °C"
+    },
+    "purpose": [
+      "Безопасность"
+    ],
+    "protocols": [
+      "RF 868 МГц"
+    ],
+    "slug": "rubetek-rs-3215",
+    "brand": "rubetek",
+    "name": "Датчик открытия RS-3215/Wh",
+    "description": "Фиксирует открытие двери или окна магнитным контактом.",
+    "image": "/assets/img/rubetek-rs-3215.webp",
+    "source": "https://shop.rubetek.com/catalog/datchiki/datchik-otkrytiya-rs-3215/"
+  },
+  {
+    "price": null,
+    "gallery": [],
+    "documents": [
+      {
+        "title": "Инструкция производителя (PDF)",
+        "url": "https://shop.rubetek.com/upload/iblock/30b/30b9c0da08c21cf6631f9728afd676d5.pdf"
+      }
+    ],
+    "platforms": [],
+    "scenarios": [
+      "Контроль микроклимата в спальне через приложение.",
+      "Сценарий включения совместимого увлажнителя через управляющее устройство."
+    ],
+    "compatibility": [
+      "Требуется совместимый хаб Rubetek, например RE-3315; напрямую к Wi-Fi датчик не подключается."
+    ],
+    "specs": {
+      "Протокол": "RF 868 МГц",
+      "Питание": "3 В, батарея CR2032",
+      "Дальность связи": "До 200 м на открытой местности",
+      "Рабочая температура": "0…+40 °C"
+    },
+    "purpose": [
+      "Климат"
+    ],
+    "protocols": [
+      "RF 868 МГц"
+    ],
+    "slug": "rubetek-rc-3605",
+    "brand": "rubetek",
+    "name": "Датчик температуры и влажности RC-3605",
+    "description": "Передаёт измерения температуры и влажности совместимому хабу Rubetek.",
+    "image": "/assets/img/rubetek-rc-3605.webp",
+    "source": "https://shop.rubetek.com/catalog/datchiki/datchik-temperatury-i-vlazhnosti-rc-3605/"
+  },
+  {
+    "price": null,
+    "gallery": [],
+    "documents": [
+      {
+        "title": "Инструкция производителя (PDF)",
+        "url": "https://shop.rubetek.com/upload/iblock/2e0/y6a01eyd3ekdbynt9ss3oda0jymy2s87.pdf"
+      }
+    ],
+    "platforms": [],
+    "scenarios": [
+      "Уведомление о движении через совместимый хаб.",
+      "Включение освещения через блок RE-3315 по событию движения."
+    ],
+    "compatibility": [
+      "Требуется совместимый хаб Rubetek, например RE-3315; напрямую к Wi-Fi датчик не подключается."
+    ],
+    "specs": {
+      "Протокол": "RF 868 МГц",
+      "Питание": "3 В, батарея CR2450",
+      "Дальность связи": "До 200 м на открытой местности",
+      "Рабочая температура": "0…+40 °C"
+    },
+    "purpose": [
+      "Безопасность"
+    ],
+    "protocols": [
+      "RF 868 МГц"
+    ],
+    "slug": "rubetek-rs-3205",
+    "brand": "rubetek",
+    "name": "Датчик движения RS-3205",
+    "description": "Беспроводной PIR-датчик для контроля движения внутри помещения.",
+    "image": "/assets/img/rubetek-rs-3205.webp",
+    "source": "https://shop.rubetek.com/catalog/datchiki/datchik-dvizheniya-rs-3205/"
+  },
+  {
+    "price": null,
+    "gallery": [],
+    "documents": [
+      {
+        "title": "Инструкция и схемы подключения (PDF)",
+        "url": "https://shop.rubetek.com/upload/iblock/ed1/ed1d88e1793ba63422d2a9ea89a5580f.pdf"
+      }
+    ],
+    "platforms": [
+      "Алиса",
+      "HomeKit"
+    ],
+    "scenarios": [
+      "Включение света по событию датчика открытия или движения.",
+      "Перекрытие воды с датчиком RS-3225 и подходящими электроприводами кранов."
+    ],
+    "compatibility": [
+      "Датчики Rubetek RF 868 МГц, включая RS-3225, RS-3215, RC-3605 и RS-3205.",
+      "Алиса и HomeKit — по процедуре подключения производителя.",
+      "Датчики RF 433 МГц не поддерживаются. Нагрузку и схему подключения подбирают по инструкции."
+    ],
+    "specs": {
+      "Связь": "Wi-Fi 2,4 ГГц; датчики RF 868 МГц",
+      "Питание": "AC 100–240 В, 50/60 Гц; DC 24–60 В",
+      "Каналы": "2",
+      "Рабочая температура": "0…+40 °C"
+    },
+    "purpose": [
+      "Освещение",
+      "Контроллеры и модули"
+    ],
+    "protocols": [
+      "Wi-Fi",
+      "RF 868 МГц"
+    ],
+    "slug": "rubetek-re-3315",
+    "brand": "rubetek",
+    "name": "Блок управления RE-3315",
+    "description": "Двухканальное реле с Wi-Fi и функцией хаба для датчиков Rubetek RF 868 МГц.",
+    "image": "/assets/img/rubetek-re-3315.webp",
+    "source": "https://shop.rubetek.com/catalog/elektropitanie/umnye-rele/dvukhkanalnyy-blok-upravleniya-re-3315/"
+  },
+  {
+    "price": null,
+    "gallery": [],
+    "documents": [],
+    "platforms": [
+      "MQTT"
+    ],
+    "scenarios": [
+      "Объединение датчиков и релейных модулей в локальные сценарии.",
+      "Сбор показаний и передача данных по MQTT."
+    ],
+    "compatibility": [
+      "Модули Modbus RTU по RS-485, включая WB-MR6C v.3, WB-MSW v.4 и WB-MAI6.",
+      "Zigbee, Z-Wave и KNX требуют дополнительных модулей расширения и настройки."
+    ],
+    "specs": {
+      "Питание": "9–48 В постоянного тока",
+      "Рабочая температура": "−40…+75 °C",
+      "Связь": "Ethernet, Wi-Fi, RS-485; MQTT"
+    },
+    "purpose": [
+      "Контроллеры и модули"
+    ],
+    "protocols": [
+      "Wi-Fi",
+      "Modbus RTU"
+    ],
+    "slug": "wiren-board-8",
+    "name": "Контроллер Wiren Board 8",
+    "description": "Модульный контроллер автоматизации и мониторинга на Linux с открытым программным обеспечением.",
+    "source": "https://wirenboard.com/ru/contents/product/wiren-board-8/",
+    "brand": "wiren-board",
+    "image": "/assets/img/wiren-board-8.webp"
+  },
+  {
+    "price": null,
+    "gallery": [],
+    "documents": [
+      {
+        "title": "Руководство производителя (PDF)",
+        "url": "https://wirenboard.com/wiki/pdf/WB-MR6C_v.3_Modbus_Relay_Modules.pdf"
+      }
+    ],
+    "platforms": [],
+    "scenarios": [
+      "Управление группами освещения.",
+      "Управление совместимыми электроприводами штор в специальном режиме."
+    ],
+    "compatibility": [
+      "Контроллер Wiren Board или другой контроллер Modbus RTU.",
+      "Подбор нагрузки и параметров реле — по схеме производителя."
+    ],
+    "specs": {
+      "Связь": "RS-485, Modbus RTU",
+      "Питание": "9–28 В DC или 230 В AC",
+      "Рабочая температура": "−40…+80 °C",
+      "Номинальный ток": "10 А на канал; ограничения групп — по документации"
+    },
+    "purpose": [
+      "Освещение",
+      "Контроллеры и модули"
+    ],
+    "protocols": [
+      "Modbus RTU"
+    ],
+    "slug": "wb-mr6c-v3",
+    "name": "Релейный модуль WB-MR6C v.3",
+    "description": "Шесть релейных каналов и семь дискретных входов в корпусе для DIN-рейки.",
+    "source": "https://wirenboard.com/ru/contents/product/WB-MR6C_v3/",
+    "brand": "wiren-board",
+    "image": "/assets/img/wb-mr6c-v3.webp"
+  },
+  {
+    "price": null,
+    "gallery": [],
+    "documents": [],
+    "platforms": [],
+    "scenarios": [
+      "Контроль температуры и влажности помещения при наличии соответствующих опций.",
+      "Передача показаний в контроллер для сценариев микроклимата."
+    ],
+    "compatibility": [
+      "Контроллер Wiren Board или оборудование с Modbus RTU.",
+      "Это проводная версия: WB-MSW-ZIGBEE — отдельная модель.",
+      "Температура, влажность, CO₂, движение и другие каналы выбираются при комплектации."
+    ],
+    "specs": {
+      "Связь": "RS-485, Modbus RTU",
+      "Питание": "9–28 В постоянного тока",
+      "Корпус": "80 × 80 × 19 мм"
+    },
+    "purpose": [
+      "Климат"
+    ],
+    "protocols": [
+      "Modbus RTU"
+    ],
+    "slug": "wb-msw-v4",
+    "name": "Настенный датчик WB-MSW v.4",
+    "description": "Комбинированный датчик микроклимата. Набор измерений и ИК-функции зависят от выбранных опций.",
+    "source": "https://wirenboard.com/ru/contents/product/wb-msw-v4/",
+    "brand": "wiren-board",
+    "image": "/assets/img/wb-msw-v4.webp"
+  },
+  {
+    "price": null,
+    "gallery": [],
+    "documents": [],
+    "platforms": [],
+    "scenarios": [
+      "Сбор показаний аналоговых датчиков.",
+      "Передача измерений в систему диспетчеризации."
+    ],
+    "compatibility": [
+      "Контроллеры с поддержкой Modbus RTU.",
+      "Типы датчиков и схемы подключения выбираются по документации: 4–20 мА, 0–10 В, Pt100, термопары и другие."
+    ],
+    "specs": {
+      "Связь": "RS-485, Modbus RTU",
+      "Питание": "9–28 В постоянного тока",
+      "Рабочая температура": "−40…+80 °C",
+      "Входы": "6 дифференциальных или 12 однополярных каналов"
+    },
+    "purpose": [
+      "Контроллеры и модули",
+      "Климат"
+    ],
+    "protocols": [
+      "Modbus RTU"
+    ],
+    "slug": "wb-mai6",
+    "name": "Модуль аналогового ввода WB-MAI6",
+    "description": "Модуль для подключения аналоговых датчиков и передачи измерений по Modbus RTU.",
+    "source": "https://wirenboard.com/en/contents/product/wb-mai6/",
+    "brand": "wiren-board",
+    "image": "/assets/img/wb-mai6.webp"
+  }
+]
