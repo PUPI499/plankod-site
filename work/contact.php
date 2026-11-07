@@ -45,6 +45,8 @@ if (preg_match('/[\r\n\x00]/', $name . $contact) || strpos($message, "\0") !== f
 
 // Optional lead context: included in the enquiry, never used for headers or routing.
 $context = [];
+$cid = $_POST['client_id'] ?? '';
+if (is_string($cid) && preg_match('/^[0-9]{1,32}$/D', $cid)) $context[] = 'ClientID: ' . $cid;
 $service = trim($_POST['service'] ?? '');
 if ($service !== '' && !in_array($service, ['b2b_supply', 'equipment', 'private_home', 'smart_design'], true)) {
     respond(400, ['ok' => false, 'error' => 'invalid_service']);

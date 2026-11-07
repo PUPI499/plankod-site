@@ -346,6 +346,7 @@
       consent.disabled = true;
 
       var params = new URLSearchParams();
+  if (window.plancodClientID) params.set('client_id', window.plancodClientID);
       params.set("name", nameInput.value);
       params.set("contact", contactInput.value);
       params.set("message", (objectType && objectType.value ? "Тип объекта: " + objectType.value + "\n\n" : "") + messageInput.value);

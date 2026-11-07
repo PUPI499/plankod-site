@@ -24,6 +24,7 @@
   var comment=String(data.get('message')||'').trim();if(comment)lines.push('Задача / список позиций:\n'+comment);
   var brief=String(data.get('brief_url')||'').trim();if(brief){try{if(!/^https?:$/.test(new URL(brief).protocol))throw Error();}catch{status.hidden=false;status.dataset.error='true';status.textContent='Укажите ссылку на ТЗ, начинающуюся с https:// или http://.';return;}lines.push('Ссылка на ТЗ / план: '+brief);}
   var params=new URLSearchParams();['name','contact','website','consent'].forEach(function(key){params.set(key,String(data.get(key)||''));});
+  if (window.plancodClientID) params.set('client_id', window.plancodClientID);
   params.set('message',lines.join('\n'));params.set('service',service);Object.keys(attribution).forEach(function(k){params.set(k,attribution[k]);});
   var controls=Array.from(form.querySelectorAll('input,select,textarea'));controls.forEach(function(el){el.disabled=true;});
   pending=true;button.disabled=true;button.textContent='Отправляем…';form.setAttribute('aria-busy','true');status.hidden=true;
