@@ -29,10 +29,12 @@
   var controls=Array.from(form.querySelectorAll('input,select,textarea'));controls.forEach(function(el){el.disabled=true;});
   pending=true;button.disabled=true;button.textContent='Отправляем…';form.setAttribute('aria-busy','true');status.hidden=true;
   var controller=new AbortController(),timeout=setTimeout(function(){controller.abort();},30000);
-  fetch('/contact.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString(),signal:controller.signal}).then(function(response){return response.json().then(function(body){if(!response.ok||!body.ok||body.status!=='queued')throw Error('not_confirmed');return body;});}).then(function(body){
+  window.plancodEnquiry(params, controller.signal).then(function(result){
+   var body=result.data;
+   if (!result.ok) throw Error(body.error==='delivery_unknown' ? 'Исход отправки уточняется. Сообщите номер '+body.request_id+' в ПЛАНКОД.' : 'not_confirmed');
    // Only real server acceptance is a conversion. No contacts, comments or TЗ URL enter analytics.
-   try{goal('request_accepted',{service:service});goal(goalNames[service],{service:service});if(brief)goal('smart_brief_submitted',{service:service});}catch{/* Do not change successful UI because of analytics. */}
+   if(body.emit_goal)try{goal('request_accepted',{service:service});goal(goalNames[service],{service:service});if(brief)goal('smart_brief_submitted',{service:service});}catch{/* Do not change successful UI because of analytics. */}
    form.reset();syncSelection();status.hidden=false;status.dataset.error='false';status.textContent='Заявка принята почтовой службой. Свяжемся с вами по указанному контакту.'+(/^[A-F0-9]{12}$/.test(body.request_id||'')?' Номер обращения: '+body.request_id:'');
-  }).catch(function(){status.hidden=false;status.dataset.error='true';status.textContent='Не удалось подтвердить отправку. Данные сохранены в форме. Попробуйте ещё раз или свяжитесь с нами: info@plancod.ru, Telegram @plancod.';}).finally(function(){clearTimeout(timeout);pending=false;controls.forEach(function(el){el.disabled=false;});button.disabled=false;button.innerHTML=initialLabel;form.removeAttribute('aria-busy');});
+  }).catch(function(error){status.hidden=false;status.dataset.error='true';status.textContent=error.message.startsWith('Исход отправки')?error.message:'Не удалось подтвердить отправку. Данные сохранены в форме. Попробуйте ещё раз или свяжитесь с нами: info@plancod.ru, Telegram @plancod.';}).finally(function(){clearTimeout(timeout);pending=false;controls.forEach(function(el){el.disabled=false;});button.disabled=false;button.innerHTML=initialLabel;form.removeAttribute('aria-busy');});
  });
 })();

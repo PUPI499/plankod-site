@@ -356,17 +356,7 @@
       var controller = new AbortController();
       var timeout = window.setTimeout(function () { controller.abort(); }, 30000);
 
-      fetch("/contact.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: params.toString(),
-        signal: controller.signal,
-      })
-        .then(function (response) {
-          return response.json().catch(function () { return null; }).then(function (data) {
-            return { ok: response.ok, data: data };
-          });
-        })
+      window.plancodEnquiry(params, controller.signal)
         .then(function (result) {
           if (requestInfo && result.data && /^[A-F0-9]{12}$/.test(result.data.request_id || "")) {
             requestInfo.textContent = "Номер обращения: " + result.data.request_id;
@@ -374,15 +364,16 @@
           }
           if (result.ok && result.data && result.data.ok && result.data.status === "queued") {
             sent = true;
-            if (typeof window.ym === "function") { try { window.ym(113254722, "reachGoal", "request_accepted"); } catch { /* Submission already succeeded. */ } }
+            if (result.data.emit_goal && typeof window.ym === "function") { try { window.ym(113254722, "reachGoal", "request_accepted"); } catch { /* Submission already succeeded. */ } }
             form.reset();
             submitBtn.textContent = "Отправлено ✓";
             if (statusOk) statusOk.hidden = false;
           } else {
-            throw new Error("submit_failed");
+            throw new Error(result.data?.error || "submit_failed");
           }
         })
-        .catch(function () {
+        .catch(function (error) {
+          if (requestInfo && error.message === "delivery_unknown") requestInfo.textContent += " — исход отправки уточняется. Сообщите этот номер в ПЛАНКОД.";
           submitBtn.textContent = "Отправить заявку";
           if (statusError) statusError.hidden = false;
         })

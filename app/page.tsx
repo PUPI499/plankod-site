@@ -58,16 +58,15 @@ export default function Home() {
       <HomeCarousel />
 
       <section className="ss-page ss-section shell home-smart-directions" id="smart-home">
-        <SmartHeading number="01" tag="Умные системы" title={<>Комфорт для жизни.<br /><em>Управление для бизнеса.</em></>} text="Оснащаем гостиницы, коммерческие пространства и частные дома интеллектуальными системами. Подбираем оборудование существующих производителей и разрабатываем проектные решения под задачи объекта." />
+        <SmartHeading number="01" tag="Умные системы" title={<>Управление зданием<br /><em>по задачам объекта.</em></>} text="Оснащаем гостиницы, коммерческие пространства и частные дома интеллектуальными системами. Подбираем оборудование существующих производителей и разрабатываем проектные решения под задачи объекта." />
         <DirectionCards explicitDesign />
         <div className="home-smart-caption"><span>Иллюстрации направлений — концептуальные визуализации.</span><SmartLink href="/smart-systems/" quiet>Все возможности умных систем</SmartLink></div>
       </section>
 
-      <HomeBrands /><TaskKits />
       <section className="home-approach shell home-section" id="approach">
         <div className="section-head"><div><span className="section-number">02</span><p>Инженерный подход</p></div><h2>Инженерные системы<br /><em>не существуют отдельно.</em></h2></div>
         <div className="home-approach-grid">
-          <div className="home-approach-copy"><p>Вентиляция влияет на электроснабжение. Отопление — на выбор источника тепла. Кондиционирование — на планировку и размещение оборудования.</p><p>Поэтому мы рассматриваем инженерные системы во взаимосвязи и собираем решения в единый проект.</p><strong>Один объект.<br />Одна инженерная логика.</strong></div>
+          <div className="home-approach-copy"><p>Вентиляционной установке нужны место, питание и доступ для обслуживания. Эти требования отражаются сразу в нескольких разделах проекта.</p><p>Сопоставляем отметки воздуховодов с конструкциями и соседними трассами, передаём нагрузки проектировщику электроснабжения. Так расхождения можно обнаружить до выпуска чертежей.</p><a href="/design/integrated/">Как проектируем несколько разделов вместе →</a></div>
           <div className="home-system-map panel"><span className="micro-label">Состав проекта — по задачам объекта</span><div className="home-map-core">ПЛАН <i>◆</i> КОД</div><div className="home-map-systems">{systems.map(([title], index) => <a key={title} href={`#system-${index + 1}`}><span>0{index + 1}</span>{title}<b><ArrowIcon direction="up-right" /></b></a>)}</div></div>
         </div>
       </section>
@@ -83,17 +82,18 @@ export default function Home() {
       </section>
 
       <section className="home-portfolio home-section" id="projects"><div className="shell">
-        <div className="section-head inverse-head"><div><span className="section-number">05</span><p>Проекты</p></div><h2>Не галерея.<br /><em>Разбор инженерных решений.</em></h2></div>
+        <div className="section-head inverse-head"><div><span className="section-number">05</span><p>Проекты</p></div><h2>Проектные решения<br /><em>на рабочих чертежах.</em></h2></div>
         <p className="home-section-lead">Планы, аксонометрии и схемы из проектной документации ПЛАНКОД.</p>
         <div className="home-project-grid">{featured.map(project => <article className="home-project-card panel" key={project.slug}><div className="home-project-image"><img src={`/images/design/case-${project.slug}-v1.webp`} alt={`${project.title} — визуализация объекта`} loading="lazy" /><span className="home-project-disclaimer">Концептуальная визуализация объекта</span></div><div className="home-project-copy"><span className="micro-label">Инженерное проектирование</span><h3>{project.title}</h3><span className="home-project-scope">{project.scope}</span><p>{project.description}</p><a href={`/projects/${project.slug}/`}><strong>Смотреть проект <ArrowIcon direction="up-right" /></strong></a><a className="project-discuss" data-goal="discuss_project" href={`/projects/${project.slug}/#contact`}>Обсудить похожий объект <ArrowIcon direction="up-right" /></a></div></article>)}</div>
       </div></section>
 
+      <HomeBrands /><TaskKits />
       <section className="home-section shell" id="result">
-        <div className="section-head"><div><span className="section-number">06</span><p>Документация</p></div><h2>Проект — это не красивые схемы.<br /><em>Это основа для реализации.</em></h2></div>
+        <div className="section-head"><div><span className="section-number">06</span><p>Документация</p></div><h2>Что получает<br /><em>технический заказчик.</em></h2></div>
         <div className="home-result-grid">
-          <article><span>01</span><h3>Согласованные решения</h3><p>Инженерные системы рассматриваются не отдельно, а во взаимосвязи.</p></article>
+          <article><span>01</span><h3>Согласованные решения</h3><p>На планах видны места установки оборудования, проходы и трассы коммуникаций.</p></article>
           <article><span>02</span><h3>Проектная документация</h3><p>Планы, схемы, расчёты, спецификации и необходимые материалы для конкретного проекта.</p></article>
-          <article><span>03</span><h3>Понятная инженерная логика</h3><p>Связи между разделами зафиксированы в документации для дальнейшей реализации.</p></article>
+          <article><span>03</span><h3>Задания смежным разделам</h3><p>Электрические нагрузки, проёмы и точки подключения фиксируем в согласованном составе проекта.</p></article>
         </div>
         <div className="home-document-grid">
           <a href="/projects/laundry-ventilation/"><img src="/images/projects/details/laundry-basement-combined.png" alt="Прачечная — общий план вентиляции" loading="lazy" /><span>01 / Прачечная · План вентиляции <ArrowIcon direction="up-right" /></span></a>

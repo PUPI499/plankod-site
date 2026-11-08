@@ -42,8 +42,19 @@ $cases = [
 ];
 
 if (!isset($argv[1])) {
+    // Never read a real config or write receipts into the working copy.
+    $temp = sys_get_temp_dir() . '/plancod-mail-test-' . bin2hex(random_bytes(8));
+    mkdir($temp . '/www', 0700, true);
+    copy(__FILE__, $temp . '/www/check-contact.php');
+    copy(__DIR__ . '/contact.php', $temp . '/www/contact.php');
+    register_shutdown_function(function() use ($temp) {
+        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($temp, \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST) as $file) {
+            if ($file->isDir()) rmdir($file->getPathname()); else unlink($file->getPathname());
+        }
+        rmdir($temp);
+    });
     foreach ($cases as $case => $expected) {
-        passthru(escapeshellarg(PHP_BINARY) . ' ' . escapeshellarg(__FILE__) . ' ' . escapeshellarg($case), $code);
+        passthru(escapeshellarg(PHP_BINARY) . ' ' . escapeshellarg($temp . '/www/check-contact.php') . ' ' . escapeshellarg($case), $code);
         if ($code !== 0) exit($code);
     }
     echo "Mail handler: 16 tests passed, no real email sent.\n";
@@ -54,7 +65,7 @@ $scenario = $argv[1];
 if (!isset($cases[$scenario])) exit(1);
 $mail_calls = 0;
 $_SERVER['REQUEST_METHOD'] = 'POST';
-$_POST = ['name' => 'Проверка', 'contact' => 'qa@example.invalid', 'message' => 'Тестовая заявка', 'consent' => '1', 'website' => ''];
+$_POST = ['submission_key'=>bin2hex(random_bytes(16)), 'name' => 'Проверка', 'contact' => 'qa@example.invalid', 'message' => 'Тестовая заявка', 'consent' => '1', 'website' => ''];
 if ($scenario === 'method') $_SERVER['REQUEST_METHOD'] = 'GET';
 if ($scenario === 'empty') $_POST = [];
 if ($scenario === 'array') $_POST['name'] = ['bad'];

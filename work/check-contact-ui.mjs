@@ -24,15 +24,18 @@ for (const scenario of ['queued', 'rejected', 'unconfirmed']) {
     reset() { fields.forEach(field => { field.value = ''; }); consent.checked = false; },
   };
   let calls = 0, finish;
-  vm.runInNewContext(script, {
-    document: { querySelectorAll: () => [form] },
-    window: { setTimeout: () => 1, clearTimeout() {} }, URLSearchParams, AbortController,
-    fetch: (_url, options) => {
+  function transport(_url,options) {
       calls++;
       assert.equal(new URLSearchParams(options.body).get('consent'), '1');
       assert.equal(new URLSearchParams(options.body).get('message'), 'Тип объекта: Частный дом\n\nQA');
       return new Promise(resolve => { finish = resolve; });
-    },
+  }
+  vm.runInNewContext(script, {
+    document: { querySelectorAll: () => [form] },
+    window: { plancodEnquiry: async (params) => {
+      const res=await transport('/contact.php',{body:params.toString()});return {ok:res.ok,data:await res.json()};
+    }, setTimeout: () => 1, clearTimeout() {} }, URLSearchParams, AbortController,
+
   });
   assert(button.disabled);
   fields.forEach(field => { field.value = 'QA'; field.events.input(); });

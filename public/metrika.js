@@ -11,6 +11,6 @@ if (["localhost", "127.0.0.1", "::1", "[::1]"].includes(location.hostname)) retu
 window.ym(113254722, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
 
 window.ym(113254722, "getClientID", function(id) {
-    if (/^[0-9]{1,32}$/.test(String(id))) window.plancodClientID = String(id);
+    if (typeof id === "string" && /^[0-9]{1,32}$/.test(id)) window.plancodClientID = id;
 });
 })();

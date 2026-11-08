@@ -13,7 +13,7 @@ export function EngineeringHero({topic,title,description,image,mobileImage,secon
  <picture className="eng-hero-art">{mobileImage&&<source media="(max-width:700px)" srcSet={mobileImage}/>}<img src={image} width="1536" height="1024" alt="" fetchPriority="high"/></picture>
  <div className="eng-hero-shade" aria-hidden="true"/>
  <div className="eng-masthead"><span>{topic}</span><BrandSignature slogan="Думать системно."/></div>
- <div className="eng-hero-copy"><h1>{title}</h1><p>{description}</p><div className="eng-actions"><a className="eng-button" href="#contact" data-goal="discuss_service">Обсудить проект <ArrowIcon direction="up-right"/></a>{secondary&&<a className="eng-link" href={secondary.href}>{secondary.label}<ArrowIcon direction="down"/></a>}</div></div>
+ <div className="eng-hero-copy"><h1>{title}</h1><p>{description}</p><div className="eng-actions"><a className="eng-button" href="#contact" data-goal="discuss_service">Запросить предложение <ArrowIcon direction="up-right"/></a>{secondary&&<a className="eng-link" href={secondary.href}>{secondary.label}<ArrowIcon direction="down"/></a>}</div></div>
  <div className="eng-hero-facts">{facts.map((fact,i)=><span key={fact}><i>{String(i+1).padStart(2,"0")}</i>{fact}</span>)}</div>
  </section><div className="eng-caption shell"><span>ПЛАНКОД / ИНЖЕНЕРНОЕ ПРОЕКТИРОВАНИЕ</span><span>{caption}</span></div></>;
 }

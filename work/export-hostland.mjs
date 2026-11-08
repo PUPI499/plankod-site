@@ -81,7 +81,7 @@ const routes = [
     bundle: "./tmp-about.mjs",
     output: "about.html",
     title: "О компании — ПЛАНКОД",
-    description: "ПЛАНКОД — проектирование и координация инженерных систем. Умный дом — самостоятельное направление.",
+    description: "Инженерная компания ПЛАНКОД. Проектирование систем зданий, координация разделов и подбор оборудования. Примеры рабочих чертежей и контакты.",
     ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
@@ -96,7 +96,7 @@ const routes = [
   },
   ...services.map(service => ({
     entry: "../app/design/[slug]/page.tsx", bundle: `./tmp-service-${service.slug}.mjs`,
-    output: `design/${service.slug}/index.html`, title: `${service.title} — ${service.price} | ПЛАНКОД`,
+    output: `design/${service.slug}/index.html`, title: `${service.title} — состав проекта и стоимость | ПЛАНКОД`,
     description: service.description, ogImage: `https://plancod.ru/images/design/${service.slug}-v1.webp`, clientScript: "catalog.js", params: {slug: service.slug},
   })),
   ...projectRoutes.map((project) => ({
@@ -137,6 +137,10 @@ console.log("copied .htaccess");
 const storeCss = await readFile(new URL("../app/products/store.css",import.meta.url),"utf8");
 const css = storeCss + "\n" + await readFile(new URL("../app/globals.css", import.meta.url), "utf8") + "\n" + await readFile(new URL("../app/design/editorial.css", import.meta.url), "utf8");
 
+// One versioned stylesheet can be reused when a visitor moves between services.
+const stylesheetName = "site-" + createHash("sha256").update(css).digest("hex").slice(0, 12) + ".css";
+await writeFile(new URL(stylesheetName, OUT_DIR), css);
+
 try {
   await copyFile(new URL("../public/og.png", import.meta.url), new URL("./og.png", OUT_DIR));
   console.log("copied og.png");
@@ -161,6 +165,8 @@ try {
   if (err.code !== "ENOENT") console.warn("WARN: could not copy public/images/ —", err.message);
 }
 
+await copyFile(new URL("../public/enquiry.js",import.meta.url),new URL("./enquiry.js",OUT_DIR));
+const enquiryVersion=createHash("sha256").update(await readFile(new URL("../public/enquiry.js",import.meta.url))).digest("hex").slice(0,12);
 await copyFile(new URL("../public/store.js",import.meta.url),new URL("./store.js",OUT_DIR));
 const storeVersion=createHash("sha256").update(await readFile(new URL("../public/store.js",import.meta.url))).digest("hex").slice(0,12);
 const {cp}=await import("node:fs/promises");
@@ -247,7 +253,7 @@ for (const route of routes) {
   const canonical = `${SITE_URL}/${route.output === "index.html" ? "" : route.output.replace(/\/index\.html$/, "/")}`;
   const title = escapeAttribute(route.title);
   const description = escapeAttribute(route.description);
-  const scriptTag = `<script defer src="/store.js?v=${storeVersion}"></script>` + `<script defer src="/smart-systems.js?v=${smartVersion}"></script>` + (route.output === "index.html" ? `<script defer src="/homepage-carousel.js?v=${carouselVersion}"></script>` : "") + (route.clientScript ? `\n  <script defer src="/${route.clientScript}?v=${clientVersion}"></script>` : "");
+  const scriptTag = `<script defer src="/enquiry.js?v=${enquiryVersion}"></script><script defer src="/store.js?v=${storeVersion}"></script>` + `<script defer src="/smart-systems.js?v=${smartVersion}"></script>` + (route.output === "index.html" ? `<script defer src="/homepage-carousel.js?v=${carouselVersion}"></script>` : "") + (route.clientScript ? `\n  <script defer src="/${route.clientScript}?v=${clientVersion}"></script>` : "");
   const html = `<!doctype html>
 <html lang="ru">
 <head>
@@ -272,7 +278,7 @@ for (const route of routes) {
   <meta name="twitter:description" content="${description}">
   <meta name="twitter:image" content="${route.ogImage}">
   <script defer src="/metrika.js"></script>
-  <style>${css}</style>${scriptTag}
+  <link rel="stylesheet" href="/${stylesheetName}">${scriptTag}
 </head>
 <body><noscript><div><img src="https://mc.yandex.ru/watch/113254722" style="position:absolute;left:-9999px" alt=""></div></noscript>${body}</body>
 </html>`;

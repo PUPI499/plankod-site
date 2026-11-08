@@ -48,8 +48,8 @@ export function ContactBand({ eyebrow = "Начать с проекта", title 
         <div className="contact-copy">
           <span className="micro-label">{eyebrow}</span>
           <h2>{lines.map((line, index) => <span key={line}>{line}{index < lines.length - 1 && <br />}</span>)}</h2>
-          <p>{engineering ? "Получим исходные данные, разберём задачу и определим следующий шаг." : "Заполните форму или отправьте планировку в Telegram. Вернёмся с вопросами по существу и предложим следующий шаг."}</p>
-          <a href="https://t.me/plancod" target="_blank" rel="noopener noreferrer">Отправить план в Telegram <span><ArrowIcon direction="up-right" /></span></a>
+          <p>{engineering ? "Укажите назначение здания, нужные разделы и стадию проекта. Изучим материалы, уточним границы работ и предложим состав документации для расчёта стоимости." : "Пришлите модели и количество или опишите задачу объекта. Уточним совместимость, комплектацию и условия поставки. План или спецификацию можно передать в Telegram."}</p>
+          <a href="https://t.me/plancod" target="_blank" rel="noopener noreferrer">{engineering ? "Отправить ТЗ в Telegram" : "Отправить спецификацию"} <span><ArrowIcon direction="up-right" /></span></a>
         </div>
         <div className="contact-card panel">
           <div><small>Email</small><strong><a href="mailto:info@plancod.ru">info@plancod.ru</a></strong></div>

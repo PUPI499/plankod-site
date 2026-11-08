@@ -1551,3 +1551,14 @@ footer > nav { flex-wrap:wrap; }
  .home-contact-route{margin-top:0}
  .home-smart-inquiry .ss-contact{padding-block:45px}
 }
+
+.home-showcase .showcase-project-route {
+  display: table;
+  margin-top: 8px;
+  padding: 10px 0;
+  color: #fff;
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.home-showcase .showcase-project-route:focus-visible { outline: 2px solid white; outline-offset: 3px; }

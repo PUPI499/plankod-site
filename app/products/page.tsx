@@ -18,7 +18,7 @@ export default function ProductsPage() {
     <main className="engineering-page premium-page page-products">
       <SiteHeader active="products" />
 
-      <PageHero topic="Оборудование" title={<>Устройства.<br />Одна система.</>} description="Подбираем устройства под задачу объекта и проверяем совместимость с инженерными системами. Состав комплекта определяем на основе проекта." image="/images/home/smart-equipment.webp" mobileImage="/images/home/smart-equipment-mobile.webp" slogan="Управлять просто." theme="page-cover-equipment" actionLabel="Выбрать оборудование" actionHref="#catalog" facts={["Умный дом", "Климат и управление", "Безопасность"]} />
+      <PageHero topic="Оборудование" title={<>Каталог оборудования<br />для автоматизации.</>} description="Выберите датчики, контроллеры и реле по назначению и протоколу. Если спецификация уже есть, пришлите модели и количество для предложения по поставке." image="/images/home/smart-equipment.webp" mobileImage="/images/home/smart-equipment-mobile.webp" slogan="Управлять просто." theme="page-cover-equipment" actionLabel="Выбрать оборудование" actionHref="#catalog" facts={["Умный дом", "Климат и управление", "Безопасность"]} />
 
       <section className="catalog-section shell" id="catalog">
         <div className="catalog-heading"><span>01 / каталог</span><h2>Оборудование.<br /><em>По задачам вашего объекта.</em></h2><p>Выбирайте модели по назначению и протоколу. Стоимость, комплектацию и наличие подтвердим в предложении.</p></div>
