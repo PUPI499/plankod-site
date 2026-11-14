@@ -1,64 +1,55 @@
+import type { Metadata } from "next";
 import { PageHero } from "../page-hero";
 import { ArrowIcon } from "../arrow-icon";
-/* eslint-disable @next/next/no-html-link-for-pages -- direct paths keep the static and hosted builds consistent */
-import type { Metadata } from "next";
 import { ContactBand, SiteFooter, SiteHeader } from "../components";
 
+const title = "Об инженерной компании ПЛАНКОД";
+const description = "Автоматизация действующих зданий организаций и проектирование ОВиК. Как ПЛАНКОД обследует объект, согласует состав работ и передаёт результат заказчику.";
+
 export const metadata: Metadata = {
-  title: "О компании — ПЛАНКОД",
-  description: "Инженерная компания ПЛАНКОД. Проектирование систем зданий, координация разделов и подбор оборудования. Примеры рабочих чертежей и контакты.",
-  openGraph: { title: "О компании — ПЛАНКОД", description: "Инженерное проектирование, координация разделов и умный дом.", images: ["/og.png"] },
-  twitter: { title: "О компании — ПЛАНКОД", description: "Проектирование инженерных систем и умного дома.", images: ["/og.png"] },
+  title, description, alternates: { canonical: "/about.html" },
+  openGraph: { title, description, images: ["/images/about-work.jpg"] },
+  twitter: { title, description, images: ["/images/about-work.jpg"] },
 };
 
+const principles = [
+  ["Фиксируем исходное состояние", "Вместе со службой эксплуатации изучаем схемы, установленное оборудование и ручные операции, которые заказчик хочет изменить."],
+  ["Согласуем границы", "Описываем сохраняемые системы, точки подключения и ограничения по доступу. Границы изменений становятся частью задания."],
+  ["Организуем работы", "Сводим проектирование, поставку, монтаж и настройку в согласованный план. Распределяем задачи между участниками и уточняем допустимые окна работ."],
+  ["Проверяем результат", "С заказчиком проверяем согласованные сценарии, доступные показания и способы управления. Передаём предусмотренные договором документы."],
+];
+
 export default function AboutPage() {
-  return (
-    <main className="engineering-page premium-page page-about">
-      <SiteHeader active="about" />
-
-      <PageHero topic="О компании" title={<>Инженерная компания<br />ПЛАНКОД.</>} description="Проектируем инженерные системы зданий и координируем решения смежных разделов. Для гостиниц и частных домов отдельно подбираем оборудование управления климатом, светом и шторами." image="/images/about-work.jpg" slogan="Жить комфортно." theme="page-cover-about" actionHref="/projects" actionLabel="Посмотреть проекты" facts={["Расчёты и чертежи", "Координация разделов", "Европейская часть России и Урал"]} />
-
-      <section className="page-section shell">
-        <div className="page-heading"><span>01 / как работаем</span><h2>Решения<br /><em>согласованы</em></h2><p>Рассматриваем инженерные системы во взаимосвязи и фиксируем принятые решения в документации.</p></div>
-        <div className="about-principles">
-          <article className="panel"><span>01</span><h3>Считаем до закупки</h3><p>Сначала фиксируем задачи и техническое решение. Только потом формируем спецификацию и смету.</p></article>
-          <article className="panel about-principle-dark"><span>02</span><h3>Объясняем выбор</h3><p>Показываем, за что отвечает каждый элемент и где не стоит переплачивать.</p></article>
-          <article className="panel"><span>03</span><h3>Проверяем совместимость</h3><p>Сверяем оборудование, протоколы и ограничения до заказа, а не на монтаже.</p></article>
-          <article className="panel about-principle-blue"><span>04</span><h3>Разъясняем решения</h3><p>Передаём проектную документацию и отвечаем на вопросы по принятым решениям.</p></article>
-        </div>
-      </section>
-
-      <section className="about-cycle">
-        <div className="shell">
-          <div className="page-heading page-heading-light"><span>02 / разработка проекта</span><h2>Пять этапов.<br /><em>Единая логика.</em></h2><p>От исходных данных к согласованному комплекту. Состав разделов и стадии разработки определяем по задаче объекта.</p></div>
-          <div className="about-cycle-grid">
-            <article><span>01</span><h3>Проектирование</h3><p>Расчёты, схемы, сценарии и спецификация.</p></article>
-            <article><span>02</span><h3>Расчёты</h3><p>Нагрузки, расходы и параметры систем по исходным данным.</p></article>
-            <article><span>03</span><h3>Решения</h3><p>Оборудование, трассы, планы и схемы.</p></article>
-            <article><span>04</span><h3>Координация</h3><p>Увязка систем и заданий между разделами.</p></article>
-            <article><span>05</span><h3>Документация</h3><p>Передача согласованного комплекта и разъяснение решений.</p></article>
-          </div>
-        </div>
-      </section>
-
-      <section className="about-clients shell">
-        <div className="about-clients-copy panel"><span className="micro-label">Для кого работаем</span><h2>Частные дома.<br />Отели.<br /><em>Коммерция.</em></h2><p>Масштаб решения меняется, принцип остаётся тем же: проектируем под реальную эксплуатацию и заранее думаем о монтаже и обслуживании.</p></div>
-        <div className="about-clients-list panel">
-          <article><span>01</span><div><h3>Частные дома</h3><p>Комфортный климат, безопасность, управление и возможность развивать систему поэтапно.</p></div></article>
-          <article><span>02</span><div><h3>Отели и гостевые объекты</h3><p>Климат в номерах и общих зонах, контроль режимов и удобство эксплуатации.</p></div></article>
-          <article><span>03</span><div><h3>Коммерческие помещения</h3><p>Вентиляция, кондиционирование и диспетчеризация с учётом назначения объекта.</p></div></article>
-          <article><span>04</span><div><h3>Партнёры и подрядчики</h3><p>Проектирование и поставка оборудования как часть общей реализации объекта.</p></div></article>
-        </div>
-      </section>
-
-      <section className="about-proof shell">
-        <div><span className="micro-label">Материалы проектов</span><h2>Доверие подтверждают<br /><em>документы и объекты</em></h2></div>
-        <p>В проектах пищеблока и прачечной можно открыть планы и аксонометрические схемы вентиляции. В проекте дома культуры показаны решения по отоплению и кондиционированию.</p>
-        <a href="/design#portfolio">Перейти к проектам <span><ArrowIcon direction="up-right" /></span></a>
-      </section>
-
-      <ContactBand engineering eyebrow="Начать с консультации" title={"Есть объект?\nДавайте обсудим задачу."} />
-      <SiteFooter />
-    </main>
-  );
+  return <main className="engineering-page premium-page page-about">
+    <SiteHeader active="about" />
+    <PageHero topic="О компании" title={<>Инженерная компания<br/>ПЛАНКОД.</>}
+      description="Автоматизируем инженерные системы действующих зданий для организаций. Для строительства, реконструкции и ремонта отдельно проектируем вентиляцию, отопление и кондиционирование."
+      image="/images/about-work.jpg" slogan="Думать системно." theme="page-cover-about"
+      actionHref="#contact" actionLabel="Обсудить объект"
+      facts={["Обследование и совместимость", "Монтаж и пусконаладка", "Проектная документация"]}/>
+    <section className="page-section shell">
+      <div className="page-heading"><h2>Как организуем работы<br/><em>на действующем объекте</em></h2><p>Руководитель организации согласует состав работ и условия приёмки. Техническая служба участвует в выборе режимов и определяет ограничения эксплуатации.</p></div>
+      <div className="about-principles">{principles.map(([name, text], i) =>
+        <article key={name} className={["panel","panel about-principle-dark","panel","panel about-principle-blue"][i]}>
+          <h3>{name}</h3><p>{text}</p>
+        </article>)}</div>
+    </section>
+    <section className="about-cycle"><div className="shell">
+      <div className="page-heading page-heading-light"><h2>Что войдёт<br/><em>в предложение</em></h2><p>После первого обращения уточним назначение здания, задачу и доступные планы. Если документации недостаточно, предложим согласовать обследование с технической службой.</p></div>
+      <div className="about-cycle-grid">
+        <article><h3>Объём</h3><p>Помещения, инженерные системы и перечень работ по каждому контуру.</p></article>
+        <article><h3>Решения</h3><p>Сохраняемое оборудование, новые компоненты и проверяемые точки интеграции.</p></article>
+        <article><h3>Этапы</h3><p>Последовательность и сроки с учётом доступа и режима работы учреждения.</p></article>
+        <article><h3>Изменения</h3><p>Если обследование выявит дополнительные работы, согласуем их объём и стоимость с заказчиком.</p></article>
+        <article><h3>Приёмка</h3><p>Сценарии испытаний, способ проверки и комплект передаваемых документов.</p></article>
+      </div></div>
+    </section>
+    <section className="about-proof shell">
+      <div><span className="micro-label">Проектная практика</span><h2>От расчёта<br/><em>до рабочего чертежа</em></h2></div>
+      <p>В проекте пищеблока показаны местные отсосы, в прачечной — разделение воздушных потоков, в доме культуры — схемы отопления и кондиционирования. Откройте листы и сравните решения с задачей вашего объекта.</p>
+      <a href="/projects.html">Посмотреть документацию <span><ArrowIcon direction="up-right"/></span></a>
+    </section>
+    <ContactBand engineering eyebrow="Для организаций" title={"Какая задача стоит\nперед вашей службой эксплуатации?"}/>
+    <SiteFooter slogan="Думать системно."/>
+  </main>;
 }

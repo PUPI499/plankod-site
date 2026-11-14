@@ -196,3 +196,5 @@
 
 .ss-contact input:focus-visible,.ss-contact select:focus-visible,.ss-contact textarea:focus-visible,.contact-form button:focus-visible{outline:3px solid #574acd;outline-offset:2px}
 .ss-contact .consent-row label,.contact-form .consent-row label{padding-block:8px}
+
+.eng-services + .eng-heading { margin-top: clamp(3rem, 7vw, 6rem); }

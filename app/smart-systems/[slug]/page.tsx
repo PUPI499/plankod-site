@@ -3,7 +3,43 @@ import { SiteHeader, SiteFooter } from '../../components';
 import { PageHero } from '../../page-hero';
 import { SmartInquiry } from '../inquiry';
 import { smartDirections, smartMetadata, serviceBySlug } from '../data';
-import { Breadcrumbs, SmartLink, Related, HotelContent, HomeContent, EquipmentContent, DesignContent } from '../sections';
-export function generateStaticParams() {return smartDirections.map(x=>({slug:x.slug}));}
-export async function generateMetadata({params}:{params:Promise<{slug:string}>}) {const {slug}=await params;const item=smartDirections.find(x=>x.slug===slug);return item?smartMetadata(item.slug):{};}
-export default async function SmartDirectionPage({params}:{params:Promise<{slug:string}>}) {const {slug}=await params;const item=smartDirections.find(x=>x.slug===slug);if(!item)notFound();const {slug:key}=item;const cta={hotels:'Обсудить конфигурацию',home:'Обсудить умный дом',equipment:'Запросить стоимость оборудования',design:'Заказать проектирование'}[key];return <main className={`engineering-page premium-page ss-page ss-page-${key}`}><SiteHeader active="smart"/><Breadcrumbs slug={key}/><PageHero topic={item.name} title={item.title} description={item.description} image={item.image} mobileImage={item.mobile} slogan={key==='home'?'Жить комфортно.':key==='design'?'Думать системно.':'Управлять просто.'} theme="ss-hero" action={<><SmartLink href="#contact">{cta}</SmartLink>{key==='hotels'&&<SmartLink quiet href="#possibilities">Посмотреть возможности</SmartLink>}{key==='equipment'&&<SmartLink quiet href="#categories">Категории оборудования</SmartLink>}</>} facts={item.features.slice()}/><div className="page-caption shell"><span>{key==='design'?'Проектирование — самостоятельная услуга':'Состав решения определяем под объект'}</span><span>{key==='equipment'?'Иллюстрация категорий · не конкретные модели':'Концептуальная визуализация'}</span></div>{key==='hotels'?<HotelContent/>:key==='home'?<HomeContent/>:key==='equipment'?<EquipmentContent/>:<DesignContent/>}<SmartInquiry service={serviceBySlug[key]}/><Related slug={key}/><SiteFooter slogan={key==='home'?'Жить комфортно.':'Управлять просто.'}/></main>;}
+import { Breadcrumbs, SmartLink, Related, HotelContent, EquipmentContent, DesignContent } from '../sections';
+import { MedicalContent, SanatoriumContent } from '../segments';
+
+type Props = { params: Promise<{ slug: string }> };
+const sections = {
+  hotels: HotelContent, sanatoriums: SanatoriumContent, medical: MedicalContent,
+  equipment: EquipmentContent, design: DesignContent
+};
+const actions = {
+  hotels: 'Обсудить гостиницу', sanatoriums: 'Описать задачу по корпусу',
+  medical: 'Обсудить ограничения объекта', equipment: 'Запросить подбор оборудования',
+  design: 'Обсудить задание'
+};
+
+export function generateStaticParams() {
+  return [...smartDirections.map(({slug}) => ({slug})), { slug: 'home' }];
+}
+export async function generateMetadata({params}: Props) {
+  const {slug} = await params;
+  if (slug === 'home') return {title:'Архив раздела | ПЛАНКОД', robots:{index:false,follow:true}, alternates:{canonical:'/smart-systems/home/'}};
+  const item = smartDirections.find(x => x.slug === slug);
+  return item ? smartMetadata(item.slug) : {};
+}
+
+export default async function SmartDirectionPage({params}: Props) {
+  const {slug} = await params;
+  if (slug === 'home') return <main id="top" className="engineering-page premium-page ss-page"><SiteHeader active="smart" contact="/smart-systems/#contact"/><section className="ss-section shell"><h1>Раздел перенесён в архив</h1><p>Актуальные услуги ПЛАНКОД для организаций представлены в разделе автоматизации инженерных систем.</p><SmartLink href="/smart-systems/">Перейти к автоматизации зданий</SmartLink></section><SiteFooter slogan="Управлять просто." contactHref="/smart-systems/#contact"/></main>;
+  const item = smartDirections.find(x => x.slug === slug);
+  if (!item) notFound();
+  const Content = sections[item.slug];
+  return <main className={`engineering-page premium-page ss-page ss-page-${item.slug}`}>
+    <SiteHeader active="smart"/><Breadcrumbs slug={item.slug}/>
+    <PageHero topic={item.name} title={item.title} description={item.description}
+      image={item.image} mobileImage={item.mobile} theme="ss-hero" slogan="Управлять просто."
+      action={<SmartLink href="#contact">{actions[item.slug]}</SmartLink>} />
+    <Content />
+    <SmartInquiry service={serviceBySlug[item.slug]} />
+    <Related slug={item.slug} /><SiteFooter slogan="Управлять просто."/>
+  </main>;
+}

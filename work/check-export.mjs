@@ -51,7 +51,7 @@ for (const file of files) {
     assert(html.includes('<link rel="canonical" href="https://plancod.ru/">'), "Homepage canonical must be the root URL");
   }
   assert(html.includes('<meta property="og:url"'), `Missing share URL: ${file}`);
-  if (!file.endsWith("privacy.html")) {
+  if (!file.endsWith("privacy.html") && !file.endsWith("/smart-systems/home/index.html")) {
     const form = html.match(/<form\b[^>]*class="contact-form(?: [^"]*)?"[^>]*>/)?.[0] || "";
     assert(form.includes('action="/contact.php"') && form.includes('method="post"'), `Missing form: ${file}`);
     assert(html.includes('name="consent"'), `Missing consent: ${file}`);

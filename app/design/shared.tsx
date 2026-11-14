@@ -3,8 +3,10 @@ import { ArrowIcon } from "../arrow-icon";
 import services from "./services.json";
 import { projects } from "../projects/data";
 import { engineeringArt, disciplineNotes } from "./visuals";
-export function ServiceCards(){
- return <div className="eng-services">{services.map((s,i)=><a className="eng-service" href={"/design/"+s.slug+"/"} key={s.slug}><div className="eng-service-image"><img src={engineeringArt(s.slug).cardImage} alt={"Концептуальная иллюстрация: "+s.name} loading="lazy" width="800" height="500"/><span>{String(i+1).padStart(2,"0")} / {disciplineNotes[s.slug].code}</span></div><div className="eng-service-copy"><h3>{s.name}<ArrowIcon direction="up-right"/></h3><p>{s.description}</p><div><strong>{s.price}</strong><span>Расчёт по заданию</span></div></div></a>)}</div>;
+const coreDirections = ["ventilation", "heating", "air-conditioning", "hvac", "integrated"];
+export function ServiceCards({group = "core"}: {group?: "core" | "additional"}){
+ const selected = group === "core" ? coreDirections.flatMap(slug => services.filter(service => service.slug === slug)) : services.filter(service => !coreDirections.includes(service.slug));
+ return <div className="eng-services">{selected.map((s,i)=><a className="eng-service" href={"/design/"+s.slug+"/"} key={s.slug}><div className="eng-service-image"><img src={engineeringArt(s.slug).cardImage} alt={"Концептуальная иллюстрация: "+s.name} loading="lazy" width="800" height="500"/><span>{String(i+1).padStart(2,"0")} / {disciplineNotes[s.slug].code}</span></div><div className="eng-service-copy"><h3>{s.name}<ArrowIcon direction="up-right"/></h3><p>{s.description}</p><div><strong>{s.price}</strong><span>Расчёт по заданию</span></div></div></a>)}</div>;
 }
 export function ProjectCards({slugs,filter=false}:{slugs?:string[];filter?:boolean}){
  const selected=slugs?projects.filter(p=>slugs.includes(p.slug)):projects;

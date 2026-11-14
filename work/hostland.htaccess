@@ -2,6 +2,9 @@
 RewriteEngine On
 RewriteRule ^\.well-known/acme-challenge/ - [L]
 
+# Bookmarks to the demo now open the first section of the hotel page.
+RewriteRule ^smart-systems/hotels/room(?:/index\.html|/)?$ /smart-systems/hotels/#possibilities [R=301,L,NE]
+
 # Preserve external links and campaign parameters of the old smart-home page.
 RewriteCond %{REQUEST_METHOD} !^(GET|HEAD)$
 RewriteRule ^smart-home(?:\.html|/)?$ https://plancod.ru/smart-systems/home/ [R=308,L,NE]

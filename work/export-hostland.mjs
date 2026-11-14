@@ -6,7 +6,7 @@ import { build } from "esbuild";
 import { createHash } from "node:crypto";
 import { readFile, writeFile, mkdir, copyFile, rm } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
-import { renderToStaticMarkup } from "react-dom/server";
+import { renderToStaticMarkup, renderToString } from "react-dom/server";
 
 const OUT_DIR = new URL("../hostland-export/", import.meta.url);
 
@@ -35,25 +35,26 @@ const {brands:storeBrands,products:storeProducts}=await import(storeBundle.href)
 await rm(storeBundle);
 
 const routes = [
-{entry:"../app/brands/page.tsx",bundle:"./tmp-brands.mjs",output:"brands/index.html",title:"Бренды и поставщики оборудования — ПЛАНКОД",description:"Выбор оборудования умного дома по производителям и задачам объекта.",ogImage:"https://plancod.ru/og.png",clientScript:"catalog.js"},
-...storeBrands.map(b=>({entry:"../app/brands/[slug]/page.tsx",bundle:"./tmp-brand-"+b.slug+".mjs",output:"brands/"+b.slug+"/index.html",title:b.name+" — оборудование | ПЛАНКОД",description:b.description,ogImage:"https://plancod.ru/og.png",clientScript:"catalog.js",params:{slug:b.slug}})),
+{entry:"../app/brands/page.tsx",bundle:"./tmp-brands.mjs",output:"brands/index.html",title:"Бренды и поставщики оборудования — ПЛАНКОД",description:"Контроллеры, датчики и модули управления для организаций. Производители и подбор по спецификации.",ogImage:"https://plancod.ru/og.png",clientScript:"catalog.js"},
+...storeBrands.map(b=>({entry:"../app/brands/[slug]/page.tsx",bundle:"./tmp-brand-"+b.slug+".mjs",output:"brands/"+b.slug+"/index.html",noindex:b.slug==="cleverhome",title:b.name+" — оборудование | ПЛАНКОД",description:b.description,ogImage:"https://plancod.ru/og.png",clientScript:"catalog.js",params:{slug:b.slug}})),
 ...storeProducts.map(p=>({entry:"../app/products/[slug]/page.tsx",bundle:"./tmp-item-"+p.slug+".mjs",output:"products/"+p.slug+"/index.html",title:p.name+" — подбор и поставка | ПЛАНКОД",description:p.description,ogImage:"https://plancod.ru"+p.image,clientScript:"catalog.js",params:{slug:p.slug}})),
   {
     entry: "../app/page.tsx",
     bundle: "./tmp-home.mjs",
     output: "index.html",
-    title: "ПЛАНКОД — умные системы и инженерное проектирование",
-    description: "Умные системы для гостиниц, бизнеса и частных домов. Подбор и поставка оборудования, проектирование автоматизации и инженерных систем зданий.",
+    title: "Автоматизация действующих зданий и проектирование ОВиК | ПЛАНКОД",
+    description: "Автоматизация инженерных систем организаций от обследования до пусконаладки. Проектирование вентиляции, отопления и кондиционирования как отдельная услуга.",
     ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
   {entry:'../app/smart-systems/page.tsx',bundle:'./tmp-smart-hub.mjs',output:'smart-systems/index.html',title:smartHub.title,description:smartHub.description,ogImage:'https://plancod.ru/images/smart-systems/hub-v2.webp',clientScript:'catalog.js',smart:true},
+  {entry:'../app/smart-systems/[slug]/page.tsx',bundle:'./tmp-smart-archive.mjs',output:'smart-systems/home/index.html',title:'Архив направления | ПЛАНКОД',description:'Актуальные направления инженерной компании ПЛАНКОД для организаций.',ogImage:'https://plancod.ru/og.png',params:{slug:'home'},noindex:true},
   ...smartDirections.map(item=>({entry:'../app/smart-systems/[slug]/page.tsx',bundle:`./tmp-smart-${item.slug}.mjs`,output:`smart-systems/${item.slug}/index.html`,title:item.seoTitle,description:item.seoDescription,ogImage:`https://plancod.ru${item.image}`,clientScript:'catalog.js',smart:true,params:{slug:item.slug}})),
   {
     entry: "../app/design/page.tsx",
     bundle: "./tmp-design.mjs",
     output: "design.html",
-    title: "Проектирование инженерных систем — направления и цены | ПЛАНКОД",
+    title: "Проектирование ОВиК для организаций | ПЛАНКОД",
     description: "Проектирование отопления, вентиляции, кондиционирования, ВК, электроснабжения и ИТП. Состав работ, стартовые цены и примеры проектной документации.",
     ogImage: "https://plancod.ru/images/design/hub-v1.webp",
     clientScript: "catalog.js",
@@ -62,7 +63,7 @@ const routes = [
     entry: "../app/projects/page.tsx",
     bundle: "./tmp-projects.mjs",
     output: "projects.html",
-    title: "Выполненные проекты: вентиляция, отопление, инженерные сети — ПЛАНКОД",
+    title: "Проектная документация по объектам — ПЛАНКОД",
     description: "Реальные проекты ПЛАНКОД: вентиляция пищевого блока и прачечной, отопление и кондиционирование дома культуры, инженерные сети санатория. Фрагменты рабочих чертежей.",
     ogImage: "https://plancod.ru/images/design/portfolio-v1.webp",
     clientScript: "catalog.js",
@@ -71,7 +72,7 @@ const routes = [
     entry: "../app/products/page.tsx",
     bundle: "./tmp-products.mjs",
     output: "products.html",
-    title: "Каталог оборудования умного дома — ПЛАНКОД",
+    title: "Каталог оборудования автоматизации зданий — ПЛАНКОД",
     description: "Датчики, контроллеры и модули Rubetek, Wiren Board и Zennio: характеристики, фильтры и подбор по задачам. Стоимость и условия поставки по запросу.",
     ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
@@ -80,8 +81,8 @@ const routes = [
     entry: "../app/about/page.tsx",
     bundle: "./tmp-about.mjs",
     output: "about.html",
-    title: "О компании — ПЛАНКОД",
-    description: "Инженерная компания ПЛАНКОД. Проектирование систем зданий, координация разделов и подбор оборудования. Примеры рабочих чертежей и контакты.",
+    title: "Об инженерной компании ПЛАНКОД",
+    description: "Автоматизация действующих зданий и проектирование ОВиК. Порядок работы с организациями, примеры документации и контакты.",
     ogImage: "https://plancod.ru/og.png",
     clientScript: "catalog.js",
   },
@@ -178,8 +179,6 @@ await copyFile(new URL('./smart-systems.js',import.meta.url),new URL('./smart-sy
 const smartVersion=createHash('sha256').update(await readFile(new URL('./smart-systems.js',import.meta.url))).digest('hex').slice(0,12);
 const clientVersion = createHash("sha256").update(await readFile(new URL("./hostland-catalog.js", import.meta.url))).digest("hex").slice(0, 12);
 console.log("copied catalog.js");
-await build({ entryPoints: [new URL("./hostland-carousel.ts", import.meta.url).pathname], outfile: new URL("./homepage-carousel.js", OUT_DIR).pathname, bundle: true, minify: true, platform: "browser", target: "es2020" });
-const carouselVersion = createHash("sha256").update(await readFile(new URL("./homepage-carousel.js", OUT_DIR))).digest("hex").slice(0,12);
 
 await copyFile(new URL("../public/metrika.js", import.meta.url), new URL("./metrika.js", OUT_DIR));
 
@@ -189,6 +188,20 @@ console.log("copied contact.php");
 await copyFile(new URL("./calc.html", import.meta.url), new URL("./calc.html", OUT_DIR));
 console.log("copied calc.html");
 
+await build({entryPoints:[new URL("./hostland-carousel.ts", import.meta.url).pathname], outfile:new URL("./homepage-carousel.js", OUT_DIR).pathname, bundle:true, minify:true, platform:"browser", target:"es2020"});
+const carouselVersion = createHash("sha256").update(await readFile(new URL("./homepage-carousel.js", OUT_DIR))).digest("hex").slice(0,12);
+
+const roomScripts = new Map();
+for (const [slug, name] of [["hotels", "hotel-room"], ["sanatoriums", "treatment-room"], ["medical", "patient-room"]]) {
+  const output = new URL(`./${name}.js`, OUT_DIR);
+  await build({
+    entryPoints: [new URL(`./hostland-${name}.tsx`, import.meta.url).pathname],
+    outfile: output.pathname, jsx: "automatic", bundle: true, minify: true,
+    platform: "browser", target: "es2020", define: {"process.env.NODE_ENV": '"production"'}
+  });
+  const version = createHash("sha256").update(await readFile(output)).digest("hex").slice(0,12);
+  roomScripts.set(`smart-systems/${slug}/index.html`, `/${name}.js?v=${version}`);
+}
 const SITE_URL = "https://plancod.ru";
 const escapeAttribute = (value) => value.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 const lastmod = new Date().toISOString().slice(0, 10);
@@ -207,7 +220,10 @@ const sitemapUrls = [
   ...smartDirections.map(item=>({path:`/smart-systems/${item.slug}/`,priority:"0.8"})),
   { path: "/design.html", priority: "0.8" },
   { path: "/projects.html", priority: "0.8" },
-  { path: "/products.html", priority: "0.8" },
+  { path: "/products.html", priority: "0.6" },
+  { path: "/brands/", priority: "0.5" },
+  ...storeBrands.filter(b=>b.slug!=='cleverhome').map(b=>({path:`/brands/${b.slug}/`,priority:"0.5"})),
+  ...storeProducts.map(p=>({path:`/products/${p.slug}/`,priority:"0.5"})),
   { path: "/about.html", priority: "0.6" },
   { path: "/privacy.html", priority: "0.3" },
   ...services.map(service => ({path: `/design/${service.slug}/`, priority: "0.8"})),
@@ -249,15 +265,17 @@ for (const route of routes) {
   });
   const { default: Page } = await import(`${pathToFileURL(bundledPage.pathname).href}?v=${Date.now()}`);
   const page = route.params ? await Page({ params: Promise.resolve(route.params) }) : await Page();
-  const body = localizeLinks(renderToStaticMarkup(page));
+  const roomScript = roomScripts.get(route.output);
+  const body = localizeLinks(roomScript ? renderToString(page) : renderToStaticMarkup(page));
   const canonical = `${SITE_URL}/${route.output === "index.html" ? "" : route.output.replace(/\/index\.html$/, "/")}`;
   const title = escapeAttribute(route.title);
   const description = escapeAttribute(route.description);
-  const scriptTag = `<script defer src="/enquiry.js?v=${enquiryVersion}"></script><script defer src="/store.js?v=${storeVersion}"></script>` + `<script defer src="/smart-systems.js?v=${smartVersion}"></script>` + (route.output === "index.html" ? `<script defer src="/homepage-carousel.js?v=${carouselVersion}"></script>` : "") + (route.clientScript ? `\n  <script defer src="/${route.clientScript}?v=${clientVersion}"></script>` : "");
+  const scriptTag = (roomScript ? `<script defer src="${roomScript}"></script>` : "") + (route.output === "index.html" ? `<script defer src="/homepage-carousel.js?v=${carouselVersion}"></script>` : "") + `<script defer src="/enquiry.js?v=${enquiryVersion}"></script><script defer src="/store.js?v=${storeVersion}"></script>` + `<script defer src="/smart-systems.js?v=${smartVersion}"></script>` + (route.clientScript ? `\n  <script defer src="/${route.clientScript}?v=${clientVersion}"></script>` : "");
   const html = `<!doctype html>
 <html lang="ru">
 <head>
   <meta charset="utf-8">
+  ${route.noindex ? '<meta name="robots" content="noindex,follow">' : ''}
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="yandex-verification" content="054b7e6184e46585">
   <meta name="google-site-verification" content="unc-g3f3DDC7SPzOABLBE0PGNM4EcopoxhE1zEXYXXg">

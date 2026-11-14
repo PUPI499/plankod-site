@@ -9,8 +9,8 @@ const inputs=[["brand","rubetek"],["purpose","Климат"],["protocols","KNX"]
 const grid={children:[...cards],querySelectorAll:()=>cards,appendChild(c){this.children=this.children.filter(x=>x!==c);this.children.push(c)}},sort={...node(),value:"name"},count=node(),empty=node(),open=node(),close=node(),reset=node();
 const panel={...node(),querySelectorAll:()=>inputs};
 const root={...node(),querySelector:s=>({"[data-store-grid]":grid,"[data-store-filters]":panel,"[data-open-filters]":open,"[data-close-filters]":close,"[data-store-sort]":sort,"[data-store-count]":count,"[data-store-empty]":empty,"[data-reset-filters]":reset}[s])};
-const status=node(),result=node(),button=node();let selected={object:"apartment",task:["Безопасность"],ecosystem:"rubetek",budget:"30000"};
-const form={...node(),parentElement:{querySelector:s=>s==="[data-config-status]"?status:result},querySelector:()=>button,elements:{object:{selectedOptions:[{textContent:"Квартира"}]}}};
+const status=node(),result=node(),button=node();let selected={object:"hotel",task:["Безопасность"],ecosystem:"rubetek",budget:"30000"};
+const form={...node(),parentElement:{querySelector:s=>s==="[data-config-status]"?status:result},querySelector:()=>button,elements:{object:{selectedOptions:[{textContent:"Гостиница"}]}}};
 let fetchFail=false;
 vm.runInNewContext(source,{document:{querySelectorAll:s=>s==="[data-store-catalog]"?[root]:s==="[data-store-config]"?[form]:[],createElement:()=>node(),querySelector:()=>null},FormData:class{get(k){return selected[k]}getAll(k){return selected[k]}},fetch:async()=>({ok:!fetchFail,json:async()=>products}),Event:class{},console});
 const shown=()=>cards.filter(c=>!c.hidden);
@@ -23,10 +23,10 @@ sort.value="price-asc";sort.events.change();assert.equal(grid.children[0].datase
 sort.value="price-desc";sort.events.change();assert.equal(grid.children[0].dataset.price,"90");assert.equal(grid.children[1].dataset.price,"10");
 sort.value="new";sort.events.change();assert.equal(grid.children[0].dataset.name,"Fixture10");
 inputs[2].checked=true;inputs[2].events.change();assert.equal(shown().length,4);
-await form.events.submit({preventDefault(){}});assert.match(status.textContent,/Цены уточняются/);assert.equal(button.disabled,false);assert.equal(result.attrs["aria-busy"],undefined);
+await form.events.submit({preventDefault(){}});assert.match(status.textContent,/Примеры компонентов/);assert.equal(button.disabled,false);assert.equal(result.attrs["aria-busy"],undefined);
 let links=result.children.find(x=>x.children.some(c=>c.children?.length))?.children.map(x=>x.children[0].href)||[];
 assert.deepEqual(links.sort(),["/products/rubetek-re-3315/","/products/rubetek-rs-3215/","/products/rubetek-rs-3225/"].sort());
 selected.task=[];await form.events.submit({preventDefault(){}});assert.match(status.textContent,/хотя бы одну/);
 selected.task=["Климат"];selected.ecosystem="wiren-board";await form.events.submit({preventDefault(){}});assert(result.children.some(x=>x.textContent.includes("Исполнительные")));
 const slugs=new Set;for(const p of products){assert(!slugs.has(p.slug));slugs.add(p.slug);assert(existsSync("public"+p.image));assert.equal(p.price,null);assert(p.source.startsWith("https://"));const html=readFileSync("hostland-export/products/"+p.slug+"/index.html","utf8");assert(html.includes(p.name));if(!p.documents?.length)assert(!html.includes("<h2>Документы</h2>"));if(!p.video)assert(!html.includes('class="store-video"'));if(p.brand==="knx24")assert.equal(p.manufacturer,"Zennio");}
-console.log("PASS catalog: combined filters, empty/reset, unknown prices last, date sorting, KNX manufacturer, configurator dependencies/budget, assets and optional blocks.");
+console.log("PASS catalog: combined filters, empty/reset, unknown prices last, date sorting, KNX manufacturer, configurator dependencies, assets and optional blocks.");

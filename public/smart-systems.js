@@ -8,7 +8,7 @@
  var form=document.querySelector('[data-smart-form]');
  if(!form)return;
  var goalNames={b2b_supply:'smart_b2b_request',equipment:'smart_equipment_request',private_home:'smart_home_request',smart_design:'smart_design_request'};
- var serviceNames={b2b_supply:'Подбор и поставка для бизнеса',equipment:'Стоимость оборудования',private_home:'Решение для частного дома',smart_design:'Проектирование умных систем'};
+ var serviceNames={b2b_supply:'Автоматизация действующего объекта',equipment:'Стоимость оборудования',private_home:'Решение для частного дома',smart_design:'Проектирование умных систем'};
  var status=form.querySelector('[data-smart-status]'),button=form.querySelector('[type="submit"]'),initialLabel=button.innerHTML,pending=false;
  function goal(name,params){if(typeof window.ym==='function')window.ym(113254722,'reachGoal',name,params);}
  function selected(){return Array.from(form.querySelectorAll('[name="functions"]:checked')).map(function(el){return el.value;});}

@@ -23,16 +23,19 @@ for(const [service,expectedGoal] of Object.entries(goals))for(const scenario of 
 }
 console.log('PASS 16 form outcomes: segment goals, duplicate guard, attribution, no PII in goals, error recovery');
 const titles=[],descriptions=[],h1s=[];const sitemap=readFileSync(new URL('../hostland-export/sitemap.xml',import.meta.url),'utf8');
-for(const slug of ['', 'hotels/','home/','equipment/','design/']){
+const publicRoutes=['', 'hotels/', 'sanatoriums/', 'medical/', 'equipment/', 'design/'];
+for(const slug of publicRoutes){
  const html=readFileSync(new URL('../hostland-export/smart-systems/'+slug+'index.html',import.meta.url),'utf8');
  const url='https://plancod.ru/smart-systems/'+slug;
  titles.push(html.match(/<title>(.*?)<\/title>/s)[1]);descriptions.push(html.match(/<meta name="description" content="([^"]+)"/)[1]);h1s.push(html.match(/<h1[^>]*>(.*?)<\/h1>/s)[1]);
  assert(html.includes('<link rel="canonical" href="'+url+'">'));
  assert(sitemap.includes('<loc>'+url+'</loc>'));
  assert(html.includes('BreadcrumbList'));assert(html.includes('data-smart-form'));
- for(const target of ['hotels/','home/','equipment/','design/'])assert(html.includes('href="/smart-systems/'+target+'"'));
+ assert(!html.includes('value="private_home"'));
+ for(const target of publicRoutes.slice(1))assert(html.includes('href="/smart-systems/'+target+'"'));
 }
-for(const values of [titles,descriptions,h1s])assert.equal(new Set(values).size,5);
-assert(!sitemap.includes('smart-home'));
-assert(readFileSync(new URL('./hostland.htaccess',import.meta.url),'utf8').includes('smart-systems/home/ [R=301,L,NE]'));
-console.log('PASS unique SEO, canonical, sitemap, breadcrumbs, four-way linking and permanent migration');
+for(const values of [titles,descriptions,h1s])assert.equal(new Set(values).size,publicRoutes.length);
+const archive=readFileSync(new URL('../hostland-export/smart-systems/home/index.html',import.meta.url),'utf8');
+assert(archive.includes('noindex'));assert(!archive.includes('data-smart-form'));
+assert(!sitemap.includes('/smart-systems/home/'));assert(!sitemap.includes('smart-home'));
+console.log('PASS B2B routes, distinct SEO, forms, business segments and archive exclusion');

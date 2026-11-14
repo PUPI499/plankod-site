@@ -1,19 +1,54 @@
 import type { Metadata } from "next";
+
 export const smartDirections = [
-  { slug: 'hotels', name: 'Для гостиниц и бизнеса', kicker: '01 / Бизнес', title: 'Автоматизация гостиничных номеров и коммерческих пространств', description: 'Для отелей и апарт-отелей подбираем управление светом, климатом и шторами. Можно начать с конфигурации одного номера или передать готовую спецификацию для предложения на поставку.', short: 'Оснащение номеров и коммерческих пространств с учётом существующей инфраструктуры.', features: ['Климат и свет', 'Номер и здание'], image: '/images/smart-systems/hotels-v2.webp', mobile: '/images/smart-systems/hotels-v2-mobile.webp', card: '/images/smart-systems/hotels-v2-card.webp', seoTitle: 'Автоматизация гостиничных номеров — оборудование для отелей | ПЛАНКОД', seoDescription: 'Умный номер для отеля: подбор и поставка оборудования управления климатом, светом и шторами. Проверка совместимости, технических требований и условий поставки.' },
-  { slug: 'home', name: 'Для частного дома', kicker: '02 / Дом', title: 'Проектирование и подбор умного дома', description: 'Определим, как управлять отоплением, вентиляцией, кондиционированием, освещением и подачей воды. Можно заказать отдельный проект или подобрать устройства к существующей системе.', short: 'Управление повседневными сценариями в строящемся или уже готовом доме.', features: ['Комфорт каждый день', 'Сценарии под вашу жизнь'], image: '/images/smart-systems/home-v2.webp', mobile: '/images/smart-systems/home-v2-mobile.webp', card: '/images/smart-systems/home-v2-card.webp', seoTitle: 'Умный дом для частного дома — подбор решений | ПЛАНКОД', seoDescription: 'Управление климатом, светом, шторами и защита от протечек в частном доме. Подбор оборудования и отдельная услуга проектирования умного дома.' },
+  {
+    slug: "hotels", name: "Гостиницы и отели", kicker: "Гостиничная эксплуатация",
+    title: "Управление инженерией действующей гостиницы",
+    description: "Уточняем, как гость управляет климатом в номере и какие состояния нужны дежурному инженеру. На типовом номере определяем совместимые устройства и порядок работ в заселённом здании.",
+    short: "Климат номера, освещение общих зон и доступные персоналу сигналы.",
+    features: ["Номерной фонд", "Служба эксплуатации"],
+    image: "/images/smart-systems/hotels-v2.webp", mobile: "/images/smart-systems/hotels-v2-mobile.webp", card: "/images/smart-systems/hotels-v2-card.webp",
+    seoTitle: "Автоматизация инженерных систем действующих гостиниц и отелей | ПЛАНКОД",
+    seoDescription: "Обследование номеров и общих зон гостиницы, подбор совместимых устройств, монтаж и настройка согласованных режимов климата и света."
+  },
+  {
+    slug: "sanatoriums", name: "Санатории и пансионаты", kicker: "Инженерия комплекса",
+    title: "Автоматизация инженерии санаториев и пансионатов",
+    description: "Корпуса одного комплекса могут иметь разные тепловые узлы, графики работы и оборудование. Выясняем, какие параметры полезно видеть дежурной службе и где управление должно остаться местным.",
+    short: "Согласуем работу инженерии спальных, административных и общественных корпусов.",
+    features: ["Корпуса и зоны", "Режимы эксплуатации"],
+    image: "/images/design/case-sanatorium-utilities-v1.webp", mobile: "/images/design/case-sanatorium-utilities-v1.webp", card: "/images/design/case-sanatorium-utilities-v1.webp",
+    seoTitle: "Автоматизация инженерии санаториев и пансионатов | ПЛАНКОД",
+    seoDescription: "Оценка возможности модернизации инженерных систем корпусов санатория или пансионата. Обследование узлов, согласование режимов и этапов внедрения."
+  },
+  {
+    slug: "medical", name: "Медицинские учреждения", kicker: "Работающее учреждение",
+    title: "Модернизация инженерного управления в медицинском учреждении",
+    description: "Для больниц, медицинских центров, родильных домов и специализированных отделений сначала определяем допустимые границы вмешательства вместе с ответственными службами учреждения.",
+    short: "Согласуем изменения с учётом назначения помещений, санитарного режима и непрерывности работы.",
+    features: ["Допустимые функции", "Порядок доступа"],
+    image: "/images/smart-systems/clinic-exterior.webp", mobile: "/images/smart-systems/clinic-exterior-mobile.webp", card: "/images/smart-systems/clinic-exterior-card.webp",
+    seoTitle: "Автоматизация инженерных систем медицинских учреждений | ПЛАНКОД",
+    seoDescription: "Оценка допустимых функций управления инженерией больниц, родильных домов и специализированных отделений. Исходные данные, ограничения и согласование работ."
+  },
   { slug: 'equipment', name: 'Оборудование', kicker: '03 / Комплектация', title: 'Оборудование для интеллектуального управления зданиями', description: 'Подбор решений существующих производителей с учётом функций, совместимости и технических особенностей объекта.', short: 'Контроллеры, панели, датчики и устройства управления. Подбор под техническую задачу.', features: ['Подбор и поставка', 'Запрос по списку'], image: '/images/smart-systems/equipment-v2.webp', mobile: '/images/smart-systems/equipment-v2-mobile.webp', card: '/images/smart-systems/equipment-v2-card.webp', seoTitle: 'Оборудование для автоматизации зданий — подбор и поставка | ПЛАНКОД', seoDescription: 'Контроллеры, шлюзы, панели, термостаты и датчики для интеллектуального управления зданиями. Подбор по функциям и совместимости, запрос стоимости оборудования.' },
-  { slug: 'design', name: 'Проектирование', kicker: '04 / Инженерия', title: 'Проектирование интеллектуальных систем управления зданием', description: 'Для гостиницы, офиса или частного дома разрабатываем сценарии, схему связей и требования к оборудованию. По согласованному заданию готовим документацию для дальнейшей реализации.', short: 'Самостоятельная инженерная услуга: от задачи объекта до технической документации.', features: ['Архитектура системы', 'Координация инженерии'], image: '/images/smart-systems/design-v2.webp', mobile: '/images/smart-systems/design-v2-mobile.webp', card: '/images/smart-systems/design-v2-card.webp', seoTitle: 'Проектирование умного дома и интеллектуальных систем | ПЛАНКОД', seoDescription: 'Проект автоматизации дома, гостиницы или коммерческого здания: архитектура управления, сценарии, размещение устройств и связи с инженерными системами.' },
+  { slug: 'design', name: 'Проект автоматизации', kicker: '04 / Инженерия', title: 'Проектирование интеллектуальных систем управления зданием', description: 'Для действующего здания организации разрабатываем сценарии, схему связей и требования к оборудованию. По согласованному заданию готовим документацию для дальнейшей реализации.', short: 'Самостоятельная инженерная услуга: от задачи объекта до технической документации.', features: ['Архитектура системы', 'Координация инженерии'], image: '/images/smart-systems/design-v2.webp', mobile: '/images/smart-systems/design-v2-mobile.webp', card: '/images/smart-systems/design-v2-card.webp', seoTitle: 'Проектирование автоматизации инженерных систем | ПЛАНКОД', seoDescription: 'Проект автоматизации коммерческого или общественного здания: архитектура управления, сценарии, размещение устройств и связи с инженерными системами.' },
 ] as const;
-export type SmartSlug = typeof smartDirections[number]['slug'];
-export type SmartService = 'b2b_supply' | 'equipment' | 'private_home' | 'smart_design';
-export const serviceBySlug: Record<SmartSlug, SmartService> = {hotels:'b2b_supply',home:'private_home',equipment:'equipment',design:'smart_design'};
-export const smartHub = { title:'Умные системы для гостиниц, бизнеса и дома | ПЛАНКОД', description:'Подбор и поставка оборудования автоматизации существующих производителей. Проектирование интеллектуальных систем гостиниц, коммерческих зданий и частных домов.' };
+export type SmartSlug = typeof smartDirections[number]["slug"];
+export type SmartService = "b2b_supply" | "equipment" | "smart_design";
+export const serviceBySlug: Record<SmartSlug, SmartService> = {
+  hotels: "b2b_supply", sanatoriums: "b2b_supply", medical: "b2b_supply",
+  equipment: "equipment", design: "smart_design"
+};
+export const smartHub = {
+  title: "Автоматизация инженерных систем действующих зданий | ПЛАНКОД",
+  description: "Обследование, проектирование и внедрение систем управления в эксплуатируемых зданиях организаций. Совместимость оборудования, этапы модернизации и условия приёмки."
+};
 export function smartMetadata(slug?: SmartSlug): Metadata {
  const item=smartDirections.find(x=>x.slug===slug);
  const title=item?.seoTitle || smartHub.title, description=item?.seoDescription || smartHub.description;
  const url=`/smart-systems/${slug ? slug+'/' : ''}`;
- return {title,description,alternates:{canonical:url},openGraph:{title,description,url,type:'website',images:[{url:item?.image || '/images/smart-systems/hub-v2.webp',alt:'ПЛАНКОД — умные системы; концептуальная визуализация'}]},twitter:{card:'summary_large_image',title,description,images:[item?.image || '/images/smart-systems/hub-v2.webp']}};
+ return {title,description,alternates:{canonical:url},openGraph:{title,description,url,type:'website',images:[{url:item?.image || '/images/smart-systems/hub-v2.webp',alt:'ПЛАНКОД — инженерная автоматизация; концептуальная визуализация'}]},twitter:{card:'summary_large_image',title,description,images:[item?.image || '/images/smart-systems/hub-v2.webp']}};
 }
 export const equipmentCategories = [
  ['controllers','Контроллеры и шлюзы','Логика управления и связь между совместимыми устройствами.','Число каналов, интерфейсы и архитектура сети'],
